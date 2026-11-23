@@ -179,6 +179,7 @@ import { cloneWorkplaneShapeSnapshot, compactEdgeTreatmentHistory, edgeTreatment
 import { describeHistoryStep, historyStepsAround } from "@/lib/historyStepDescription";
 import { historyStepText } from "@/lib/historyStepText";
 import { historyViewMcpCommand } from "./workplane/historyViewMcp";
+import { AiCompanionPanel } from "./AiCompanionPanel";
 import { attachmentsFingerprint } from "@/lib/projectAttachments";
 import { ATTACHMENT_MCP_READ_ACTIONS, attachmentMcpCommand, attachmentMcpList } from "@/lib/projectAttachmentsMcp";
 import { appendEditorHistorySnapshot, boundedEditorHistoryState, continuesKeyRun, type KeyRun, editorHistoryBranch, editorHistoryEntry, editorHistoryForExport, historyStateAt, historyWithUnfinishedState, hydrateEditorHistoryState, notesForHistoryIndex, projectSceneFingerprint, projectShapesFingerprint, workplaneForHistoryIndex, type EditorHistoryEntry, type EditorHistoryState } from "@/lib/editorHistory";
@@ -18514,6 +18515,13 @@ export function LayerlingEditor({
     executeMcpCommandRef.current = executeMcpCommand;
   }, [executeMcpCommand]);
 
+  // The AI design companion (sentire-layer) runs the same commands as the MCP bridge, right in this tab.
+  const companionExecute = useCallback(async (action: string, params: Record<string, unknown>) => {
+    const run = executeMcpCommandRef.current;
+    if (!run) throw new Error("The editor is not ready yet.");
+    return run({ id: `ai-${Date.now().toString(36)}`, action: action as LayerlingMcpCommand["action"], params, createdAt: Date.now() });
+  }, []);
+
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
@@ -22186,6 +22194,7 @@ export function LayerlingEditor({
           </button>
         </p>
       ) : null}
+      <AiCompanionPanel execute={companionExecute} />
       <pre data-codex-state hidden>
         {debugState}
       </pre>

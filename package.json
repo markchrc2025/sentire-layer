@@ -16,9 +16,9 @@
     "copy:manifold": "node scripts/copy-manifold.mjs",
     "fonts:japanese": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-japanese-typeface.mjs",
     "clean:cache": "node scripts/clean-next-cache.mjs",
-    "predev": "node scripts/check-node-version.mjs && npm run copy:occt && npm run copy:manifold && npm run fonts:japanese && npm run guide",
+    "predev": "node scripts/check-node-version.mjs && npm run ai:catalog && npm run copy:occt && npm run copy:manifold && npm run fonts:japanese && npm run guide",
     "dev": "next dev apps/web",
-    "prebuild": "node scripts/check-node-version.mjs && npm run copy:occt && npm run copy:manifold && npm run fonts:japanese && npm run guide",
+    "prebuild": "node scripts/check-node-version.mjs && npm run ai:catalog && npm run copy:occt && npm run copy:manifold && npm run fonts:japanese && npm run guide",
     "build": "next build apps/web",
     "export": "node scripts/build-static-export.mjs",
     "verify:static-worker-assets": "node scripts/verify-static-worker-assets.mjs",
@@ -39,7 +39,8 @@
     "printers:update": "node scripts/generate-printer-presets.mjs",
     "printers:check": "node scripts/check-printer-updates.mjs",
     "ci": "npm run typecheck && npm run test",
-    "mcp:layerling": "node scripts/layerling-mcp-server.mjs"
+    "mcp:layerling": "node scripts/layerling-mcp-server.mjs",
+    "ai:catalog": "node scripts/build-ai-tool-catalog.mjs"
   },
   "dependencies": {
     "@types/three": "^0.184.1",
