@@ -1,0 +1,106 @@
+---
+title: Priprava za 3D-tisk
+summary: Izberi svoj tiskalnik, bodi opozorjen, če kaj ne ustreza, in del pravilno položi.
+---
+
+## Izbira tiskalnika
+
+Odpri nastavitve (zobnik v naslovni vrstici, {{ui:editor.workspaceSettings}}) in preklopi na področje {{ui:workspace.workplane}}. Pri {{ui:workspace.printer}} svoj tiskalnik izbereš s seznama več kot 230 običajnih modelov, med njimi Bambu Lab, Prusa, Creality, Anycubic, Elegoo in mnogi drugi.
+
+![Nastavitve delovne ravnine z izbranim tiskalnikom. Tiskalna postelja in največja višina tiska prihajata iz profila rezalnika.](shot:settings-workplane)
+
+S tem se zgodijo tri stvari:
+
+- Delovna ravnina dobi velikost tiskalne postelje.
+- V kotu delovne površine stojita ime tiskalnika in njegov delovni prostor. Komur napis moti, ga izklopi pod {{ui:workspace.workplane}} z {{ui:workspace.showPlateLabels}}; to velja tudi za ime načrta spredaj levo.
+- layerling **opozori**, če kaj ne ustreza.
+
+Večina profilov tiskalnikov izvira iz OrcaSlicerja. Če želiš delati brez tiskalnika, izberi {{ui:workspace.printerNone}}. Velikost delovne ravnine lahko nastaviš tudi ročno.
+
+Delta tiskalniki, na primer FLSun ali SeeMeCNC ali Anycubic Predator, tiskajo na okroglo ploščo. Z enim od njih je tudi delovna ploskev okrogla in široka kot plošča, telo pa je preveliko, takoj ko sega čez rob. Okroglo telo se meri po lastnem obrisu, ne po škatli okoli njega, zato se prilega tudi valj, ki je skoraj tako širok kot plošča.
+
+## Kadar kaj ne ustreza
+
+Telo, ki sega čez rob tiskalne plošče, se označi. Zraven se pojavi sporočilo, katere strani koliko segajo čez. Enako je, če je del **previsok**: višina šteje od najnižjega telesa, tako kot rezalnik postavi model.
+
+![Kvader je širši od tiskalne postelje Bambu Lab A1 mini. Sporočilo spodaj pove, za koliko.](shot:printer-overhang)
+
+Opozorilo ti ne preprečuje nadaljnjega dela. Je namig, da šele v rezalniku ne ugotoviš, da je del prevelik. Prevelik del je pogosto mogoče razdeliti: z {{ui:editor.tool.split}} ga razreži na dve polovici in ju natisni ločeno.
+
+Če dele namenoma odložiš ob plošči, klikni majhen križec v sporočilu. Opozorilo potem izgine prav za ta telesa. Ko eno od njih spet ustreza in ga pozneje premakneš ven ali ko kakšno drugo telo sega čez, se sporočilo vrne. Skrita telesa se nikoli ne štejejo, zato deluje tudi, če odložene dele skriješ.
+
+## Pravilno položiti del
+
+Kako del leži na plošči, odloča o trdnosti in videzu. Pri tem pomagata dve orodji v področju {{ui:editor.group.arrange}}:
+
+- {{ui:editor.tool.layFlat}}: klikni ploskev in del leži s to stranjo spodaj. Najboljša smer tiska z enim klikom.
+- {{ui:editor.tool.dropToWorkplane}} ([[D]]): del postavi na delovno ravnino, če nekje visi v zraku.
+
+Nekaj ravnil za smer:
+
+- Ploske, velike ploskve navzdol. Najbolje se oprimejo.
+- Dolge dele, ki so obremenjeni, položi tako, da plasti ne potekajo pravokotno na obremenitev. Plasti so najšibkejša smer.
+- Previse čez 45° se izogibaj ali jim v rezalniku dodaj podpore.
+
+## Iskanje previsov
+
+V meniju ob očesu ({{ui:editor.group.visibility}}) **Pokaži previse** vklopi previse. Vsaka ploskev, ki kaže strmeje kot 45° navzdol, se potem pokaže rdeče-belo šrafirana – tam bi tiskalnik potreboval podpore. Kar leži na plošči, ostane prosto. Tako že med konstruiranjem vidiš, ali krogla, lok ali vodoravna izvrtina gre brez podpor; [kapljična izvrtina](chapter:navoji-in-mehanika) je natanko za to. Če del zavrtiš ali ga z {{ui:editor.tool.layFlat}} položiš drugače, šrafura takoj potuje zraven.
+
+Kako strmo zmore tvoj tiskalnik, nastaviš v nastavitvah pod {{ui:workspace.appearance}}: od 30° (previdno) do 70° (za tiskalnike z dobrim hlajenjem dela). Ploskev, ki leži na drugem telesu, se vseeno označi – layerling vidi samo ploskev samo.
+
+## Podporna rebra za poševen del
+
+Del, ki ga tiskaš poševno na robu, na primer pod 45°, pogosto ne potrebuje podpor: njegove ploskve so dovolj strme. Stoji pa na tankem robu in se lahko prevrne. {{ui:supportRib.title}} ga drži: pod njegovo spodnjo ploskvijo z majhno režo stoji tanko rebro na ovalni nogi, drobni mostički pa del pridržijo. Del najprej obrni na rob in naj stoji na podlagi.
+
+1. Izberi del in klikni {{ui:supportRib.title}} v skupini {{ui:editor.section.splitShape}} na traku, desno klikni del ali ga poišči s [[Ctrl]]+[[K]].
+2. Klikni spodnjo ploskev tam, kjer naj stoji rebro. Ploskev mora gledati navzdol, biti nagnjena med 15° in 75° in segati do podlage; rebro gre od tvojega klika naravnost navzdol po ploskvi. Če je spodnji rob dela zaobljen ali posnet, sme ploskev končati do 3 mm nad podlago: klikni ravno ploskev nad zaobljenjem.
+3. Nastavi {{ui:supportRib.nozzle}}, {{ui:supportRib.layerHeight}} in {{ui:supportRib.firstLayer}} kot v svojem rezalniku. Rebro je debelo dve progi šobe, reža do dela pol proge; vsak mostiček je širok eno progo in visok natanko eno plast ter leži na plasti tiska, da ga rezalnik natisne kot eno tanko progo, ki se čisto odlomi. {{ui:supportRib.height}} pove, kako visoko rebro seže po ploskvi (na začetku do polovice), {{ui:supportRib.bridgeSpacing}} pa, kako narazen so mostički, v celih plasteh.
+4. Pod {{ui:supportRib.more}} lahko ročno nastaviš debelino, režo, širino mostičkov in debelino noge (do takrat sledijo šobi in plastem), pa tudi širino noge in zaobljenji pri nogi in zgoraj. Če je {{ui:supportRib.bridgeGap}} večja od 0, mostički ne segajo več v del, ampak se končajo toliko pred njim, merjeno v plasti: rezalnik tedaj vsakega natisne kot svojo pot, ki drži del s stisnjeno črto in se loči brez sledi (pol črte, 0,2 mm pri šobi 0,4 mm, je dober začetek). Ob tem povečaj {{ui:supportRib.gap}}, da mostički še vedno premostijo del nje.
+5. {{ui:supportRib.apply}} doda rebro. Z {{ui:supportRib.bundle}} (na začetku vklopljeno) sta rebro in del v svežnju: premikata se skupaj in gresta v rezalnik kot dve telesi drug ob drugem, pri tisku povezani z mostički.
+
+Rebro je mrežno telo: če ga želiš spremeniti, ga izbriši in ustvari znova. Vsak klik ustvari eno rebro; za več klikni {{ui:supportRib.repick}} ali ga ponovi z {{ui:editor.tool.array}}. Rebro nikjer ne sme teči v del, del pa mora stati na podlagi - sicer okno pove, zakaj ne gre. Nastavitve si ta brskalnik zapomni za naslednje rebro.
+
+{{ui:clearance.title}} in {{ui:printCheck.title}} poznata rebro: da njegovi mostički segajo v del ter da sta rebro in mostički tanka in ležita eno plast visoko čez režo, je namenoma in se ne sporoča. Rebro, narejeno v layerling 1.148.0, te oznake še nima; naredi ga znova in preverjanji ga izpustita.
+
+## Debelina stene, zračnost in posnetja
+
+- Stene naj bodo široke vsaj dve tiskalni poti, pri šobi 0,4 mm torej 0,8 mm. Trdni deli potrebujejo 1,2 do 2 mm.
+- Kjer se dva dela prilegata, potrebuješ zračnost: običajno 0,2 do 0,4 mm, odvisno od tiskalnika. Zgradi majhen preizkusni par, preden natisneš velik del.
+- Spodnji rob, ki leži na plošči, mnogi rahlo posnamejo. To prepreči, da bi se prva plast razlezla (»slonja noga«).
+
+## Zračnost tvojega tiskalnika: preizkus ujemanja
+
+Vsak tiskalnik natisne luknje malo manjše in zatiče malo debelejše, kot so narisani, vsak za svojo mero. Zračnost, ki jo potrebujeta dva natisnjena dela, je zato sprva ugibanje. Raje jo enkrat izmeri: v nastavitvah pod {{ui:workspace.workplane}} gumb {{ui:workspace.fitTestMake}} položi preizkus ujemanja na ploščo. To je ploščica 60 × 20 × 4 mm s sedmimi luknjami za en zatič 5 mm, vsaka narisana kot 5 mm in dvakrat 0,05, 0,10, 0,15, 0,20, 0,25, 0,30 ali 0,40 mm, ob njej pa je izbočena vrednost, in še sam zatič 5 mm, ki stoji ob ploščici in ima zgoraj majhno posnetje. Sestavljen je iz navadnih oblik, zato se natisne skupaj z ostalim na plošči, brez podpor.
+
+Na tiskalniku, katerega podlaga se premika naprej in nazaj, se visok tanek zatič lahko zamaje, odlepi ali na dnu natisne valovito, z robom ali brez. Pred izdelavo preizkusa ujemanja označite {{ui:workspace.fitTestBase}}: zatič potem stoji na majhni 10-milimetrski plošči, ki se drži podlage. Stene ležišča se ne dotika, stoji na majhnem izboklini na njegovem dnu; po tisku ga zazibajte naprej in nazaj in se odlomi.
+
+Natisni ga, kot leži, nato potiskaj zatič s posnetim koncem naprej v luknje, od najožje naprej. **Najožja luknja, v kateri se zatič še vrti,** pove zračnost tvojega tiskalnika. Vpiši njeno številko pod {{ui:workspace.printerPlay}} ali jo klikni med vrednostmi pod poljem. Zračnost velja na stran, v milimetrih, in brskalnik jo hrani za vse projekte; prazno polje pomeni, da ni izmerjena.
+Z več tiskalniki najprej pod {{ui:workspace.printer}} izberi tistega, na katerem tiskaš: vsak tiskalnik ima svojo zračnost, nove uporabe pa začnejo z zračnostjo tiskalnika, ki je nastavljen za model. Tiskalnik brez svoje zračnosti uporabi zračnost, nastavljeno, ko ni bil izbran noben tiskalnik.
+
+Od takrat nove uporabe začnejo z zračnostjo namesto z vgrajeno vrednostjo: {{ui:lid.gap}} in {{ui:lid.hingePinPlay}} v orodju {{ui:editor.tool.lid}}, zračnost novih oblik {{ui:shape.dovetail}} in {{ui:shape.snapFit}}, {{ui:prop.clearance}} nove matice ali navojne luknje – dvojna zračnost, saj je to prostor čez ves premer – in {{ui:clearance.threshold}} pri {{ui:editor.tool.clearance}}. Prav tako {{ui:split.connectorClearance}} moznikov, čepov in lastovičjih repov pri {{ui:editor.tool.split}}. Dokler tako polje še ima to vrednost, »{{ui:printerPlay.fromFitTest}}« ob njem pove, od kod je številka. Tečaj, natisnjen v enem kosu, in zgibi orodja {{ui:editor.tool.flexi}} obdržijo svojih 0,4 mm: ko so natisnjeni v enem kosu, morajo njihove reže ostati odprte tudi med plastmi, tega pa zatič, natisnjen posebej, ne izmeri. Prostor za vtis magneta ali ključa Gridfinity in prostor za kupljeno vtičnico ali ploščo prav tako obdržita svoje vrednosti. Telesa, ki so že v projektu, se nikoli ne spremenijo, in tudi projekt, ki ga odpreš, ne.
+
+## Preverjanje tiska
+
+{{ui:editor.tool.printCheck}} ob {{ui:editor.tool.clearance}} v skupini {{ui:editor.group.combine}} pregleda izbrane predmete ali vse vidne, če ni nič izbrano, in v enem oknu pove, kaj bi šlo pri tiskanju narobe. Vsaka od petih vrstic je zelena, če ni našla ničesar, in oranžna s tem, kaj in kje, če je:
+
+- **{{ui:printCheck.thin.title}}**: mesta, tanjša od dveh linij šobe - 0,8 mm pri šobi 0,4 mm. Slicer tako steno izpusti ali jo natisne kot eno šibko linijo. Na vrhu okna pri {{ui:printCheck.nozzle}} izberite svojo šobo (0,2 do 0,8 z enim klikom, katero koli drugo v polju). Tanka mesta se na telesih pobarvajo rdeče s svetlo mrežo, vrstica pa navede najtanjše mesto in koliko površine je pretanke. Mesta pod 1 mm² in ostri robovi, na primer rob klina, se ne štejejo.
+- **{{ui:printCheck.floating.title}}**: telo ali ločen del telesa, ki se ne dotika ne plošče ne drugega dela (do 0,05 mm natančno). Tiskal bi se v zraku. Del, ki leži na stoječem delu, je v redu.
+- **{{ui:printCheck.contact.title}}**: del na plošči, katerega prva plast je za njegovo višino zelo majhna, na primer krogla ali stožec na konici. Med tiskanjem se lahko odlepi. Opozorilo se pokaže pod 0,5 mm² naležne površine, izmerjene 0,1 mm nad ploščo, na vsak milimeter višine: krogla je vedno pod tem, kocka z 10 mm ima 10.
+- **{{ui:printCheck.overhang.title}}**: iste številke kot pri **Pokaži previse**, s kotom, ki je nastavljen tam.
+- **{{ui:printCheck.openMesh.title}}**: uvožena mreža z odprtimi robovi ali z robovi, ki si jih delijo tri ali več ploskev. Slicer mora pri taki mreži ugibati, kje je notranjost.
+
+![Pladenj, katerega desna stena je debela le 0,6 mm: Preveri tisk jo pobarva rdeče in jo navede v oknu.](shot:print-check)
+
+{{ui:printCheck.show}} v vrstici pripelje kamero tja; izbere lebdeče dele, dele z majhnim stikom in odprte mreže, pri previsih pa vklopi **Pokaži previse**. Telesa, ki se prekrivajo, se preverijo združena, kot jih združi slicer. Če model spremenite, medtem ko je okno odprto, se pokaže {{ui:printCheck.stale}}; kliknite to ali {{ui:printCheck.checkAgain}}. [[Esc]] zapre okno. Na modelu se nič ne spremeni. UI naredi isto preverjanje z `layerling_check_print`. Okno samo preverja, nič ne natisne ali shrani: za tisk model izvozite za rezalnik z {{ui:editor.export}} v skupini {{ui:editor.group.file}}. {{ui:printCheck.openExport}} v oknu zapre preverjanje in odpre izvoz.
+
+### Analiza tiska in pogled plasti
+
+{{ui:editor.tool.layerCheck}} ob {{ui:editor.tool.printCheck}} gre korak dlje: izbrane predmete (ali vse vidne) razreže na plasti, ki jih nanaša tvoj tiskalnik, in vsako plast primerja s plastjo pod njo, vse naenkrat. Plasti ti ni treba listati, da bi našel težavo: okno našteje svoje **ugotovitve**, najprej težave (rdeče), nato namige (rumene), od spodaj navzgor. Vsaka vrstica pove, kje in kako hudo, na primer »Plasti 83–97 (16,6–19,4 mm): Previs 62°, 1,4 cm²«, in kaj pomaga. Zaporedne plasti z isto težavo na istem mestu dajo eno ugotovitev.
+
+Preden pogleda plasti, preveri celoto: del, ki sega v tiskalno podlago ({{ui:finding.kind.inBed}}; plasti pod delovno ravnino se ne štejejo), del, ki lebdi nad njo, mrežo, ki ni zaprta, del, večji od tiskalnika, izbranega v nastavitvah. Nato plast za plastjo: {{ui:finding.kind.unsupported}} (mesto, ki se začne brez česar koli pod sabo, na primer kraka črke T), {{ui:finding.kind.overhang}} (namig od 45°, težava od 60° od navpičnice), {{ui:finding.kind.bridge}} (namig od razpona 10 mm), {{ui:finding.kind.thinWall}} (pod dvema linijama šobe), {{ui:finding.kind.smallIsland}} (ločeno mesto pod 2 mm², ki se nadaljuje 2 mm ali več) in {{ui:finding.kind.adhesion}}. Na vrhu izberi {{ui:layerCheck.layerHeight}} in {{ui:layerCheck.nozzle}}; meje so pod {{ui:layerCheck.advanced}}. Mesta pod 0,05 mm², na primer konica ali zadnja plast, se ne ocenjujejo. Preverjanje teče v ozadju z vrstico napredka; {{ui:layerCheck.stop}} ga takoj ustavi.
+
+Klikni ugotovitev: **pogled plasti** se odpre pri prvi plasti, ki jo zadeva, kamera gre na mesto, mesto se na plasti pobarva rdeče ali rumeno, plasti pod njo pa ostanejo vidne. Drsnik stoji pokonci ob profilu prereza po višini; oznake ob njem kažejo, kje so ugotovitve, klik na eno skoči tja. Na drsniku [[↑]] in [[↓]] premakneta za eno plast, [[Page Up]] in [[Page Down]] za deset, [[Home]] in [[End]] skočita na konca, [[Space]] predvaja, [[N]] gre na naslednjo ugotovitev in [[Shift+N]] na prejšnjo. {{ui:layerCheck.view.mode}} pokaže {{ui:layerCheck.view.mode.upTo}}, {{ui:layerCheck.view.mode.only}} ali {{ui:layerCheck.view.mode.range}}; plasti, ki šele pridejo, so lahko prikazane kot bleda senca. Kjer ima Layerling za ugotovitev orodje, ga odpre gumb: {{ui:finding.action.dropToPlate}}, {{ui:finding.action.layFlat}} ali {{ui:finding.action.supportRib}}. Po spremembi je seznam označen kot zastarel, dokler ne klikneš {{ui:layerCheck.checkAgain}}. Ko zapreš okno, se kamera vrne tja, kjer je bila. To ni predogled slicerja: podpore, polnilo in čas tiska določi tvoj slicer.
+
+## Ko gre zares
+
+Izberi {{ui:editor.export}} in potem **STL** ali **3MF**. STL je najpreprostejša oblika. 3MF obdrži imena in barve posameznih teles, zato je praktičen, če tiskaš z več barvami. V oknu za izvoz vidiš tudi, koliko gramov in metrov filamenta bi del potreboval, če bi bil poln. Več v poglavju [Datoteke in shranjevanje](chapter:datoteke-in-shranjevanje).

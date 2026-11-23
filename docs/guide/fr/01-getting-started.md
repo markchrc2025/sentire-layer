@@ -1,0 +1,124 @@
+---
+title: Premiers pas
+summary: D'une feuille vierge à votre première pièce pour l'imprimante 3D, en cinq minutes, sans compte et sans rien à installer.
+---
+
+layerling est un logiciel de modélisation pour l'impression 3D qui fonctionne directement dans votre navigateur. Vous construisez une pièce à partir de formes simples, y découpez des perçages, arrondissez les arêtes et l'envoyez à votre trancheur. Il n'y a rien à installer et aucun compte à créer. Ce que vous concevez reste sur votre ordinateur.
+
+![La page d'accueil de layerling : "Créer un nouveau design 3D" en haut, vos designs et le guide rapide en bas.](shot:start-page)
+
+## Créer un design
+
+Ouvrez [layerling.com](https://layerling.com/). Sur la page d'accueil, cliquez sur {{ui:dashboard.createDesign}}. L'éditeur s'ouvre avec un plan de travail vierge, la grille sur laquelle chaque forme prend vie.
+
+Si vous avez déjà un fichier à poursuivre, utilisez {{ui:dashboard.importGeometry}}. Cela fonctionne aussi bien pour les fichiers de conception layerling (`.lyl`) que pour les fichiers STL, OBJ, 3MF, STEP ou SVG.
+
+Tous vos designs apparaissent ensuite sur la page d'accueil avec une image d'aperçu. Ils sont conservés dans le stockage de votre navigateur et enregistrés automatiquement après chaque modification, il n'y a donc pas de bouton d'enregistrement. **layerling n'assume aucune responsabilité pour les conceptions conservées dans le navigateur.** Un navigateur peut avoir des défaillances, et une mise à jour peut causer des problèmes. Sauvegardez donc vos conceptions de temps en temps avec {{ui:dashboard.backupAll}} sur la page d'accueil, ou enregistrez-les sous forme de fichiers. Une sauvegarde revient avec {{ui:dashboard.restoreBackup}}. La façon d'emballer les designs dans un fichier et de les transmettre est expliquée dans [Fichiers et enregistrement](chapter:files-and-saving). Si vous souhaitez un rappel, activez {{ui:workspace.confirmTabClose}} dans les réglages (la roue dentée du ruban) : le navigateur demande alors confirmation avant de fermer ou de recharger un onglet contenant une conception ouverte.
+
+## L'éditeur en un coup d'œil
+
+![L'éditeur avec ses zones nommées : le ruban en haut, le cube de vue à gauche avec la barre de vue en dessous, à côté le message d'état et la liste des objets, les propriétés de la forme sélectionnée à droite.](shot:editor-areas)
+
+- **En haut** se trouve le **ruban**. Il est organisé par tâche : {{ui:editor.group.clipboard}}, {{ui:editor.group.history}}, {{ui:editor.group.shapes}}, {{ui:editor.group.visibility}}, {{ui:editor.group.combine}}, {{ui:editor.section.mirrorPattern}}, {{ui:editor.section.splitShape}}, {{ui:editor.section.edgesWalls}}, {{ui:editor.section.surface}}, {{ui:editor.group.arrange}} et {{ui:editor.group.file}} ; {{ui:editor.group.help}} se trouve au-dessus, dans la ligne du titre, et la maison à côté des onglets ramène à la page d'accueil. Quand la fenêtre est trop étroite pour tous les groupes, les moins utilisés se replient en un bouton sous leur nom, avec une petite flèche de la couleur du groupe suspendue en dessous : pointez-le ou touchez-le, et ses outils s'ouvrent en dessous. {{ui:editor.group.history}} replié est l'exception : son bouton est {{ui:editor.tool.undo}} lui-même, et seule la flèche en dessous ouvre {{ui:editor.tool.redo}} et le reste. Le bouton de {{ui:editor.group.shapes}} porte la même flèche : laissez la souris dessus et la bibliothèque de formes s'ouvre ; elle se referme peu après que la souris l'a quittée, sauf si vous cliquez sur le bouton, travaillez dans la bibliothèque ou l'épinglez. L'épingle en haut à droite, à gauche de la loupe, garde au contraire tous les groupes ouverts. Survolez une icône pour afficher son nom, même grisée ; {{ui:interactiveHelp.title}} (le point d'interrogation sous {{ui:editor.group.help}}, ou Maj+F1) explique chacune d'un clic et mène à sa section de ce guide. Partout où vous voyez un petit point d'interrogation, par exemple dans les réglages d'une forme, dans la bibliothèque de formes ou dans les fenêtres d'outils, il mène directement au chapitre correspondant de ce guide. Une icône grisée dit aussi ce qu'elle attend, par exemple {{ui:editor.needs.oneBody}} ou {{ui:editor.needs.locked}}. Vous ne trouvez pas un outil ? Appuyez sur [[Ctrl]]+[[K]] et tapez son nom ; un dessin vide vous le rappelle en bas de la vue.
+- **Au milieu** se trouve le plan de travail. C'est ici que vous placez les formes, les modifiez et visualisez le résultat.
+- **À droite** apparaissent les **propriétés** de la forme sélectionnée : couleur, dimensions, position et tout ce qui compose la forme. Saisir des valeurs numériques est plus précis que de glisser à la souris.
+- **À gauche** se trouve la **barre de vue**, surmontée du **cube de vue**. Elles permettent de se déplacer dans la scène, voir plus en détail dans [Vue et plan de travail](chapter:view-and-workplane).
+- **À côté de la barre de vue** s'ouvre la **liste des objets** ([[Ctrl]]+[[U]]), avec toutes les formes du design. Plus de détails dans [Choisir et organiser](chapter:select-and-arrange).
+- **À droite du cube de vue** apparaît le **message d'état** quand layerling a quelque chose à vous dire, par exemple ce qu'un outil attend de vous. Quand il n'y a rien à dire, il n'est pas là. Après une étape comme une union, il dit brièvement ce qui a été fait et propose {{ui:shortcuts.undo}} ; {{ui:workspace.showStepNotices}} dans les paramètres désactive ces messages.
+- Les **fenêtres d'outils** s'ouvrent au-dessus du plan de travail quand vous lancez un outil comme {{ui:editor.tool.fillet}}, {{ui:editor.tool.array}} ou {{ui:editor.tool.hollow}}. Écartez-les par leur barre de titre quand elles cachent quelque chose.
+- **Tout en haut**, vous basculez entre {{ui:editor.modeGeometry}} et {{ui:editor.modeSketch}}, renommez le design et choisissez la langue et le thème visuel.
+
+## Les boutons autour de la zone de travail
+
+Passez la souris sur un bouton pour voir son nom. Si vous ne savez pas ce que fait un bouton, cliquez dans la zone {{ui:editor.group.help}} sur {{ui:interactiveHelp.title}} ([[Shift]]+[[F1]]) puis sur le bouton. Voici ceux dont on parle le plus.
+
+### Coller
+
+{{ui:editor.tool.paste}} ([[Ctrl]]+[[V]]) ajoute à la conception ce que vous avez copié avec {{ui:editor.tool.copy}}. {{ui:common.duplicate}} copie et colle en une étape. Un collage place chaque pièce un peu à côté de l'endroit où elle était. Les pièces venant d'un autre programme peuvent atterrir loin du plateau ; pour elles, il y a {{ui:workspace.pasteCentered}} dans les réglages, sous {{ui:workspace.appearance}} : un collage pose alors les pièces ensemble au milieu du plan de travail et les y dépose.
+
+### Supprimer
+
+{{ui:common.delete}} ([[Delete]]) retire les formes sélectionnées. {{ui:editor.tool.undo}} les ramène.
+
+### Dissocier
+
+{{ui:editor.tool.ungroup}} ([[Ctrl]]+[[Shift]]+[[G]]) défait le groupe sélectionné en les formes dont il était fait.
+
+### Paramètres de l'espace de travail
+
+{{ui:editor.workspaceSettings}} ouvre les réglages de la zone de travail : unité, taille du plateau, imprimante, grille, couleurs, lumière et plus. Plus de détails dans [Vue et plan de travail](chapter:view-and-workplane).
+
+### Thème
+
+{{ui:common.theme}} tout en haut choisit l'apparence de layerling : comme votre système, clair, sombre ou graphite.
+
+### Renommer la conception
+
+{{ui:editor.renameProject}} : le crayon à côté du nom tout en haut. Tapez le nouveau nom et appuyez sur [[Enter]].
+
+### Nom du modèle
+
+Le nom de la conception ({{ui:confirm.projectName}}) se trouve tout en haut. Cliquez dessus, tapez, et [[Enter]] garde le nom.
+
+### Options de visibilité
+
+{{ui:editor.visibilityOptions}}, la flèche à côté de l'œil, contient ce que vous pouvez afficher ou masquer : la liste des objets, tout ce que vous avez masqué, les notes et les surplombs de l'impression. Plus de détails dans [Sélectionner et disposer](chapter:select-and-arrange).
+
+### Masquer la sélection
+
+{{ui:editor.tool.hideSelected}} ([[Ctrl]]+[[H]]) masque les formes sélectionnées. Elles restent dans la conception et dans la liste des objets ; {{ui:editor.visibilityOptions}} les affiche de nouveau.
+
+### Commandes de recherche
+
+{{ui:palette.open}} : tapez ce que vous cherchez, un outil, une forme ou un réglage, et cliquez sur le résultat.
+
+### Masquer la barre de vue
+
+{{ui:camera.hide}} replie la barre de vue à gauche et laisse plus de place à la zone de travail ; {{ui:camera.show}} les ramène.
+
+### Grille d'accrochage
+
+{{ui:inspector.snapGrid}}, en bas des propriétés, est le pas sur lequel le déplacement et le redimensionnement s'accrochent. À côté, le petit commutateur **mm | in** change l'unité. Plus de détails dans [Vue et plan de travail](chapter:view-and-workplane).
+
+### Unité : millimètres ou pouces
+
+Le commutateur **mm | in** à côté de {{ui:inspector.snapGrid}} change l'unité, la grille du plateau et le pas d'accrochage, pour cette conception.
+
+### Le pied de page
+
+En bas de la fenêtre : {{ui:dashboard.sponsor}} mène à la page où vous pouvez soutenir le projet ; {{ui:dashboard.userGuide}} ouvre ce guide ; {{ui:dashboard.forum}} mène à l'endroit des questions, des idées et des rapports de bogue (les discussions sur GitHub, en allemand le forum de drucktipps3d) ; {{ui:editor.bugReport}} crée un ZIP pour un rapport de bogue ; {{ui:dashboard.projectOnGitHub}} mène au projet sur GitHub, et le numéro de version ouvre les notes de version. Les liens vers les mentions légales et la politique de confidentialité appartiennent à celui qui exploite la copie de layerling que vous utilisez.
+
+### Mode concentration
+
+Sur un petit écran, le {{ui:focusMode.enter}} laisse la ligne de titre et le pied de page au travail : le bouton aux deux flèches tournées vers l’extérieur en haut à droite, [[Ctrl]]+[[Shift]]+[[F]] ou la recherche de commandes l’activent. Le ruban remonte et la vue descend jusqu’au bord de la fenêtre. Une petite barre sous le ruban garde la maison vers la page d’accueil, les onglets {{ui:editor.modeGeometry}} et {{ui:editor.modeSketch}}, la loupe, les réglages et le bouton aux deux flèches tournées vers l’intérieur, qui quitte le mode ; faites glisser la barre par sa poignée ailleurs, un double-clic sur la poignée la remet en place. layerling retient ce choix dans ce navigateur et, tant que le navigateur remplit tout l’écran (F11), passe de lui-même en mode concentration.
+La barre affiche aussi le nom du motif ; un clic dessus permet de le renommer sans quitter le mode concentration.
+
+## Votre première pièce
+
+À titre d'exemple, nous allons créer un cube percé d'un trou.
+
+1. Cliquez sur {{ui:editor.addShape}} dans le ruban et choisissez {{ui:shape.box}}. La forme suit maintenant le pointeur de votre souris. Un clic sur le plan de travail la dépose.
+2. À droite, définissez les dimensions, par exemple 40 mm de longueur, 40 mm de largeur et 20 mm de hauteur.
+3. Placez de la même manière un {{ui:shape.cylinder}} au milieu, de 14 mm de diamètre et 30 mm de hauteur. Il doit être plus haut que le cube pour le traverser de part en part.
+4. Sélectionnez le cylindre et cliquez sur {{ui:inspector.hole}} à droite. Il devient translucide : le solide est devenu un outil de découpe qui enlève de la matière.
+5. Sélectionnez les deux formes et cliquez sur {{ui:editor.tool.group}}. Le cube possède maintenant un perçage.
+
+![Le cylindre est un perçage et dépasse du haut du cube.](shot:hole-before)
+
+![Après le groupement, le cube présente un alésage.](shot:hole-after)
+
+C'est ainsi que sont créés les perçages, fentes et poches. Le chapitre [Solides et perçages](chapter:solids-and-holes) l'explique en détail.
+
+## Nouveau depuis votre dernière visite
+
+Lorsque vous ouvrez à nouveau layerling après une mise à jour, une carte sur la page d'accueil liste ce qui a été ajouté depuis votre dernière visite : chaque version depuis lors, la plus récente en premier. Après une longue absence, vous pouvez faire défiler l'intérieur de la carte. En dessous, {{ui:whatsNew.earlier}} affiche également les versions antérieures à votre dernière visite. Fermez-la avec {{ui:whatsNew.dismiss}} et elle restera masquée jusqu'à la prochaine mise à jour. {{ui:whatsNew.footerLink}} dans le pied de page de la page d'accueil affiche à tout moment les derniers ajouts. Dans l'éditeur, le bouton {{ui:whatsNew.footerLink}} à côté de {{ui:editor.guide}} en haut à droite, ou la recherche de commandes, ouvre la même liste ; elle reste ouverte à côté de votre modèle pendant que vous essayez les nouveautés. Le navigateur se souvient de la dernière version consultée, et aucune donnée personnelle ne quitte votre machine.
+
+De temps en temps, une deuxième carte s'affiche au-dessus : un message de l'auteur de layerling, par exemple au sujet d'une pause pendant laquelle les réponses prennent plus de temps. Elle n'apparaît que pendant les jours prévus, et {{ui:whatsNew.dismiss}} la fait disparaître.
+
+Sur une copie locale de layerling sur votre ordinateur ou serveur, la notification "Mise à jour disponible" comporte un bouton, {{ui:update.previewShow}}, qui liste ce que la mise à jour apporte avant de l'installer. La liste n'est récupérée sur GitHub que lorsque vous cliquez sur le bouton.
+
+## De la conception à l'impression
+
+Lorsque votre pièce est terminée, cliquez sur {{ui:editor.export}}, choisissez STL ou 3MF et téléchargez le fichier. Ouvrez-le dans votre trancheur préféré (Bambu Studio, PrusaSlicer, OrcaSlicer ou Cura). Si vous configurez votre imprimante dans les paramètres, vous pouvez vérifier en temps réel pendant la modélisation si la pièce tient sur le plateau d'impression. Plus d'informations dans [Impression](chapter:printing).
+
+> **Astuce :** Si vous venez de Tinkercad, vous retrouverez très vite vos repères : le plateau, les formes, les solides et perçages, le groupement, l'alignement et la symétrie fonctionnent presque à l'identique. Les nouveautés majeures concernent les congés et chanfreins, l'évidement, les filetages et les esquisses. Vos propres designs Tinkercad peuvent aussi venir avec vous, voir [Fichiers, sauvegarde et partage](chapter:files-and-saving).

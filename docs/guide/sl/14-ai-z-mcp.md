@@ -1,0 +1,202 @@
+---
+title: Gradnja z umetno inteligenco (MCP)
+summary: Kako pomočnik z umetno inteligenco, kot je Claude ali Codex, v tvojem odprtem urejevalniku ustvarja, spreminja in združuje oblike ter posname slike pogleda.
+---
+
+layerling prinaša strežnik MCP. MCP je standard, prek katerega lahko pomočnik z umetno inteligenco uporablja orodja v drugih programih. S tem odjemalec z umetno inteligenco, kot je Claude ali Codex, vidi odprt zavihek urejevalnika in v njem dela: ustvarja oblike, spreminja mere, združuje v skupine, reže, zaokroža robove, bere prizor in snema slike pogleda. Ti opišeš del, umetna inteligenca ga zgradi, ti gledaš in kadarkoli posežeš vmes.
+
+Most med odjemalcem z umetno inteligenco in urejevalnikom teče **lokalno na tvojem računalniku**. Vseeno upoštevaj: kar umetna inteligenca prebere, torej prizor in slike pogleda, gre ponudniku tvojega odjemalca z umetno inteligenco, tako kot vsak drug vnos tam.
+
+> **Pomembno:** Most MCP je v razvojnem strežniku, ki ga sam zaženeš na svojem računalniku. Na layerling.com in v namestitvah s statičnim gostovanjem je izklopljen. Kopija, ki jo upravljaš sam, na primer slika Docker na NAS, ga lahko vklopi z dostopnim ključem; glej »Kopija na NAS ali strežniku« spodaj.
+
+## Korak za korakom za začetnike
+
+Za to ti ni treba znati programirati.
+
+**Najkrajša pot:** svoji najljubši umetni inteligenci daj naslov projekta, `https://github.com/henmedia/layerling`, in jo prosi: »Namesti layerling na moj računalnik, da bom lahko s tabo prek njegovega strežnika MCP gradil 3D-modele.« Vse sama prenese in namesti ter ti pove, ko je končala. To deluje z umetno inteligenco, ki lahko dela na tvojem računalniku, na primer z zavihkom Code v aplikaciji Claude, s Codexom, Antigravity ali Gemini CLI. Klepet v brskalniku tega ne zmore, ker na tvoj računalnik ne more ničesar namestiti.
+
+**Ali pa to narediš sam, v sistemu Windows z aplikacijo Claude, v petih korakih:**
+
+**1. Namesti layerling.** Odpri meni Start, vtipkaj `PowerShell` in odpri Windows PowerShell. Kopiraj to vrstico, jo z desnim klikom prilepi v okno in pritisni Enter:
+
+```powershell
+irm https://raw.githubusercontent.com/henmedia/layerling/main/scripts/windows-quickstart.ps1 | iex
+```
+
+Namesti, kar layerling potrebuje, prenese layerling v mapo `layerling` v tvoji uporabniški mapi (`C:\Users\<tvoje ime>\layerling`) in ga odpre v brskalniku. Prvič to traja nekaj minut.
+
+![Windows PowerShell s prilepljeno vrstico. Pritisni Enter in začne se.](still:ai-quickstart-powershell)
+
+**2. Pusti layerling teči.** layerling teče, dokler je okno PowerShell odprto, in umetna inteligenca lahko gradi samo, ko teče. Naslednjič namesto tega dvakrat klikni »Start layerling« na namizju.
+
+**3. Namesti aplikacijo Claude.** Namesti aplikacijo Claude za Windows in se prijavi. Zavihek Code iz naslednjega koraka je del plačljivih paketov Claude.
+
+**4. Odpri mapo layerling v zavihku Code.** V aplikaciji Claude zgoraj preklopi na Code in kot delovno mapo izberi mapo `layerling` v svoji uporabniški mapi. layerling že prinaša vse, kar Claude potrebuje, da najde njegova orodja. Če Claude vpraša, ali sme uporabljati strežnik MCP »layerling« iz te mape, mu to dovoli.
+
+**5. Povej Claudu, kaj naj zgradi.** Na primer: »Uporabi orodja layerling in mi zgradi okroglo škatlo s premerom 60 mm in višino 40 mm, s steno 2,5 mm.« Če noben urejevalnik ni odprt, ga Claude odpre v tvojem brskalniku, tam korak za korakom zgradi škatlo in dela slike, da preveri svoje delo. Ti gledaš in lahko kadar koli sam kaj spremeniš.
+
+**Na Macu** gre enako, s temi spremembami. V 1. koraku odpri aplikacijo Terminal (pritisni Cmd+preslednica, vpiši `Terminal` in pritisni Enter), prilepi to vrstico in pritisni Enter:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/henmedia/layerling/main/scripts/mac-quickstart.sh | sh
+```
+
+Če manjka Git ali Node.js, ti skript pove, kaj naj namestiš (Git ponudi macOS v oknu, Node.js je namestitveni program na nodejs.org); nato isto vrstico zaženi še enkrat. V 2. koraku se bližnjica na namizju prav tako imenuje »Start layerling«. V 3. koraku namesti aplikacijo Claude za Mac.
+
+> **Namig:** Če kaj ne deluje, povej Claudu, kaj vidiš. Napako zna prebrati in jo večinoma odpravi sam. Če se v urejevalniku nič ne zgodi, najprej preveri, ali layerling še teče (korak 2).
+
+## Nastavitev
+
+1. Prenesi layerling z [GitHuba](https://github.com/henmedia/layerling) in ga v mapi projekta zaženi z `npm run dev`. Nameščen mora biti Node.js. V Windowsih to opravi hitra vrstica za začetek v README.
+2. Odpri zavihek urejevalnika, na primer `http://127.0.0.1:3000/?editor=1`. To lahko prepustiš umetni inteligenci: ko urejevalnik ni odprt, prvo orodje, ki ga potrebuje, zažene brskalnik z urejevalnikom in počaka, da se poveže. To velja za layerling na tvojem računalniku; kopija na NAS-u ali strežniku zahteva, da urejevalnik odpreš sam. Z `LAYERLING_MCP_OPEN_EDITOR=0` za strežnik MCP to izklopiš.
+3. Poveži svojega odjemalca z umetno inteligenco s strežnikom MCP. Odjemalec ga zažene sam z `node scripts/layerling-mcp-server.mjs`.
+
+### Claude Code
+
+Nič ni treba nameščati: projekt prinaša `.mcp.json`, ki vpiše strežnik, in veščino v `.claude/skills/layerling-mcp-skill`. Odpri mapo layerling v Claude Code in na primer prosi: »Uporabi orodja layerling MCP, naštej moje odprte urejevalnike in poglej prizor.«
+
+### Claude Desktop
+
+Claude Desktop ne bere datotek projekta. Strežnik vpiši v njegovo lastno konfiguracijo. Za predlogo služi `docs/mcp/claude-desktop-config.example.json` v projektu, v kateri pot do skripte zamenjaš z absolutno potjo na svojem računalniku. Potem Claude Desktop znova zaženi.
+
+### Codex
+
+Veščino iz `docs/skills/layerling-mcp-skill` kopiraj v svojo mapo veščin Codex, strežnik vpiši v svojo konfiguracijo Codex po `docs/mcp/codex-config.example.toml` in Codex znova zaženi.
+
+### Gemini & Antigravity
+
+Antigravity samodejno najde veščino delovnega prostora v `.agents/skills/layerling-mcp-skill`. Za Gemini CLI kopiraj veščino iz `docs/skills/layerling-mcp-skill` v svojo globalno mapo veščin (`~/.gemini/skills/`), strežnik dodaj v svoje nastavitve po `docs/mcp/gemini-config.example.json` in odjemalca znova zaženi.
+
+Podrobna navodila za vsak odjemalec so v [README na GitHubu](https://github.com/henmedia/layerling/blob/main/README.de.md#layerling-mcp-skill).
+
+## Kopija na NAS ali strežniku
+
+Kopija, ki jo upravljaš sam, lahko dovoli odjemalcu z umetno inteligenco, da njene odprte urejevalnike upravlja prek omrežja. To je privzeto izklopljeno, saj lahko kdor upravlja most, bere in spreminja odprte načrte. Na strežniku nastavi `LAYERLING_MCP_REMOTE` na `true` in `LAYERLING_MCP_TOKEN` na skrivnost z vsaj 16 znaki (pri sliki Docker pod `environment:` v datoteki Compose; nova gradnja ni potrebna). Odpri zavihek urejevalnika te kopije in ga pusti odprtega, odjemalcu MCP pa daj naslov in isti ključ: `LAYERLING_URL=http://nas:3000` in `LAYERLING_MCP_TOKEN=<ključ>`.
+
+Samo odjemalec s ključem lahko našteje ali upravlja urejevalnike. Strani urejevalnika ga ne potrebujejo, štejejo pa samo pod naslovom ali imenom, ki ga lahko uporablja samo tvoje lastno omrežje (naslov IP, ime brez pike ali tako na `.local` ali `.lan`); prava domena za povratnim posrednikom pride v `LAYERLING_MCP_ALLOWED_HOSTS`. Uporabljaj ga v omrežju, ki mu zaupaš, in HTTPS čez to. Podrobnosti so v README.
+
+## Kaj zna umetna inteligenca
+
+Umetna inteligenca dela z istimi funkcijami kot ti, teče po isti poti kot tvoje upravljanje v urejevalniku. Nove funkcije programa layerling dobijo svoje dejanje MCP kar zraven. Orodja:
+
+| Orodje | Kaj naredi |
+| --- | --- |
+| `layerling_open_editor` | odpre nov zavihek urejevalnika v privzetem brskalniku in počaka, da se poveže (samo na tvojem računalniku) |
+| `layerling_list_editors` | našteje odprte zavihke urejevalnika |
+| `layerling_rename_project` | projektu da ime, kot svinčnik ob imenu projekta |
+| `layerling_read_scene` | prebere prizor, izbor, enote in natančne mere vseh objektov |
+| `layerling_list_objects` | našteje vse objekte z merami, lego, zasukom in oznako |
+| `layerling_select_objects` | izbere objekte |
+| `layerling_hide_others` | skrije vse razen izbora ali navedenih objektov, v enem koraku razveljavitve |
+| `layerling_delete_objects` | izbriše objekte |
+| `layerling_move_object` | premakne objekt na drugo mesto na seznamu objektov |
+| `layerling_create_shape` | ustvari obliko: kvader, valj, besedilo (tudi ukrivljeno), navoj, zobnik, skicirano telo in vse druge |
+| `layerling_import_file` | uvozi datoteko kot okno za uvoz, barvni OBJ ali 3MF kot eno telo na barvo, 3MF z več objekti kot eno telo na objekt |
+| `layerling_add_font` | doda lastno pisavo za besedilo, iz datoteke TrueType, OpenType ali WOFF; ostane v brskalniku, načrt obdrži samo uporabljene črke |
+| `layerling_list_fonts` | našteje priložene in lastne pisave, z oznako in imenom |
+| `layerling_import_mesh` | prinese mrežo trikotnikov v načrt |
+| `layerling_update_object` | spremeni mere, lego, barvo, ime, telo ali luknjo in vse, kar oblika še ima, pri besedilu tudi rob črk |
+| `layerling_align_objects` | poravna objekte drug z drugim |
+| `layerling_scale_objects` | poveča objekte za odstotno vrednost, skupaj ali vsak zase ali v modelarsko merilo, npr. 1:87 |
+| `layerling_lay_flat` | položi objekt s ploskvijo na ploščo |
+| `layerling_place_on_face` | postavi objekte na ploskev drugega, tudi poševno, kot tipka C |
+| `layerling_perforate_face` | vreže vzorec lukenj v ravno ploskev ali okrog stene valja, cevi ali izvrtine, luknje ostanejo kot luknje, združene v skupino s telesom |
+| `layerling_thread_insert` | naredi luknjo za vtisnjeni navojni vložek (M2 do M8, 1/4-20 ali lastna velikost) v ravno ploskev ali v zunanjo steno valja ali cevi, potem ko preveri, da sta stena ob luknji in globina za njo dovolj veliki; luknja ostane kot luknja, združena v skupino s telesom |
+| `layerling_magnet_pocket` | izreže ležišče za okrogel magnet (od 2 × 1 do 12 × 3 mm ali lastna velikost) z ožjo jamico za lepilo pod njim v ravno ploskev ali zunanjo steno valja ali cevi, po enakem preverjanju, in enako ležišče nasproti v delu, ki se tam dotika; vsako ostane luknja, združena s svojim delom |
+| `layerling_sweep_sketch` | povleče pravokoten ali okrogel prerez vzdolž poti iz točk kot eno natančno telo; sklenjena pot da obroč |
+| `layerling_push_face` | ravno ploskev potegne navzven ali vanjo izreže žep, z odmikom od roba in polmerom vogalov; nov del je telo iz skice, združeno v skupino s telesom |
+| `layerling_paint` | pobarva dele telesa v lastnih barvah za tisk v več barvah (Barvanje): zapolni ploskev do ostrih robov, okrogla lisa ali laso v ravnem pogledu; radiranje, odstrani vse; shrani se s telesom in se v 3MF zapiše kot pobarvane ploskve |
+| `layerling_support_rib` | postavi tanko podporno rebro pod spodnjo ploskev dela, natisnjenega poševno na robu, z mostički, visokimi eno plast (Podporno rebro) |
+| `layerling_stencil_bridges` | drži dele plošče z besedilom, izrezanim skoznjo, ki bi izpadli, z mostički, združenimi s ploščo, v podani širini in višini (Mostički šablone) |
+| `layerling_mate_faces` | položi ploskev enega objekta na ploskev drugega, drugo proti drugemu ali poravnano |
+| `layerling_open_group` | odpre skupino, da so njeni deli posamezno spremenljivi, tudi skupino v odprti |
+| `layerling_close_group` | jo spet zapre (»Končano«) ali prekine |
+| `layerling_add_to_group` | doda samostojne predmete v skupino, ne da bi jo odprl |
+| `layerling_take_out_of_group` | vzame en del iz skupine, ne da bi jo odprl |
+| `layerling_group_objects` | združi objekte v skupino |
+| `layerling_ungroup_objects` | razpusti skupine |
+| `layerling_boolean_cut` | reže telesa z luknjami |
+| `layerling_intersect_objects` | obdrži samo to, kar imajo objekti skupnega (presek) |
+| `layerling_hull_objects` | ovije objekte v eno izbočeno telo, kot bi jih skrčili v folijo (ovojnica) |
+| `layerling_cookie_cutter` | makes a cookie cutter from the objects: a wall and a rim round the outline (Cookie cutter) |
+| `layerling_flexi_joints` | cuts a flat body into links with joints printed in place that swing to the sides (Flexi joints) |
+| `layerling_make_lid` | makes a lid for a body open at the top: pushed in, over the top or flat, with the fit you choose and magnets if you like (Lid) |
+| `layerling_make_mold` | makes a mold or a die from a master: a two-part mold to cast in, a silicone pour box, an open mold, or a stamp and die for sheet (Mold & die) |
+| `layerling_make_cable_channel` | runs a round channel for a cable through a body from an entry to an exit, finding the way itself with gentle bends (Cable channel) |
+| `layerling_loft_sketches` | joins two sketch bodies into a loft from one outline to the other (Loft sketches) |
+| `layerling_separate_parts` | razstavi obliko z ločenimi deli, telo iz skice na eno telo za vsak obris |
+| `layerling_split_objects` | razdeli telesa ali luknje z ravnino na dva dela |
+| `layerling_list_edges` | našteje prave robove CAD objekta |
+| `layerling_apply_edge_treatment` | posname ali zaobli izbrane robove |
+| `layerling_hollow_object` | izdolbe telo z enakomerno steno |
+| `layerling_cut_out` | izreže eno telo iz drugega, da si ustrezata: del ostane, kopija, povečana za zračnost, se odšteje od drugega telesa |
+| `layerling_punch` | izseka obris enega telesa, gledan vzdolž x, y ali z, naravnost skozi drugo; pečat ostane in se ga ne rabi dotikati |
+| `layerling_offset_object` | odmakne vse ploskve telesa za zračnost nasedanja: telo poveča ali zmanjša ali doda povečano kopijo kot luknjo ali premakne le stranice |
+| `layerling_list_faces` | našteje ploskve natančnega telesa |
+| `layerling_delete_faces` | izbriše ploskve in zapre vrzel |
+| `layerling_array_objects` | pomnoži v vrsti, v mreži ali na krogu |
+| `layerling_bundle_objects` | poveže objekte v sveženj kot Ctrl+B: premikajo se skupaj, obdržijo barvo in vrsto ter gredo posamezno v izvoz |
+| `layerling_layer_text` | iz besedila naredi sklad plasti za večbarvni tisk (črke, širši robovi, plošča brez lukenj) ali sklad zgradi znova, z luknjo za obesek za ključe, vogali za vsako plast in zaobljenim ali poševno odrezanim robom črk; s seznamom imen en napis na ime; `flush` potopi plasti v spodnjo, tako da se vse barve končajo na eni ravni ploskvi (true, false ali globina od 0,2 do 5 mm) |
+| `layerling_text_block` | naredi blok besedila: besedilo postane prva od več vrstic, vsaka samostojno besedilo pod zgornjo, poravnane levo, na sredino ali desno, vsaka vrstica enako velika ali manjša |
+| `layerling_layer_icon` | iz simbola SVG (besedilo datoteke ali iztisnjeno telo skice) naredi simbolno oznako v plasteh za večbarvni tisk – simbol, širši robovi, plošča brez lukenj – ali jo zgradi znova z novo širino ali plastmi; s številom napolni ploščo s kopijami; `flush` potopi plasti v spodnjo, tako da se vse barve končajo na eni ravni ploskvi (true, false ali globina od 0,2 do 5 mm) |
+| `layerling_create_qr_code` | iz besedila ali spletnega naslova naredi kodo QR kot {{ui:shape.qrCode}} v knjižnici oblik – samo kodo, dvignjeno na plošči ali vgravirano, s popravkom napak, širino, višino, tihim območjem in po želji kot luknjo; opozori, ko je modul manjši od 0,8 mm |
+| `layerling_create_sbc_board` | postavi ploščo SBC v pravi velikosti kot {{ui:shape.sbcBoard}} v knjižnici oblik – Raspberry Pi 5, 4, 3 B+, Zero 2 W ali BIGTREETECH Pi, z luknjami in priključki, zračnostjo okoli robnih priključkov, položajem in kot luknjo za izrez ohišja |
+| `layerling_reference_image` | doda referenčno sliko iz slike kot {{ui:import.referenceImage}} ali eno premakne, zavrti, umeri (dve točki slike in njuna prava razdalja), zbledi ali zaklene - pomoč, ki se nikoli ne izvozi ali natisne; `trace` iz temnega ali svetlega dela naredi telo skice, ki stoji na njej |
+| `layerling_measure_section` | meri na ravnini prereza med dvema točkama, ki se zaskočita na obris – debeline sten, reže, prileganja |
+| `layerling_show_overhangs` | vklopi ali izklopi šrafuro previsov, nastavi kot in za vsako telo navede ploskev, ki bi potrebovala podpore |
+| `layerling_estimate_print` | oceni prostornino, težo in filament za izbor ali celoten načrt: za polno telo in kot grobo oceno s stenami in polnilom kot v oknu za izvoz |
+| `layerling_check_clearance` | pred tiskanjem preveri, kateri deli se prekrivajo, dotikajo ali so bližje od najmanjše zračnosti (Preveri zračnost), tudi ločene dele enega predmeta |
+| `layerling_printer_play` | prebere, nastavi ali izbriše zračnost tiskalnika ({{ui:workspace.printerPlay}} v nastavitvah) in položi preizkus ujemanja, ki jo izmeri |
+| `layerling_check_print` | pred tiskanjem preveri, kaj bi šlo narobe: pretanke stene za šobo, lebdeče dele, majhen stik s ploščo, previse in odprte mreže (Preveri tisk) |
+| `layerling_check_layers` | razreže tisk na plasti in po plasteh našteje, kaj bi šlo narobe: previsi, mesta brez podpore, mostovi, tanke stene, majhni otočki, del v podlagi (Analiza tiska) |
+| `layerling_split_bolt` | razdeli vijak ali navojno palico po dolžini skozi os in obe polovici položi na rezno ploskev za tisk, po želji s centrirnimi zatiči |
+| `layerling_add_reference_points` | postavi referenčne točke - na sredine, vogale ali sredine robov objektov ali na natančna mesta -, na katere se oblike zaskočijo |
+| `layerling_list_reference_points` | našteje referenčne točke z oznako in lego |
+| `layerling_remove_reference_points` | izbriše referenčne točke po oznaki ali vse |
+| `layerling_list_notes` | prebere uporabnikove zapiske z besedilom, telesom, na katero je vsak pripet, in ali je naloga za UI |
+| `layerling_wait_for_notes` | počaka, da pri opombi označite {{ui:note.forAi}}, in zahtevo takoj preda |
+| `layerling_add_note` | postavi zapisek na model, pripet na predmet ali prost na plošči |
+| `layerling_update_note` | spremeni zapisek ali nanj odgovori; odgovor nalogo zaključi |
+| `layerling_remove_notes` | izbriše zapiske po id |
+| `layerling_inspect_errors` | pokaže zadnje sporočilo in zadnjo napako, poleg tega sporočila in napake seje |
+| `layerling_wrap_around_cylinder` | ovije ležeče telo, na primer SVG ali besedilo, okoli valja, navzven ali kot gravuro navznotraj |
+| `layerling_texture_surface` | nanese na telo površinsko teksturo: utore, narebričenje, satovje ali izbokline, za boljši oprijem ali za videz, pozneje pa jo tudi spremeni ali odstrani |
+| `layerling_simplify_mesh` | zmanjša število trikotnikov uvožene mreže, na delež v odstotkih ali na število trikotnikov |
+| `layerling_make_exact` | uvoženo mrežo spremeni v natančno telo CAD: ravnine, valji, stožci, krogle in torusi postanejo prave ploskve, da se robovi čisto zaokrožijo in jih STEP nosi |
+| `layerling_save_custom_shape` | shrani telesa kot lastno obliko, na strežniku ali v brskalniku, da jih vstavi v druge načrte |
+| `layerling_list_custom_shapes` | našteje lastne oblike na strežniku in v brskalniku |
+| `layerling_insert_custom_shape` | vstavi lastno obliko v odprti načrt, po želji na mesto x/z |
+| `layerling_delete_custom_shape` | odstrani lastno obliko; vstavljena telesa ostanejo |
+| `layerling_show_workplane` | skrije ploščo z njeno mrežo in jo spet prikaže, na primer za sliko spodnje strani (samo pogled) |
+| `layerling_focus_mode` | vklopi in izklopi način osredotočenja: skrije naslovno vrstico in nogo za več prostora (le okvir urejevalnika) |
+| `layerling_set_section_view` | prereže pogled vzdolž ravnine, da se vidi notranjost (samo pogled, nič se ne razreže) |
+| `layerling_measurements` | prikaže ali skrije meritve merilnega traku in jih našteje z njihovimi dolžinami, ter skrije ali prikaže mere okoli izbora kot [[Q]], in vnese dolžino za eno od njih, kar premakne telo na njenem koncu kot klik na število |
+| `layerling_measure_angle` | izmeri kot, kakor kotomer: v oglišču treh točk ali med dvema ravnima ploskvama, in ga pokaže v pogledu |
+| `layerling_saved_view` | shrani trenutni pogled pod tipko 7, 8, 9 ali 0 in se vrne nanj, kot Shift+tipka in tipka (samo pogled); nastavi tudi začetni pogled novih osnutkov |
+| `layerling_build_plates` | našteje, doda, poimenuje, razvrsti in odstrani tiskalne plošče, premakne predmete na ploščo in jih razporedi po ploščah, kot vrstica plošč |
+| `layerling_clear_history` | za vedno izbriše vse korake razveljavitve, kot gumb »Izbriši zgodovino« v pogledu zgodovine; potrebuje `confirm: true` |
+| `layerling_delete_history_steps` | trajno izbriše posamezna stanja zgodovine, nikoli trenutnega, kot koš ob koraku na seznamu pogleda zgodovine; potrebuje `steps` in `confirm: true` |
+| `layerling_list_backups` | navede samodejne varnostne kopije (Prejšnje različice) odprtega projekta, z `all: true` pa vseh projektov v tem brskalniku |
+| `layerling_open_backup` | odpre varnostno kopijo po njenem `id` kot nov projekt, nikoli vezan na izvirno datoteko |
+| `layerling_set_history_view` | pogleda nazaj na prejšnje stanje projekta, kot pogled zgodovine (pravi načrt ostane nedotaknjen; orodja, ki spreminjajo, počakajo, da se zapre) |
+| `layerling_restore_from_history` | vrne objekte (tudi dele v skupinah) iz prejšnjega stanja v načrt kot kopije, kot »Vrni v načrt« v pogledu zgodovine - en korak, ki ga razveljavitev vzame nazaj |
+| `layerling_export_drawing` | naredi delavniško risbo izvoza »2D«: trije pogledi v merilu 1:1 na listu ISO s skupnimi merami in tabelo okroglih izvrtin, kot besedilo SVG ali PDF |
+| `layerling_export_mesh` | zapiše datoteko izvoznega okna kot STL, 3MF, OBJ, SVG (tloris, odtis ali vidni robovi) ali DXF za lasersko rezanje iz istih teles; na pot v tem računalniku ali kot base64 |
+| `layerling_save_project` | shrani celoten urejevalni načrt kot datoteko .lyl na pot v računalniku, na katerem teče strežnik MCP, brez pogovornega okna; obstoječa datoteka se zamenja le z `overwrite`, piše se prek začasne datoteke, cilj Ctrl+S v urejevalniku pa ostane, kakršen je bil |
+| `layerling_list_attachments` | našteje datoteke, priložene načrtu (ime, vrsta, velikost), kot jih kaže plošča Priloge |
+| `layerling_get_attachment` | prebere eno priloženo datoteko, njene bajte kot base64, kot Prenesi na plošči |
+| `layerling_add_attachment` | priloži datoteko, podano kot base64, s preverjanji plošče; že priloženo ime prepiše le z `replace` |
+| `layerling_rename_attachment` | priloženi datoteki da drugo ime; vsebina ostane |
+| `layerling_remove_attachment` | priloženo datoteko trajno odstrani; zahteva `confirm: true` |
+| `layerling_export_section_svg` | izda obrise na ravnini prereza kot SVG v merilu 1:1, iz istih teles kot izvoz |
+| `layerling_sketch_from_section` | naredi skico iz obrisov na ravnini prereza, ki leži na prerezu: odprto v urejevalniku za spreminjanje ali takoj zgrajeno v telo podane višine |
+| `layerling_set_workplane` | položi delovno ravnino na stran telesa, jo ponastavi na osnovno ploščo ali jo skrije in prikaže |
+| `layerling_capture_image` | posname sliko pogleda, od spredaj, zgoraj, s strani, poševno z vogala in več |
+
+Umetna inteligenca se tako lahko sama preverja: nekaj ustvari, posname sliko, pogleda in izboljša.
+
+## Primer
+
+Rečeš: »Zgradi mi okroglo škatlo s premerom 60 mm, višino 40 mm in steno 2,5 mm, zgoraj odprto, poleg tega ploski pokrov, na katerem je v loku napisano ›Čaj‹.« Umetna inteligenca ustvari valje, enega izdolbe, ukrivljeno besedilo postavi na pokrov in na koncu posname slike, da vidi, ali ustreza.
+
+> **Namig:** Umetni inteligenci daj konkretne mere in ji povej, čemu je del namenjen (»držalo za palico 12 mm, ustreza Bambu Lab A1«). Potem sprejema smiselnejše odločitve. In ji pri gradnji gledaj: kadarkoli lahko posežeš sam, saj je to isti urejevalnik.

@@ -1,0 +1,198 @@
+---
+title: Construire avec une IA (MCP)
+summary: Comment un assistant IA tel que Claude ou Codex crée et modifie des formes, les regroupe et prend des photos de la vue dans votre éditeur ouvert.
+---
+
+layerling est livré avec un serveur MCP. MCP est une norme grâce à laquelle un assistant IA peut utiliser des outils dans d'autres programmes. Avec lui, un client IA tel que Claude ou Codex voit un onglet d'éditeur ouvert et y travaille : il crée des formes, modifie les dimensions, regroupe, coupe, arrondit les bords, lit la scène et prend des photos de la vue. Vous décrivez la pièce, l'IA la construit, vous regardez et pouvez intervenir à tout moment.
+
+Le pont entre le client AI et l'éditeur s'exécute **localement sur votre ordinateur**. Gardez cependant à l’esprit : ce que l’IA lit, c’est-à-dire la scène et les images de la vue, va au fournisseur de votre client IA, comme toute autre entrée.
+
+> **Important :** Le pont MCP existe dans le serveur de développement que vous démarrez vous-même sur votre ordinateur. Sur layerling.com et dans les installations avec hébergement statique, il est désactivé. Une copie que vous hébergez vous-même, comme l'image Docker sur un NAS, peut l'activer avec un jeton d'accès ; voir « Une copie sur un NAS ou un serveur » ci-dessous.
+
+## Pas à pas pour débutants
+
+Vous n'avez besoin d'aucune connaissance en programmation pour cela.
+
+**Le chemin le plus court :** donnez à votre IA préférée l'adresse du projet, `https://github.com/henmedia/layerling`, et demandez-lui : « Installe layerling sur mon ordinateur pour que je puisse construire des modèles 3D avec toi grâce à son serveur MCP. » Elle télécharge et installe tout elle-même et vous prévient quand c'est prêt. Cela fonctionne avec une IA qui peut travailler sur votre ordinateur, comme l'onglet Code de l'application Claude, Codex, Antigravity ou Gemini CLI. Un chat dans le navigateur ne le peut pas, car il ne peut rien installer sur votre ordinateur.
+
+**Ou faites-le vous-même, sous Windows avec l'application Claude, en cinq étapes :**
+
+**1. Installer layerling.** Ouvrez le menu Démarrer, tapez `PowerShell` et ouvrez Windows PowerShell. Copiez cette ligne, collez-la dans la fenêtre d'un clic droit et appuyez sur Entrée :
+
+```powershell
+irm https://raw.githubusercontent.com/henmedia/layerling/main/scripts/windows-quickstart.ps1 | iex
+```
+
+Elle installe ce dont layerling a besoin, télécharge layerling dans le dossier `layerling` de votre dossier utilisateur (`C:\Users\<votre nom>\layerling`) et l'ouvre dans votre navigateur. La première fois, cela prend quelques minutes.
+
+![Windows PowerShell avec la ligne collée. Appuyez sur Entrée, et c'est parti.](still:ai-quickstart-powershell)
+
+**2. Laisser layerling tourner.** layerling tourne tant que la fenêtre PowerShell reste ouverte, et l'IA ne peut construire que pendant qu'il tourne. La prochaine fois, double-cliquez plutôt sur « Start layerling » sur votre bureau.
+
+**3. Installer l'application Claude.** Installez l'application Claude pour Windows et connectez-vous. L'onglet Code de l'étape suivante fait partie des formules payantes de Claude.
+
+**4. Ouvrir le dossier layerling dans l'onglet Code.** Dans l'application Claude, passez en haut sur Code et choisissez le dossier `layerling` de votre dossier utilisateur comme dossier de travail. layerling apporte déjà tout ce dont Claude a besoin pour trouver ses outils. Si Claude demande s'il peut utiliser le serveur MCP « layerling » de ce dossier, autorisez-le.
+
+**5. Dire à Claude quoi construire.** Par exemple : « Utilise les outils de layerling et construis-moi une boîte ronde de 60 mm de diamètre et 40 mm de haut, avec une paroi de 2,5 mm. » Si aucun éditeur n'est ouvert, Claude en ouvre un dans votre navigateur, y construit la boîte pas à pas et prend des images pour vérifier son travail. Vous regardez et pouvez tout modifier vous-même à tout moment.
+
+**Sur un Mac**, c'est pareil, avec ces changements. À l'étape 1, ouvre l'application Terminal (appuie sur Cmd+Espace, tape `Terminal` et appuie sur Entrée), colle cette ligne et appuie sur Entrée :
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/henmedia/layerling/main/scripts/mac-quickstart.sh | sh
+```
+
+Si Git ou Node.js manque, elle te dit quoi installer (macOS propose Git dans une fenêtre, Node.js s'installe avec le programme d'installation de nodejs.org) ; ensuite, relance la même ligne. À l'étape 2, le raccourci sur le bureau s'appelle aussi « Start layerling ». À l'étape 3, installe l'application Claude pour Mac.
+
+> **Conseil :** Si quelque chose ne fonctionne pas, dites à Claude ce que vous voyez. Il peut lire l'erreur et la corrige le plus souvent lui-même. S'il ne se passe rien dans l'éditeur, vérifiez d'abord que layerling tourne toujours (étape 2).
+
+## Configuration
+
+1. Obtenez layerling depuis [GitHub](https://github.com/henmedia/layerling) et démarrez-le dans le dossier du projet avec `npm run dev`. Node.js doit être installé. Sous Windows, la ligne de démarrage rapide du README s'en charge.
+2. Ouvrez un onglet d'éditeur, par exemple `http://127.0.0.1:3000/?editor=1`. Vous pouvez laisser cela à l'IA : lorsqu'aucun éditeur n'est ouvert, le premier outil qui en a besoin démarre votre navigateur avec un éditeur et attend qu'il se connecte. Cela fonctionne pour une instance de layerling sur votre propre ordinateur ; une copie sur un NAS ou un serveur nécessite que vous ouvriez l'éditeur. Définissez `LAYERLING_MCP_OPEN_EDITOR=0` pour que le serveur MCP le désactive.
+3. Connectez votre client AI au serveur MCP. Le client le démarre lui-même avec `node scripts/layerling-mcp-server.mjs`.
+
+### Claude Code
+
+Rien à installer : le projet apporte un `.mcp.json` qui enregistre le serveur, et la compétence sous `.claude/skills/layerling-mcp-skill`. Ouvrez le dossier layerling dans Claude Code et demandez, par exemple : "Utilisez les outils layerling MCP pour lister mes éditeurs ouverts et inspecter la scène."
+
+### Claude Desktop
+
+Claude Desktop ne lit pas les fichiers de projet. Entrez le serveur dans sa propre configuration. Comme modèle, utilisez `docs/mcp/claude-desktop-config.example.json` dans le projet, en remplaçant le chemin du script par le chemin absolu sur votre ordinateur. Redémarrez ensuite Claude Desktop.
+
+### Codex
+
+Copiez la compétence de `docs/skills/layerling-mcp-skill` dans votre dossier de compétences Codex, entrez le serveur dans votre configuration Codex à l'aide de `docs/mcp/codex-config.example.toml` et redémarrez le Codex.
+
+Les instructions détaillées pour les trois se trouvent dans le [README sur GitHub](https://github.com/henmedia/layerling/blob/main/README.md#layerling-mcp-skill).
+
+## Une copie sur un NAS ou un serveur
+
+Une copie que vous hébergez vous-même peut permettre à un client IA de piloter ses éditeurs ouverts sur le réseau. Il est désactivé par défaut, car quiconque peut conduire le pont peut lire et modifier les conceptions ouvertes. Sur le serveur, définissez `LAYERLING_MCP_REMOTE` sur `true` et `LAYERLING_MCP_TOKEN` sur un secret d'au moins 16 caractères (pour l'image Docker dans `environment:` du fichier de composition ; aucune reconstruction n'est nécessaire). Ouvrez un onglet d'éditeur de cette copie et laissez-le ouvert, et donnez au client MCP l'adresse et le même jeton : `LAYERLING_URL=http://nas:3000` et `LAYERLING_MCP_TOKEN=<the token>`.
+
+Seul un client disposant du jeton peut lister ou piloter les éditeurs. Les pages de l'éditeur n'en ont pas besoin, mais elles ne comptent que sous une adresse ou un nom que seul votre propre réseau peut utiliser (une adresse IP, un nom sans point ou se terminant par `.local` ou `.lan`) ; un domaine réel derrière un proxy inverse va dans `LAYERLING_MCP_ALLOWED_HOSTS`. Utilisez-le sur un réseau de confiance, et HTTPS au-delà. Le README contient les détails.
+
+## Ce que l'IA peut faire
+
+L'IA fonctionne avec les mêmes fonctions que vous, via le même chemin que votre opération dans l'éditeur. Les nouvelles fonctions de layerling obtiennent immédiatement leur action MCP. Les outils :
+
+| Outil | Ce qu'il fait |
+| --- | --- |
+| `layerling_list_editors` | répertorie les onglets ouverts de l'éditeur |
+| `layerling_rename_project` | donne un nom au projet, comme le crayon à côté du nom du projet |
+| `layerling_open_editor` | ouvre un nouvel onglet d'éditeur dans votre navigateur par défaut et attend qu'il soit connecté (sur votre propre ordinateur uniquement) |
+| `layerling_read_scene` | lit la scène, la sélection, les unités et les dimensions exactes de tous les objets |
+| `layerling_list_objects` | répertorie tous les objets avec les dimensions, la position, la rotation et l'identifiant |
+| `layerling_select_objects` | sélectionne des objets |
+| `layerling_hide_others` | masque tout sauf la sélection ou les objets indiqués, en une seule étape d'annulation |
+| `layerling_delete_objects` | supprime des objets |
+| `layerling_move_object` | déplace un objet à un autre endroit de la liste des objets |
+| `layerling_create_shape` | crée une forme : boîte, cylindre, texte (également courbé), fil, engrenage, corps d'esquisse et tous les autres |
+| `layerling_import_file` | importe un fichier comme le fait la fenêtre d'import, un OBJ ou 3MF coloré comme un corps par couleur, un 3MF avec plusieurs objets comme un corps par objet |
+| `layerling_add_font` | ajoute sa propre police pour le texte d'un fichier TrueType, OpenType ou WOFF ; il reste dans le navigateur, un design ne conserve que les lettres qu'il utilise |
+| `layerling_list_fonts` | répertorie les polices intégrées et les polices personnelles, avec leur identifiant et leur nom |
+| `layerling_import_mesh` | apporte un maillage triangulaire dans la conception |
+| `layerling_update_object` | change les dimensions, la position, la couleur, le nom, le solide ou le trou et tout ce qui constitue la forme, le bord d'une lettre de texte inclus |
+| `layerling_align_objects` | aligne les objets les uns avec les autres |
+| `layerling_scale_objects` | met à l'échelle les objets selon un pourcentage, ensemble ou chacun en place, ou à une échelle de modélisme comme 1:87 |
+| `layerling_lay_flat` | pose un objet avec une face sur la plaque |
+| `layerling_place_on_face` | pose des objets sur une face d'une autre, également inclinée, comme la touche C |
+| `layerling_perforate_face` | découpe un motif de trous dans une face plate ou autour de la paroi d'un cylindre, d'un tube ou d'un alésage ; les trous restent groupés avec le corps |
+| `layerling_thread_insert` | perce le trou pour un insert fileté à chaud (M2 à M8, 1/4-20 ou votre propre taille) dans une face plate ou la paroi extérieure d'un cylindre ou d'un tube, après avoir vérifié que la paroi à côté du trou et la profondeur derrière sont suffisantes ; le trou reste un trou groupé avec le corps |
+| `layerling_magnet_pocket` | creuse un logement pour un aimant rond (2 × 1 à 12 × 3 mm ou taille personnalisée) avec un puits de colle plus étroit dessous, dans une face plane ou la paroi extérieure d’un cylindre ou d’un tube, après la même vérification, et le même logement en face dans la pièce qui touche ; chacun reste un trou groupé avec sa pièce |
+| `layerling_sweep_sketch` | tire une section rectangulaire ou ronde le long d'un chemin de points, comme un seul corps exact ; un chemin fermé donne un anneau |
+| `layerling_push_face` | tire une face plane vers l'extérieur ou y creuse une poche, avec un retrait depuis le bord et un rayon des coins ; la nouvelle pièce est un corps d'esquisse regroupé avec le corps |
+| `layerling_paint` | peint des parties d'un corps dans leurs propres couleurs pour une impression en plusieurs couleurs (Peindre) : remplir une face jusqu'à ses arêtes vives, une tache ronde ou un lasso tracé dans une vue à plat ; gommer, tout retirer ; enregistré avec le corps et écrit dans un 3MF sous forme de faces peintes |
+| `layerling_support_rib` | place une fine nervure de support sous la face inférieure d'une pièce imprimée inclinée sur une arête, avec des ponts d'une couche de haut (Nervure de support) |
+| `layerling_stencil_bridges` | retient les parties d'une plaque traversée par un texte qui tomberaient, avec des ponts regroupés avec la plaque, aussi larges et hauts que demandé (Ponts de pochoir) |
+| `layerling_mate_faces` | amène la face d'un objet contre la face d'un autre, face à face ou à fleur |
+| `layerling_open_group` | ouvre un groupe pour que ses parties puissent être modifiées une par une, également un groupe à l'intérieur d'un groupe ouvert |
+| `layerling_close_group` | le referme ("Terminé") ou annule |
+| `layerling_add_to_group` | met des objets libres dans un groupe sans l'ouvrir |
+| `layerling_take_out_of_group` | sort une pièce d'un groupe sans l'ouvrir |
+| `layerling_group_objects` | groupes d'objets |
+| `layerling_ungroup_objects` | dissout les groupes |
+| `layerling_boolean_cut` | coupe les solides avec des trous |
+| `layerling_intersect_objects` | ne garde que ce que les objets ont en commun (Intersection) |
+| `layerling_hull_objects` | enveloppe les objets dans un seul corps convexe, comme sous film rétractable (Enveloppe) |
+| `layerling_cookie_cutter` | makes a cookie cutter from the objects: a wall and a rim round the outline (Cookie cutter) |
+| `layerling_flexi_joints` | cuts a flat body into links with joints printed in place that swing to the sides (Flexi joints) |
+| `layerling_make_lid` | makes a lid for a body open at the top: pushed in, over the top or flat, with the fit you choose and magnets if you like (Lid) |
+| `layerling_make_mold` | makes a mold or a die from a master: a two-part mold to cast in, a silicone pour box, an open mold, or a stamp and die for sheet (Mold & die) |
+| `layerling_make_cable_channel` | runs a round channel for a cable through a body from an entry to an exit, finding the way itself with gentle bends (Cable channel) |
+| `layerling_loft_sketches` | joins two sketch bodies into a loft from one outline to the other (Loft sketches) |
+| `layerling_separate_parts` | sépare une forme en ses parties détachées, un corps d'esquisse en un corps par contour |
+| `layerling_split_objects` | coupe des solides ou des trous en deux avec un rabot |
+| `layerling_list_edges` | répertorie les véritables bords CAO d'un objet |
+| `layerling_apply_edge_treatment` | chanfreins ou congés arêtes choisies |
+| `layerling_hollow_object` | creuse un corps avec une paroi plane |
+| `layerling_cut_out` | découpe un solide dans un autre pour qu'ils s'ajustent : la pièce reste, une copie agrandie du jeu est soustraite de l'autre corps |
+| `layerling_punch` | poinçonne le contour d'un solide, vu selon x, y ou z, tout droit à travers un autre ; le poinçon reste et n'a pas besoin de le toucher |
+| `layerling_offset_object` | décale toutes les faces d'un corps pour le jeu d'un ajustement : l'agrandit ou le réduit, ou ajoute la copie agrandie comme trou, ou ne déplace que les côtés |
+| `layerling_list_faces` | répertorie les faces d'un corps exact |
+| `layerling_delete_faces` | supprime des faces et referme le vide |
+| `layerling_array_objects` | se multiplie en ligne, en grille ou sur un cercle |
+| `layerling_bundle_objects` | regroupe les objets comme Ctrl+B : ils se déplacent ensemble, gardent leur couleur et leur nature et sortent séparément lors d'un export |
+| `layerling_layer_text` | transforme un texte en une pile de calques pour une impression multicolore (lettres, bords plus larges, plaque sans trous) ou reconstitue une pile, avec un trou en porte-clés, les coins par calque et un bord de lettre arrondi ou chanfreiné ; avec une liste de noms, une balise par nom ; `flush` enfonce les couches dans celle du bas pour que toutes les couleurs finissent sur une même face plane (true, false ou une profondeur de 0,2 à 5 mm) |
+| `layerling_text_block` | crée un bloc de texte : un texte devient la première de plusieurs lignes, chacune un texte à part sous celle du dessus, alignées à gauche, au centre ou à droite, chaque ligne de même taille ou plus petite |
+| `layerling_layer_icon` | transforme une icône SVG (le texte du fichier ou un corps d'esquisse extrudé) en une balise d'icône en couches pour une impression multicolore - l'icône, des bords plus larges, une plaque sans trous - ou en construit une à nouveau avec une nouvelle largeur ou des nouveaux calques ; avec un compte il remplit l'assiette de copies ; `flush` enfonce les couches dans celle du bas pour que toutes les couleurs finissent sur une même face plane (true, false ou une profondeur de 0,2 à 5 mm) |
+| `layerling_create_qr_code` | crée un code QR à partir d'un texte ou d'une adresse web, comme {{ui:shape.qrCode}} dans la bibliothèque de formes - le code seul, en relief sur une plaque ou gravé, avec correction d'erreur, largeur, hauteur, zone de silence et en trou si demandé ; avertit quand un module passe sous 0,8 mm |
+| `layerling_create_sbc_board` | place une carte SBC en taille réelle, comme {{ui:shape.sbcBoard}} dans la bibliothèque de formes - Raspberry Pi 5, 4, 3 B+, Zero 2 W ou BIGTREETECH Pi, avec trous et connecteurs, le jeu autour des connecteurs du bord, la position et en trou pour découper un boîtier |
+| `layerling_reference_image` | ajoute une image de référence à partir d'une image, comme {{ui:import.referenceImage}}, ou en déplace, tourne, calibre (deux points de l'image et leur distance réelle), estompe ou verrouille une - un repère jamais exporté ni imprimé; `trace` transforme sa partie sombre ou claire en un corps d'esquisse posé dessus |
+| `layerling_measure_section` | mesure sur un plan de coupe entre deux points qui s'accrochent au contour - épaisseur de paroi, espaces, ajustements |
+| `layerling_show_overhangs` | active ou désactive les hachures en surplomb, définit l'angle et indique pour chaque corps la zone qui aurait besoin de supports |
+| `layerling_estimate_print` | estime le volume, le poids et le filament pour la sélection ou l'ensemble du dessin, élaboré aussi solidement que la fenêtre d'export |
+| `layerling_check_clearance` | vérifie avant l'impression quelles pièces se chevauchent, se touchent ou sont plus proches qu'un jeu minimal (Vérifier le jeu), y compris les pièces séparées d'un objet |
+| `layerling_printer_play` | lit, règle ou efface le jeu de l'imprimante ({{ui:workspace.printerPlay}} dans les réglages) et pose le test d'ajustement qui le mesure |
+| `layerling_check_print` | vérifie avant l'impression ce qui raterait : parois trop fines pour la buse, pièces en l'air, faible contact avec le plateau, surplombs et maillages ouverts (Vérifier l'impression) |
+| `layerling_check_layers` | découpe l’impression en couches et liste couche par couche ce qui irait mal : porte-à-faux, zones sans appui, ponts, parois fines, petits îlots, pièce dans le plateau (Analyse d’impression) |
+| `layerling_split_bolt` | coupe une vis ou une tige filetée dans la longueur par son axe et pose les deux moitiés sur leur face de coupe pour l’impression, avec pions de centrage si voulu |
+| `layerling_add_reference_points` | marque des points de référence - au centre, dans les coins ou au milieu des bords des objets, ou à des positions exactes - sur lesquels les formes s'accrochent |
+| `layerling_list_reference_points` | répertorie les points de référence avec leurs identifiants et positions |
+| `layerling_remove_reference_points` | supprime les points de référence par identifiant, ou tous |
+| `layerling_list_notes` | lit les notes de l'utilisateur avec leur texte, le corps auquel chacune est fixée et si c'est une demande pour l'IA |
+| `layerling_wait_for_notes` | attend que vous cochiez {{ui:note.forAi}} sur une note et transmet aussitôt la demande |
+| `layerling_add_note` | pose une note sur le modèle, fixée à un objet ou libre sur le plateau |
+| `layerling_update_note` | modifie une note ou y répond ; une réponse clôt la demande |
+| `layerling_remove_notes` | supprime des notes par identifiant |
+| `layerling_inspect_errors` | affiche le dernier message et la dernière erreur, ainsi que les messages et erreurs de la session |
+| `layerling_wrap_around_cylinder` | enroule un corps posé à plat, un SVG ou un texte par exemple, autour d'un cylindre, vers l'extérieur ou vers l'intérieur comme une gravure |
+| `layerling_texture_surface` | applique une texture de surface sur un corps : rainures, moletage, nid d'abeille ou picots, pour la prise en main ou pour l'aspect, et la change ou la retire plus tard |
+| `layerling_simplify_mesh` | réduit le nombre de triangles d'un maillage importé, à une part en pourcentage ou à un nombre de triangles |
+| `layerling_make_exact` | transforme un maillage importé en corps CAO exact : plans, cylindres, cônes, sphères et tores deviennent de vraies faces, pour des arêtes qui s'arrondissent proprement et un STEP qui les transporte |
+| `layerling_save_custom_shape` | conserve les corps sous forme de forme personnalisée, sur le serveur ou dans le navigateur, pour les insérer dans d'autres conceptions |
+| `layerling_list_custom_shapes` | répertorie les formes personnalisées sur le serveur et dans le navigateur |
+| `layerling_insert_custom_shape` | insère une forme personnalisée dans le design ouvert, à un endroit x/z si vous le souhaitez |
+| `layerling_delete_custom_shape` | supprime une forme personnalisée ; les corps insérés restent |
+| `layerling_show_workplane` | cache et affiche la plaque avec sa grille, pour une photo du dessous par exemple (uniquement la vue) |
+| `layerling_focus_mode` | active et désactive le mode concentration : masque la ligne de titre et le pied de page pour plus de place (seulement le cadre de l’éditeur) |
+| `layerling_set_section_view` | coupe la vue ouverte le long d'un plan pour regarder à l'intérieur (seulement la vue, rien n'est coupé) |
+| `layerling_measurements` | affiche ou masque les mesures du ruban à mesurer et les liste avec leurs longueurs, et masque ou affiche les cotes autour de la sélection comme [[Q]], et saisit une longueur pour l'une d'elles, ce qui déplace le corps à son extrémité comme un clic sur son nombre |
+| `layerling_measure_angle` | mesure un angle comme le rapporteur : au sommet de trois points ou entre deux faces planes, et l'affiche dans la vue |
+| `layerling_saved_view` | enregistre la vue actuelle sous la touche 7, 8, 9 ou 0 et y revient, comme Maj+touche et la touche (seulement la vue); règle aussi la vue de départ des nouveaux designs |
+| `layerling_build_plates` | liste, ajoute, nomme, ordonne et retire les plateaux d'impression, déplace des objets sur un plateau et les répartit sur les plateaux, comme la barre des plateaux |
+| `layerling_clear_history` | supprime définitivement chaque étape d'annulation, comme le fait le bouton "Supprimer l'historique" de la vue Historique ; besoins `confirm: true` |
+| `layerling_delete_history_steps` | supprime définitivement des états isolés de l'historique, jamais l'état actuel, comme la corbeille à côté d'une étape dans la liste de la vue de l'historique ; demande `steps` et `confirm: true` |
+| `layerling_list_backups` | liste les sauvegardes automatiques (Versions précédentes) du dessin ouvert, ou avec `all: true` de tous les dessins de ce navigateur |
+| `layerling_open_backup` | ouvre une sauvegarde par son `id` comme nouveau dessin, jamais lié au fichier d'origine |
+| `layerling_set_history_view` | revient sur un état antérieur du projet, comme la vue Historique (la conception réelle reste intacte ; les outils de changement attendent qu'il soit fermé) |
+| `layerling_restore_from_history` | ramène des objets (aussi des pièces dans des groupes) d'un état antérieur dans la conception, sous forme de copies, comme « Ramener dans la conception » de la vue Historique - une étape que l'annulation reprend |
+| `layerling_export_section_svg` | renvoie les contours sur un plan de coupe au format SVG à 1:1, à partir des mêmes corps que l'export |
+| `layerling_sketch_from_section` | crée une esquisse à partir des contours sur un plan de coupe, posée sur la coupe : ouverte dans l'éditeur pour la modifier, ou construite aussitôt en un corps d'une hauteur donnée |
+| `layerling_export_drawing` | réalise le dessin d'atelier de l'export "2D": trois vues au 1:1 sur une feuille ISO avec les dimensions hors tout et un tableau des alésages ronds, en texte SVG ou PDF |
+| `layerling_export_mesh` | écrit le fichier de la fenêtre d'export en STL, 3MF, OBJ, SVG (vue de dessus, empreinte ou arêtes visibles) ou DXF pour la découpe laser, à partir des mêmes corps ; vers un chemin de cet ordinateur ou en base64 |
+| `layerling_save_project` | enregistre toute la conception modifiable comme fichier .lyl à un chemin de l'ordinateur où tourne le serveur MCP, sans boîte de dialogue ; un fichier existant n'est remplacé qu'avec `overwrite`, l'écriture passe par un fichier temporaire, et la cible de Ctrl+S dans l'éditeur reste inchangée |
+| `layerling_list_attachments` | liste les fichiers joints au modèle (nom, type, taille), comme le panneau Pièces jointes les montre |
+| `layerling_get_attachment` | lit un fichier joint, ses octets en base64, comme Télécharger dans le panneau |
+| `layerling_add_attachment` | joint un fichier donné en base64, avec les contrôles du panneau ; un nom déjà joint n'est remplacé qu'avec `replace` |
+| `layerling_rename_attachment` | renomme un fichier joint ; son contenu reste |
+| `layerling_remove_attachment` | retire un fichier joint définitivement ; demande `confirm: true` |
+| `layerling_set_workplane` | place le plan de travail sur un côté d'un corps ou à l'arrière de la plaque de base, et le cache ou l'affiche |
+| `layerling_capture_image` | prend une photo de la vue : de face, de dessus, de côté, en diagonale depuis un coin et plus encore |
+
+Cela permet à l’IA de s’auto-vérifier : elle crée quelque chose, prend une photo, regarde et améliore.
+
+## Un exemple
+
+Vous dites : « Construisez-moi une boîte ronde de 60 mm de diamètre, 40 mm de haut avec une paroi de 2,5 mm, ouverte en haut, plus un couvercle plat avec « Thé » écrit en arc de cercle. L'IA crée les cylindres, en creuse un, place le texte incurvé sur le couvercle et prend des photos à la fin pour voir s'il rentre.
+
+> **Astuce :** Donnez à l'IA des dimensions concrètes et indiquez-lui à quoi sert la pièce ("support pour tige de 12 mm, s'adapte à un Bambu Lab A1"). Il prend alors des décisions plus judicieuses. Et regardez-le se développer : vous pouvez intervenir vous-même à tout moment, car c'est le même éditeur.

@@ -1,0 +1,82 @@
+import { normalizeHexColor } from "@/lib/coloredImport";
+import { printerPlayShapeStart } from "@/lib/printerPlay";
+import { makeShapeFromAsset, toolbarShapeAssets } from "@/lib/shapeCatalog";
+import { normalizeShapeCustomizations } from "@/lib/workplaneSettings";
+import { shapeDepth, shapeWidth } from "@/lib/workplaneShapes";
+import type { ShapeCustomization, ShapeCustomizationMap, WorkplaneShape } from "@/types/layerling";
+
+/**
+ * The settings of a shape that "Shape defaults" can hold, under the names the
+ * shape itself uses. The text itself and the largest allowed size are left
+ * out: the first belongs to one text, the second is a limit set in the
+ * settings, not a property of a body.
+ */
+const SHAPE_DEFAULT_FIELDS = [
+  "cornerFillet", "topBottomFillet", "bottomFillet", "roundedBoxQuality", "steps", "sides", "bevel", "segments", "topRadius", "baseRadius", "curvedConeTop", "curvedConeBend", "screwBossFastener", "screwBossSize", "screwBossHole", "screwBossHoleDepth", "screwBossDiameter", "screwBossGussets", "screwBossGussetHeight", "screwBossGussetThickness", "snapFitPart", "snapFitThickness", "snapFitUndercut", "snapFitClearance", "snapFitLeadAngle", "snapFitRetainAngle", "snapFitFoot", "ribStyle", "ribTop", "ribFoot", "ribThickness", "ribFootThickness", "ribFootShape",
+  "topWidth", "topDepth", "teeth", "toothSize", "toothWidth", "centerHoleSize", "hirthSteepFlank", "hirthReverse", "pulleyBeltWidth", "pulleyFlange", "pulleyFlangeRise", "pulleyHubHeight", "pulleyHubDiameter", "gearType", "helixAngle", "helixQuality", "gearProfile", "gearPressureAngle", "gearBacklash", "gearRim",
+  "threadRole", "threadHead", "threadHand", "threadProfile", "threadDiameter", "threadPitch", "threadClearance",
+  "threadBoltClearance", "threadAxialClearance", "threadStarts", "threadDepth", "threadFlankAngle", "threadQuality", "threadHeadHeight", "threadChamfer", "threadChamferBottom", "threadHeadChamfer", "threadDrive", "springTurns",
+  "springWire", "springHand", "springQuality", "springForm", "springPattern", "springEnds", "starPoints", "starInnerSize", "starOuterFillet", "starInnerFillet",
+  "starQuality", "heartTipFillet", "heartQuality", "crescentThickness", "crescentTipFillet", "crescentQuality", "sectorAngle", "sectorInnerDiameter", "sectorEndRadius",
+  "honeycombCellSize", "honeycombWallThickness", "honeycombFrameWidth", "tubeBoreHole", "hingeKnuckles", "hingeKnuckleWidth", "hingeStyle", "hingeConeSize", "hingeSnapGrip", "hingePinDiameter",
+"hingeLeafThickness", "hingeClearance", "hingePinless", "hingeScrewHoles", "hingeScrewDiameter", "hingeScrewSpacing", "hingeScrewAcross", "hingeScrewCountersink", "hingeCornerRadius", "hingeLeafStyle", "hingeScrewHead", "hingeNutWidth", "gridfinityType", "gridfinityLip", "gridfinityMagnets", "gridfinityHalfGrid", "gridfinityLargePlate", "gridfinitySwallowtail", "gridfinitySwallowtailClearance", "gridfinityLabelBack", "gridfinityLabelFront", "gridfinityLabelLeft", "gridfinityLabelRight", "gridfinityLabelBackWidth", "gridfinityLabelBackLength", "gridfinityLabelBackOffset", "gridfinityLabelFrontWidth", "gridfinityLabelFrontLength", "gridfinityLabelFrontOffset", "gridfinityLabelLeftWidth", "gridfinityLabelLeftLength", "gridfinityLabelLeftOffset", "gridfinityLabelRightWidth", "gridfinityLabelRightLength", "gridfinityLabelRightOffset", "gridfinityLabelCorner", "gridfinityLabelCornerSize", "gridfinityLabelFont", "gridfinityLabelColor", "gridfinityLabelTextSize", "gridfinityOverhangBack", "gridfinityOverhangFront", "gridfinityOverhangLeft", "gridfinityOverhangRight", "gridfinityOverhangChamfer", "gridfinityOverhangSolid", "gridfinityOverhangLipOnGrid", "gridfinityScoopBack", "gridfinityScoopFront", "gridfinityScoopLeft", "gridfinityScoopRight", "gridfinityScoopRadius", "gridfinityFloorHeight", "gridfinityOpenBack", "gridfinityOpenFront", "gridfinityOpenLeft", "gridfinityOpenRight", "gridfinityLipChamfer", "gridfinityWallThickness", "gridfinityOpeningCorner", "gridfinityOpeningCornerSize", "gridfinityPaddingBack", "gridfinityPaddingFront", "gridfinityPaddingLeft", "gridfinityPaddingRight", "gridfinityCornerRadius", "gridfinityBinCornerRadius", "gridfinityCompartmentsX", "gridfinityCompartmentsZ", "gridfinityDividerThickness", "gridfinityDividerHeight", "knurlPattern", "knurlCount", "knurlDepth", "knurlAngle", "knurlChamfer",
+  "dovetailNeckWidth", "dovetailClearance", "portProfile", "portClearance", "loftBottomOutline", "loftTopOutline", "loftBottomWidth", "loftBottomDepth", "loftTopWidth", "loftTopDepth", "loftBottomCorner", "loftTopCorner", "loftBottomSides", "loftTopSides", "loftOffsetX", "loftOffsetZ", "loftWall", "loftTopWall", "loftTwist", "loftSmooth", "loftSegments", "loftTiltX", "loftTiltZ", "slotEndRatio", "torusTubeRatio", "screwHoleShaft", "screwHoleHeadDepth", "screwHoleAngle", "drillPointAngle", "bentTubeProfile",
+  "bentTubeInnerProfile", "bentTubeSize", "bentTubeWall", "bentTubeQuality", "font", "textCurved", "textRadius",
+  "textSize", "textInward", "textFlipped", "textKerning",
+  // Fields that came later and were left out, so "Save as default" dropped them (checked 11.11.2026). A hinge's
+  // opening angle stays out on purpose: new hinges start flat (#1336).
+  "screwHoleSlot", "screwHoleRecess", "screwHoleChamfer", "ringRackHelixAngle", "ringRackHerringbone", "bevelHelixAngle",
+  "threadTaper", "threadHeadDiameter", "threadDriveSize", "threadDriveDepth", "threadCollarHeight", "threadCollarDiameter",
+  "polygonFlat",
+] as const;
+
+function sameValue(a: unknown, b: unknown) {
+  if (typeof a === "number" && typeof b === "number") return Math.abs(a - b) < 1e-9;
+  return a === b;
+}
+
+/** The toolbar asset a shape was made from, or null for a sketch, a mesh, a group or anything else without defaults. */
+export function shapeDefaultsAsset(kind: WorkplaneShape["kind"]) {
+  return toolbarShapeAssets.find((asset) => asset.kind === kind) ?? null;
+}
+
+/**
+ * What "Save as default" stores for a shape: its size and its own settings, as
+ * far as they differ from what the app starts the kind with. Returns null when
+ * nothing differs (then the kind simply has no defaults of its own), or when
+ * the shape is not one that can have any. With the printer's play, a clearance
+ * that follows it starts from it: one still at that value is not stored, so it
+ * goes on following the play.
+ */
+export function shapeDefaultsFromShape(shape: WorkplaneShape, existing: ShapeCustomizationMap = {}, printerPlay: number | null = null): ShapeCustomization | null {
+  const asset = shapeDefaultsAsset(shape.kind);
+  if (!asset) return null;
+  const app = makeShapeFromAsset(asset, undefined, printerPlayShapeStart(shape.kind, printerPlay));
+  const picked: Record<string, unknown> = {};
+  const appValues: Record<string, unknown> = {};
+  const take = (key: string, value: unknown, appValue: unknown) => {
+    if (value === undefined || sameValue(value, appValue)) return;
+    picked[key] = value;
+    appValues[key] = appValue;
+  };
+  // The colour counts as a setting of the kind, too: a new shape of it starts with the colour saved here.
+  take("color", normalizeHexColor(shape.color), normalizeHexColor(app.color));
+  take("width", shapeWidth(shape), shapeWidth(app));
+  take("depth", shapeDepth(shape), shapeDepth(app));
+  take("height", shape.height, app.height);
+  SHAPE_DEFAULT_FIELDS.forEach((key) => take(key, (shape as Record<string, unknown>)[key], (app as Record<string, unknown>)[key]));
+  const keptLimit = existing[shape.kind]?.maxDimension;
+  if (keptLimit !== undefined) picked.maxDimension = keptLimit;
+  const normalized = normalizeShapeCustomizations({ [shape.kind]: picked })[shape.kind];
+  if (!normalized) return null;
+  const compact = Object.fromEntries(Object.entries(normalized).filter(([, value]) => value !== undefined)) as ShapeCustomization;
+  return Object.keys(compact).length > 0 ? compact : null;
+}
+
+/** The shape defaults with this kind's entry set (or removed when `entry` is null). */
+export function withShapeDefaults(map: ShapeCustomizationMap, kind: WorkplaneShape["kind"], entry: ShapeCustomization | null): ShapeCustomizationMap {
+  const next = { ...map };
+  if (entry) next[kind] = entry;
+  else delete next[kind];
+  return next;
+}

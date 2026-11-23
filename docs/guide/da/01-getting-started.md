@@ -1,0 +1,125 @@
+---
+title: Kom godt i gang
+summary: Fra en tom plade til din første del til 3D-printeren, på fem minutter, uden konto og uden at installere noget.
+---
+
+layerling er et designprogram til 3D-print der kører direkte i din browser. Du bygger en del af enkle former, skærer huller i den, runder kanterne og sender den til din slicer. Der er intet at installere og intet at oprette konto til. Det du bygger bliver på din computer.
+
+![layerlings startside: "Opret nyt 3D-design" øverst, dine designs og den hurtige vejledning nedenunder.](shot:start-page)
+
+## Opret et design
+
+Åbn [layerling.com](https://layerling.com/). Klik på {{ui:dashboard.createDesign}} på startsiden. Editoren åbner med et tomt arbejdsplan, det gitter som alt tager form på.
+
+Har du allerede en fil du vil fortsætte med, så brug {{ui:dashboard.importGeometry}}. Det virker for layerling-designs (`.lyl`) samt STL-, OBJ-, 3MF-, STEP- eller SVG-filer.
+
+Alle dine designs vises senere på startsiden med et forhåndsbillede. De gemmes i din browsers lager og gemmes automatisk efter hver ændring, så der er ingen gem-knap. Hvordan du pakker designs i en fil og giver dem videre er dækket i [Filer og lagring](chapter:files-and-saving). Hvis du ønsker en påmindelse, så slå {{ui:workspace.confirmTabClose}} til i indstillingerne (tandhjulet i båndet): Browseren spørger så, før en fane med et åbent design lukkes eller genindlæses.
+Men sikkerhedskopiér dine designs ind imellem: en browser kan fejle, og en browseropdatering kan give problemer, og **layerling påtager sig intet ansvar for designs, der opbevares i browseren.** Det gør du fra startsiden med {{ui:dashboard.backupAll}}, eller du gemmer designs som filer. En sikkerhedskopi hentes tilbage med {{ui:dashboard.restoreBackup}}.
+
+## Editoren overblik
+
+![Editoren med navngivne områder: båndet øverst, visningskuben til venstre med visningsbjælken under, ved siden af statusbeskeden og objektlisten, egenskaberne for den valgte form til højre.](shot:editor-areas)
+
+- **Øverst** er båndet. Det er sorteret efter opgave: {{ui:editor.group.clipboard}}, {{ui:editor.group.history}}, {{ui:editor.group.shapes}}, {{ui:editor.group.visibility}}, {{ui:editor.group.combine}}, {{ui:editor.section.mirrorPattern}}, {{ui:editor.section.splitShape}}, {{ui:editor.section.edgesWalls}}, {{ui:editor.section.surface}}, {{ui:editor.group.arrange}} og {{ui:editor.group.file}}; {{ui:editor.group.help}} sidder over båndet i titelrækken, og huset ved siden af fanerne fører tilbage til startsiden. Når vinduet er for smalt til alle grupper, folder de mindst brugte sammen i én knap under deres navn, med en lille pil i gruppens farve hængende under den: pega på den eller trykke på den, så åbnes gruppens værktøjer under knappen. Foldet {{ui:editor.group.history}} er undtagelsen: dens knap er {{ui:editor.tool.undo}} selv, og kun pilen under den åbner {{ui:editor.tool.redo}} og resten. Knappen for {{ui:editor.group.shapes}} har den samme pil: hvil musen på den, så åbner formbiblioteket, og det lukker igen kort efter, at musen har forladt det, medmindre du klikker på knappen, arbejder i biblioteket eller fastgør det. Nålen øverst til højre, til venstre for forstørrelsesglasset, holder i stedet alle grupper åbne. Hold musen over et ikon for at se dets navn, også når ikonet er nedtonet; {{ui:interactiveHelp.title}} (spørgsmålstegnet under {{ui:editor.group.help}}, eller [[Shift]]+[[F1]]) forklarer dem alle med ét klik og fører videre til deres afsnit i denne vejledning. Hvor du ser et lille spørgsmålstegn, for eksempel i en forms indstillinger, i formbiblioteket eller i værktøjsvinduerne, fører det direkte til det tilsvarende kapitel i denne vejledning. Et gråt ikon siger også, hvad det venter på, for eksempel {{ui:editor.needs.oneBody}} eller {{ui:editor.needs.locked}}. Kan du ikke finde et værktøj? Tryk [[Ctrl]]+[[K]] og skriv dets navn; et tomt design minder dig om det nederst i visningen.
+- **I midten** ligger arbejdsplanet. Det er her du placerer former, trækker dem i form og ser resultatet.
+- **Til højre** vises **egenskaberne** for den valgte form: farve, dimensioner, position og hvad ellers der udgør formen. At taste tal er mere nøjagtigt end at trække.
+- **Til venstre** er visningsbjælken med visningskuben over den. De flytter dig rundt i scenen, mere i [Visning og arbejdsplan](chapter:view-and-workplane).
+- **Ved siden af visningsbjælken** åbner **objektlisten** ([[Ctrl]]+[[U]]) med alle designets former. Mere i [Valg og arrangering](chapter:select-and-arrange).
+- **Til højre for visningskuben** vises **statusbeskeden**, når layerling har noget at fortælle dig, for eksempel hvad et værktøj venter på. Når der ikke er noget at sige, er den der ikke. Efter et trin som en forening siger den kort, hvad der skete, og tilbyder {{ui:shortcuts.undo}}; {{ui:workspace.showStepNotices}} i indstillingerne slår disse beskeder fra.
+- **Værktøjsvinduer** åbner over arbejdsplanet, når du starter et værktøj som {{ui:editor.tool.fillet}}, {{ui:editor.tool.array}} eller {{ui:editor.tool.hollow}}. Træk dem til side i titellinjen, når de dækker noget.
+- **Øverst oppe** skifter du mellem {{ui:editor.modeGeometry}} og {{ui:editor.modeSketch}}, omdøber designet og vælger sprog og farveskema.
+
+## Knapperne rundt om arbejdsområdet
+
+Hold musen over en knap for at se dens navn. Er du i tvivl om, hvad en knap gør, så klik i området {{ui:editor.group.help}} på {{ui:interactiveHelp.title}} ([[Shift]]+[[F1]]) og derefter på knappen. Her står dem, der spørges mest om.
+
+### Indsæt
+
+{{ui:editor.tool.paste}} ([[Ctrl]]+[[V]]) sætter det ind i designet, du kopierede med {{ui:editor.tool.copy}}. {{ui:common.duplicate}} kopierer og sætter ind i ét trin. Når du indsætter, lægger hver del sig lidt ved siden af, hvor den var. Dele der kommer fra et andet program kan lande langt fra pladen, og til dem er der {{ui:workspace.pasteCentered}} i indstillingerne, under {{ui:workspace.appearance}}: så indsættes delene sammen midt på arbejdsplanet og lægges ned på det.
+
+### Slet
+
+{{ui:common.delete}} ([[Delete]]) fjerner de valgte former. {{ui:editor.tool.undo}} henter dem tilbage.
+
+### Opdel gruppe
+
+{{ui:editor.tool.ungroup}} ([[Ctrl]]+[[Shift]]+[[G]]) skiller den valgte gruppe igen ad i de former, den blev lavet af.
+
+### Arbejdsområdeindstillinger
+
+{{ui:editor.workspaceSettings}} åbner indstillingerne for arbejdsområdet: enhed, pladens størrelse, printer, gitter, farver, lys og mere. Mere i [Visning og arbejdsplan](chapter:view-and-workplane).
+
+### Farveskema
+
+{{ui:common.theme}} helt øverst bestemmer, hvordan layerling ser ud: som dit system, lyst, mørkt eller grafit.
+
+### Omdøb design
+
+{{ui:editor.renameProject}}: blyanten ved siden af navnet helt øverst. Skriv det nye navn og tryk [[Enter]].
+
+### Designnavn
+
+Designets navn ({{ui:confirm.projectName}}) står helt øverst. Klik på det, skriv, og [[Enter]] beholder navnet.
+
+### Visningsmuligheder
+
+{{ui:editor.visibilityOptions}}, pilen ved siden af øjet, rummer det, du kan vise eller skjule: listen over objekter, alt du har skjult, noterne og udhænget i printet. Mere i [Vælg og arranger](chapter:select-and-arrange).
+
+### Skjul valgte
+
+{{ui:editor.tool.hideSelected}} ([[Ctrl]]+[[H]]) skjuler de valgte former. De bliver i designet og i objektlisten; {{ui:editor.visibilityOptions}} viser dem igen.
+
+### Søg efter kommandoer
+
+{{ui:palette.open}}: skriv, hvad du leder efter, et værktøj, en form eller en indstilling, og klik på resultatet.
+
+### Skjul visningsbjælken
+
+{{ui:camera.hide}} folder visningsbjælken til venstre væk og giver arbejdsområdet mere plads; {{ui:camera.show}} henter den tilbage.
+
+### Snap til gitter
+
+{{ui:inspector.snapGrid}} nederst i egenskaberne er det trin, flytning og størrelsesændring fanger på. Ved siden af ændrer den lille kontakt **mm | in** enheden. Mere i [Visning og arbejdsplan](chapter:view-and-workplane).
+
+### Enhed: millimeter eller tommer
+
+Kontakten **mm | in** ved siden af {{ui:inspector.snapGrid}} ændrer enheden, pladens gitter og fangtrinnet for dette design.
+
+### Sidefoden
+
+Nederst i vinduet: {{ui:dashboard.sponsor}} fører til siden, hvor du kan støtte projektet; {{ui:dashboard.userGuide}} åbner denne vejledning; {{ui:dashboard.forum}} fører til stedet for spørgsmål, idéer og fejlrapporter (diskussionerne på GitHub, på tysk forummet hos drucktipps3d); {{ui:editor.bugReport}} laver en ZIP til en fejlrapport; {{ui:dashboard.projectOnGitHub}} fører til projektet på GitHub, og versionsnummeret åbner udgivelsesnoterne. Linkene til impressum og privatlivspolitik hører til den, der driver den kopi af layerling, du bruger.
+
+### Fokustilstand
+
+På en lille skærm giver {{ui:focusMode.enter}} titellinjen og sidefoden til arbejdet: knappen med de to pile, der peger udad, øverst til højre, [[Ctrl]]+[[Shift]]+[[F]] eller kommandosøgningen slår den til. Båndet rykker op, og visningen når ned til vinduets kant. En lille bjælke under båndet beholder huset til startsiden, fanerne {{ui:editor.modeGeometry}} og {{ui:editor.modeSketch}}, forstørrelsesglasset, indstillingerne og knappen med de to pile, der peger indad, som afslutter fokustilstanden; træk bjælken i dens greb et andet sted hen, et dobbeltklik på grebet sætter den tilbage. layerling husker valget i denne browser, og mens browseren fylder hele skærmen (F11), skifter den selv til fokustilstand.
+Bjælken viser også designets navn; klik på det for at omdøbe designet uden at forlade fokustilstand.
+
+## Din første del
+
+Som eksempel bygger vi en kasse med et hul.
+
+1. Klik på {{ui:editor.addShape}} i båndet og vælg {{ui:shape.box}}. Formen hænger nu på din musemarkør. Et klik på arbejdsplanet sætter den ned.
+2. Indstil dimensionerne til højre, for eksempel 40 mm lang, 40 mm bred og 20 mm høj.
+3. Placer en {{ui:shape.cylinder}} i midten på samme måde, 14 mm tværs over og 30 mm høj. Den skal være højere end kassen så den når hele vejen igennem.
+4. Vælg cylinderen og klik på {{ui:inspector.hole}} til højre. Den bliver gennemsigtig: den faste form er blevet et værktøj der fjerner materiale.
+5. Vælg begge former og klik på {{ui:editor.tool.group}}. Kassen har nu et hul.
+
+![Cylinderen er et hul og stikker ud af toppen af kassen.](shot:hole-before)
+
+![Efter gruppering har kassen et borehul.](shot:hole-after)
+
+Sådan laves borehuller, slidser og lommer. Kapitlet [Solider og huller](chapter:solids-and-holes) forklarer det i detaljer.
+
+## Nyt siden dit seneste besøg
+
+Når du åbner layerling igen efter en opdatering, viser et kort på startsiden hvad der er tilføjet siden du var her sidst: hver version siden da, den nyeste først. Efter et langt fravær scroller du ned i kortet. Nedenunder tilføjer {{ui:whatsNew.earlier}} også versionerne fra før dit seneste besøg. Luk det med {{ui:whatsNew.dismiss}} og det forbliver væk indtil næste opdatering. {{ui:whatsNew.footerLink}} i sidefoden på startsiden viser de seneste tilføjelser igen til enhver tid. I editoren åbner knappen {{ui:whatsNew.footerLink}} ved siden af {{ui:editor.guide}} øverst til højre den samme liste, og det gør kommandosøgningen også; den bliver åben ved siden af dit design, mens du prøver det nye. Browseren husker den seneste version du så, og intet om dig forlader den.
+
+Nu og da står der et andet kort over det: en besked fra layerlings forfatter, for eksempel om en pause, hvor svar tager længere tid. Det vises kun i de dage, det er tænkt til, og {{ui:whatsNew.dismiss}} lægger det væk.
+
+På en kopi af layerling på din egen computer eller server har meddelelsen "Opdatering tilgængelig" en knap, {{ui:update.previewShow}}, der viser hvad opdateringen bringer før du installerer den. Listen hentes fra GitHub først når du trykker på knappen.
+
+## Fra design til print
+
+Når din del er færdig, klik på {{ui:editor.export}}, vælg STL eller 3MF og download filen. Åbn den i din slicer, for eksempel Bambu Studio, PrusaSlicer, OrcaSlicer eller Cura. Hvis du vælger din printer i indstillingerne, kan du mens du bygger se om delen passer på printlejet. Mere i [Printning](chapter:printing).
+
+> **Tip:** Hvis du kommer fra Tinkercad finder du hurtigt rundt: plade, former, solid og hul, gruppér, justér og spejl virker næsten ens. Det nye er mest fas og rund, udhuling, gevind og skitser. Dine egne Tinkercad-designs kan også komme med, se [Filer, lagring og deling](chapter:files-and-saving).

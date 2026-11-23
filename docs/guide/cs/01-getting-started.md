@@ -1,0 +1,124 @@
+---
+title: Začínáme
+summary: Od prázdné plochy k prvnímu dílu pro 3D tiskárnu za pět minut, bez účtu a instalace.
+---
+
+Layerling je modelovací program pro 3D tisk, který běží přímo v prohlížeči. Díly sestavujete z jednoduchých tvarů, vytváříte v nich otvory, zaoblujete hrany a výsledek předáte sliceru. Není potřeba nic instalovat ani se registrovat. Vaše modely zůstávají na vašem počítači.
+
+![Úvodní stránka Layerlingu: nahoře vytvoření nového projektu, pod ním uložené projekty a stručný průvodce.](shot:start-page)
+
+## Vytvoření projektu
+
+Otevřete [layerling.com](https://layerling.com/) a na úvodní stránce klikněte na {{ui:dashboard.createDesign}}. Editor otevře prázdnou pracovní rovinu, tedy podložku s mřížkou, na které budete modelovat.
+
+Máte-li soubor, ve kterém chcete pokračovat, zvolte {{ui:dashboard.importGeometry}}. Otevřít lze projekty Layerlingu (`.lyl`) i soubory STL, OBJ, 3MF, STEP a SVG.
+
+Všechny projekty se později zobrazují na úvodní stránce s náhledem. Uchovávají se v úložišti prohlížeče a ukládají automaticky po každé změně, proto zde není tlačítko pro ukládání. **Layerling nenese odpovědnost za projekty uložené v prohlížeči.** Prohlížeč může selhat nebo jeho aktualizace může způsobit potíže, proto si projekty čas od času zálohujte tlačítkem {{ui:dashboard.backupAll}} na úvodní stránce, nebo je uložte jako soubory. Záloha se vrátí tlačítkem {{ui:dashboard.restoreBackup}}. Jak projekty zabalit do souboru a předat dál, vysvětluje kapitola [Soubory a ukládání](chapter:files-and-saving). Pokud chceš připomínku, zapni v nastavení (ozubené kolo na pásu) {{ui:workspace.confirmTabClose}}: prohlížeč se pak zeptá, než se karta s otevřeným návrhem zavře nebo obnoví.
+
+## Přehled editoru
+
+![Editor s popsanými oblastmi: nahoře pás nástrojů, vlevo orientační krychle a pod ní lišta pohledu, vedle nich stavová zpráva a seznam objektů, vpravo vlastnosti vybraného tvaru.](shot:editor-areas)
+
+- **Nahoře** je **pás nástrojů** rozdělený podle činností: {{ui:editor.group.clipboard}}, {{ui:editor.group.history}}, {{ui:editor.group.shapes}}, {{ui:editor.group.visibility}}, {{ui:editor.group.combine}}, {{ui:editor.section.mirrorPattern}}, {{ui:editor.section.splitShape}}, {{ui:editor.section.edgesWalls}}, {{ui:editor.section.surface}}, {{ui:editor.group.arrange}} a {{ui:editor.group.file}}; {{ui:editor.group.help}} je nad ním v titulním řádku a domeček vedle karet vede zpět na úvodní stránku. Když je okno pro všechny skupiny příliš úzké, nejméně používané se sbalí do jednoho tlačítka pod svým názvem, pod nímž visí malá šipka v barvě skupiny: najeďte na ni nebo na ni klepněte a její nástroje se otevřou pod ní. Sbalená skupina {{ui:editor.group.history}} je výjimkou: jejím tlačítkem je přímo {{ui:editor.tool.undo}} a teprve šipka pod ním otevře {{ui:editor.tool.redo}} a ostatní. Tlačítko {{ui:editor.group.shapes}} nese stejnou šipku: když na ní myš chvíli zůstane, otevře se knihovna tvarů a krátce poté, co ji myš opustí, se zase zavře, pokud na tlačítko neklepnete, nepracujete v knihovně nebo ji nepřipnete. Špendlík vpravo nahoře, vlevo od lupy, naopak drží všechny skupiny otevřené. Najetím na ikonu zobrazíte její název, i u zašedlé; {{ui:interactiveHelp.title}} (otazník pod {{ui:editor.group.help}} nebo Shift+F1) kteroukoli z nich vysvětlí kliknutím a zavede vás do její části této příručky. Kdekoli uvidíte malý otazník, například ve vlastnostech tvaru, v knihovně tvarů nebo v oknech nástrojů, vede přímo do odpovídající kapitoly této příručky. Zašedlá ikona také říká, na co čeká, například {{ui:editor.needs.oneBody}} nebo {{ui:editor.needs.locked}}. Nemůžete najít nástroj? Stiskněte [[Ctrl]]+[[K]] a napište jeho název; prázdný projekt vám to připomene dole v pohledu.
+- **Uprostřed** leží pracovní rovina. Sem pokládáte tvary, upravujete je a sledujete výsledek.
+- **Vpravo** se zobrazují **vlastnosti** vybraného tvaru: barva, rozměry, poloha a další vlastnosti. Zadání čísla je přesnější než tažení myší.
+- **Vlevo** najdete **lištu pohledu** a nad ní **orientační krychli**. Jejich použití popisuje kapitola [Pohled a pracovní rovina](chapter:view-and-workplane).
+- **Vedle lišty pohledu** se otevírá **seznam objektů** ([[Ctrl]]+[[U]]) se všemi tvary návrhu. Víc v kapitole [Výběr a uspořádání](chapter:select-and-arrange).
+- **Vpravo od orientační krychle** se objeví **stavová zpráva**, když vám layerling chce něco sdělit, třeba co nástroj právě očekává. Když není co říct, není vidět. Po kroku, jako je sjednocení, krátce řekne, co se stalo, a nabídne {{ui:shortcuts.undo}}; volba {{ui:workspace.showStepNotices}} v nastavení tyto zprávy vypne.
+- **Okna nástrojů** se otevírají nad pracovní rovinou, když spustíte nástroj jako {{ui:editor.tool.fillet}}, {{ui:editor.tool.array}} nebo {{ui:editor.tool.hollow}}. Za záhlaví je odsunete stranou, když něco zakrývají.
+- **Úplně nahoře** přepínáte mezi {{ui:editor.modeGeometry}} a {{ui:editor.modeSketch}}, přejmenováváte projekt a volíte jazyk a barevný motiv.
+
+## Tlačítka kolem pracovní plochy
+
+Najeďte myší na tlačítko a uvidíte jeho název. Pokud si nejste jistí, co tlačítko dělá, klikněte v oblasti {{ui:editor.group.help}} na {{ui:interactiveHelp.title}} ([[Shift]]+[[F1]]) a pak na tlačítko. Tady jsou ta, na která se ptá nejvíc lidí.
+
+### Vložit
+
+{{ui:editor.tool.paste}} ([[Ctrl]]+[[V]]) přidá do projektu to, co jste zkopírovali pomocí {{ui:editor.tool.copy}}. {{ui:common.duplicate}} kopíruje a vkládá v jednom kroku. Vložení položí každý díl kousek vedle místa, kde byl. Díly z jiného programu mohou přistát daleko od podložky; pro ně je v nastavení, v {{ui:workspace.appearance}}, {{ui:workspace.pasteCentered}}: vložení pak díly postaví společně doprostřed pracovní roviny a položí je na ni.
+
+### Smazat
+
+{{ui:common.delete}} ([[Delete]]) odstraní vybrané tvary. {{ui:editor.tool.undo}} je vrátí.
+
+### Rozdělit sloučení
+
+{{ui:editor.tool.ungroup}} ([[Ctrl]]+[[Shift]]+[[G]]) rozloží vybranou skupinu zpět na tvary, z nichž vznikla.
+
+### Nastavení pracovní plochy
+
+{{ui:editor.workspaceSettings}} otevře nastavení pracovní plochy: jednotky, velikost desky, tiskárnu, mřížku, barvy, světlo a další. Víc v kapitole [Pohled a pracovní rovina](chapter:view-and-workplane).
+
+### Barevný motiv
+
+{{ui:common.theme}} úplně nahoře určuje vzhled layerlingu: podle systému, světlý, tmavý nebo grafitový.
+
+### Přejmenovat projekt
+
+{{ui:editor.renameProject}}: tužka vedle názvu úplně nahoře. Napište nový název a stiskněte [[Enter]].
+
+### Název projektu
+
+Název projektu ({{ui:confirm.projectName}}) je úplně nahoře. Klikněte na něj, pište a [[Enter]] název potvrdí.
+
+### Možnosti viditelnosti
+
+{{ui:editor.visibilityOptions}}, šipka vedle ikony oka, obsahuje, co můžete zobrazit nebo skrýt: seznam objektů, vše skryté, poznámky a převisy tisku. Víc v kapitole [Výběr a uspořádání](chapter:select-and-arrange).
+
+### Skrýt vybrané
+
+{{ui:editor.tool.hideSelected}} ([[Ctrl]]+[[H]]) skryje vybrané tvary. Zůstanou v projektu i v seznamu objektů; {{ui:editor.visibilityOptions}} je znovu zobrazí.
+
+### Hledat příkazy
+
+{{ui:palette.open}}: napište, co hledáte, nástroj, tvar nebo nastavení, a klikněte na výsledek.
+
+### Skrýt ovládání pohledu
+
+{{ui:camera.hide}} sbalí lištu pohledu vlevo a dá pracovní ploše víc místa; {{ui:camera.show}} ho vrátí.
+
+### Krok přichytávání
+
+{{ui:inspector.snapGrid}} dole ve vlastnostech je krok, ke kterému se přichytává přesouvání a změna velikosti. Vedle něj malý přepínač **mm | in** mění jednotku. Víc v kapitole [Pohled a pracovní rovina](chapter:view-and-workplane).
+
+### Jednotka: milimetry nebo palce
+
+Přepínač **mm | in** vedle {{ui:inspector.snapGrid}} mění jednotku, mřížku desky a krok přichytávání pro tento projekt.
+
+### Zápatí
+
+Dole v okně: {{ui:dashboard.sponsor}} vede na stránku, kde můžete projekt podpořit; {{ui:dashboard.userGuide}} otevře tuto příručku; {{ui:dashboard.forum}} vede na místo pro otázky, nápady a hlášení chyb (diskuse na GitHubu, v němčině fórum drucktipps3d); {{ui:editor.bugReport}} vytvoří ZIP pro hlášení chyby; {{ui:dashboard.projectOnGitHub}} vede na projekt na GitHubu a číslo verze otevře poznámky k vydání. Odkazy na provozovatele a ochranu osobních údajů patří tomu, kdo provozuje kopii layerlingu, kterou používáte.
+
+### Režim soustředění
+
+Na malé obrazovce {{ui:focusMode.enter}} přenechá titulní řádek a zápatí práci: zapne ho tlačítko se dvěma šipkami ven vpravo nahoře, [[Ctrl]]+[[Shift]]+[[F]] nebo hledání příkazů. Pás nástrojů se posune nahoru a pohled sahá až k okraji okna. Malá lišta pod pásem ponechá domeček na úvodní stránku, karty {{ui:editor.modeGeometry}} a {{ui:editor.modeSketch}}, lupu, nastavení a tlačítko se dvěma šipkami dovnitř, které režim ukončí; za úchyt lištu přetáhnete jinam, dvojklik na úchyt ji vrátí. layerling si volbu pamatuje v tomto prohlížeči a dokud prohlížeč vyplňuje celou obrazovku (F11), přepne se do režimu soustředění sám.
+Lišta ukazuje také název projektu; kliknutím na něj projekt přejmenujete, aniž byste opustili režim soustředění.
+
+## První díl
+
+Jako příklad vytvoříme kvádr s otvorem.
+
+1. V pásu nástrojů klikněte na {{ui:editor.addShape}} a vyberte {{ui:shape.box}}. Tvar bude sledovat ukazatel myši. Kliknutím ho položte na pracovní rovinu.
+2. Vpravo nastavte rozměry, například délku 40 mm, šířku 40 mm a výšku 20 mm.
+3. Stejným způsobem umístěte doprostřed {{ui:shape.cylinder}} o průměru 14 mm a výšce 30 mm. Musí být vyšší než kvádr, aby jím prošel skrz.
+4. Vyberte válec a vpravo zvolte {{ui:inspector.hole}}. Zprůhlední: plné těleso se změnilo na nástroj pro odebírání materiálu.
+5. Vyberte oba tvary a klikněte na {{ui:editor.tool.group}}. V kvádru vznikne otvor.
+
+![Válec je nastavený jako výřez a vyčnívá nad kvádr.](shot:hole-before)
+
+![Po sloučení vznikne kvádr s otvorem.](shot:hole-after)
+
+Takto se vytvářejí otvory, drážky i kapsy. Podrobnosti najdete v kapitole [Tělesa a výřezy](chapter:solids-and-holes).
+
+## Novinky od poslední návštěvy
+
+Po aktualizaci se na úvodní stránce zobrazí karta s novinkami od vaší poslední návštěvy. Obsahuje jednotlivá vydání od nejnovějšího. Po delší nepřítomnosti můžete uvnitř karty posouvat seznam. Volba {{ui:whatsNew.earlier}} přidá i starší vydání. Kartu zavřete přes {{ui:whatsNew.dismiss}}; znovu se objeví až po další aktualizaci. Poslední novinky lze kdykoliv otevřít pomocí {{ui:whatsNew.footerLink}} v zápatí úvodní stránky. V editoru otevře stejný seznam tlačítko {{ui:whatsNew.footerLink}} vedle {{ui:editor.guide}} vpravo nahoře nebo vyhledávání příkazů; zůstane otevřený vedle vašeho návrhu, zatímco zkoušíte novinky. Poslední zobrazenou verzi si pamatuje prohlížeč a žádné vaše údaje se přitom neodesílají.
+
+Občas nad ní stojí druhá karta: zpráva od autora layerlingu, například o přestávce, kdy odpovědi trvají déle. Zobrazuje se jen ve dnech, pro které je určena, a {{ui:whatsNew.dismiss}} ji skryje.
+
+Ve vlastní instalaci na počítači nebo serveru obsahuje oznámení o dostupné aktualizaci tlačítko {{ui:update.previewShow}}. Zobrazí změny ještě před instalací. Seznam se načte z GitHubu teprve po stisknutí tlačítka.
+
+## Od modelu k tisku
+
+Hotový díl stáhněte přes {{ui:editor.export}} ve formátu STL nebo 3MF. Otevřete ho ve sliceru, například Bambu Studio, PrusaSlicer, OrcaSlicer nebo Cura. Pokud v nastavení vyberete svou tiskárnu, už během modelování uvidíte, zda se díl vejde na podložku. Více v kapitole [Příprava pro tisk](chapter:printing).
+
+> **Tip:** Pokud znáte Tinkercad, rychle se zorientujete. Podložka, tvary, plná tělesa a výřezy, slučování, zarovnávání i zrcadlení fungují velmi podobně. Navíc máte zejména zkosení a zaoblení hran, vytváření dutin, závity a náčrty. Můžete si přenést i vlastní návrhy z Tinkercadu, viz [Soubory, ukládání a sdílení](chapter:files-and-saving).

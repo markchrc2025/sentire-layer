@@ -1,0 +1,124 @@
+---
+title: Első lépések
+summary: Az üres laptól az első 3D-nyomtatható alkatrészig, öt perc alatt, fiók és telepítés nélkül.
+---
+
+A layerling egy 3D nyomtatáshoz készült tervezőprogram, amely közvetlenül a böngésződben fut. Egyszerű alakzatokból építesz fel egy alkatrészt, lyukakat vágsz bele, lekerekíted az éleit, és elküldöd a szeletelődnek. Nincs mit telepíteni, és nem kell regisztrálni. Amit építesz, a gépeden marad.
+
+![A layerling kezdőlapja: felül „Új 3D terv létrehozása”, alatta a terveid és a rövid útmutató.](shot:start-page)
+
+## Terv létrehozása
+
+Nyisd meg a [layerling.com](https://layerling.com/) oldalt. A kezdőlapon kattints az {{ui:dashboard.createDesign}} gombra. Megnyílik a szerkesztő egy üres munkasíkkal: ez az a rács, amelyen minden elkészül.
+
+Ha már van egy fájlod, amellyel folytatnád, használd a {{ui:dashboard.importGeometry}} lehetőséget. Ez layerling tervekkel (`.lyl`) és STL, OBJ, 3MF, STEP vagy SVG fájlokkal is működik.
+
+A terveid később előnézeti képpel jelennek meg a kezdőlapon. A böngésződ tárolójában maradnak, és minden változtatás után automatikusan mentődnek, ezért nincs mentés gomb. **A layerling nem vállal felelősséget a böngészőben tárolt tervekért.** Egy böngésző meghibásodhat, vagy egy böngészőfrissítés gondot okozhat, ezért időnként készíts biztonsági mentést a terveidről a kezdőlapon a(z) {{ui:dashboard.backupAll}} gombbal, vagy mentsd őket fájlként. Egy biztonsági mentést a(z) {{ui:dashboard.restoreBackup}} hoz vissza. Hogy hogyan csomagolhatsz terveket fájlba és adhatod tovább őket, azt a [Fájlok és mentés](chapter:files-and-saving) fejezet írja le. Ha emlékeztetőt szeretnél, kapcsold be a beállításokban (a szalagon lévő fogaskerék) a {{ui:workspace.confirmTabClose}} opciót: a böngésző ilyenkor rákérdez, mielőtt egy nyitott tervet tartalmazó lapot bezárnál vagy újratöltenél.
+
+## A szerkesztő egy pillantással
+
+![A szerkesztő megnevezett részeivel: felül a szalag, balra a nézetkocka és alatta a nézetsáv, mellettük az állapotüzenet és az objektumlista, jobbra a kijelölt alakzat tulajdonságai.](shot:editor-areas)
+
+- **Felül** van a **szalag**. Feladatok szerint van rendezve: {{ui:editor.group.clipboard}}, {{ui:editor.group.history}}, {{ui:editor.group.shapes}}, {{ui:editor.group.visibility}}, {{ui:editor.group.combine}}, {{ui:editor.section.mirrorPattern}}, {{ui:editor.section.splitShape}}, {{ui:editor.section.edgesWalls}}, {{ui:editor.section.surface}}, {{ui:editor.group.arrange}} és {{ui:editor.group.file}}; a(z) {{ui:editor.group.help}} fölötte, a címsorban van, a fülek melletti házikó pedig visszavisz a kezdőlapra. Ha az ablak túl keskeny az összes csoporthoz, a legritkábban használtak egyetlen gombbá csukódnak össze a nevük alatt, alattuk egy kis, a csoport színében lógó nyíllal: mutass rá vagy koppints rá, és az eszközei alatta nyílnak meg. Az összecsukott {{ui:editor.group.history}} kivétel: a gombja maga a(z) {{ui:editor.tool.undo}}, és csak az alatta lévő nyíl nyitja meg a(z) {{ui:editor.tool.redo}} gombot és a többit. A {{ui:editor.group.shapes}} gombján ugyanez a nyíl van: ha az egér megpihen rajta, megnyílik az alakzattár, és nem sokkal azután, hogy az egér elhagyta, újra bezárul, hacsak nem kattint a gombra, nem dolgozik a tárban, vagy nem tűzi ki. A jobb felső sarokban, a nagyító bal oldalán lévő tű ehelyett minden csoportot nyitva tart. Ha egy ikon fölé viszed az egeret, megjelenik a neve, egy szürkéén is; a(z) {{ui:interactiveHelp.title}} (a kérdőjel a(z) {{ui:editor.group.help}} alatt, vagy Shift+F1) egy kattintással bármelyiket elmagyarázza, és elvisz az útmutató megfelelő részéhez. Ahol egy kis kérdőjelet látsz, például egy alakzat tulajdonságainál, az alakzattárban vagy az eszközablakokban, az egyenesen az útmutató megfelelő fejezetéhez visz. Egy szürke ikon azt is megmondja, mire vár, például {{ui:editor.needs.oneBody}} vagy {{ui:editor.needs.locked}}. Nem találsz egy eszközt? Nyomd meg a [[Ctrl]]+[[K]] billentyűt, és írd be a nevét; egy üres terv a nézet alján emlékeztet erre.
+- **Középen** van a munkasík. Itt helyezed el az alakzatokat, itt alakítod őket, és itt látod az eredményt.
+- **Jobbra** jelennek meg a kijelölt alakzat **tulajdonságai**: szín, méretek, helyzet és minden, ami még az alakzathoz tartozik. A számok begépelése pontosabb, mint a húzás.
+- **Balra** van a nézetsáv, fölötte a nézetkocka. Ezekkel mozogsz a jelenetben, bővebben a [Nézet és munkasík](chapter:view-and-workplane) fejezetben.
+- **A nézetsáv mellett** nyílik meg az **objektumlista** ([[Ctrl]]+[[U]]) a terv összes alakzatával. Bővebben a [Kijelölés és elrendezés](chapter:select-and-arrange) fejezetben.
+- **A nézetkockától jobbra** jelenik meg az **állapotüzenet**, ha a layerlingnek mondanivalója van, például hogy mit vár tőled egy eszköz. Ha nincs mit mondani, nincs ott. Egy lépés, például egyesítés után röviden elmondja, mi történt, és felajánlja a(z) {{ui:shortcuts.undo}} lehetőséget; a beállításokban a(z) {{ui:workspace.showStepNotices}} kikapcsolja ezeket az üzeneteket.
+- Az **eszközablakok** a munkasík fölött nyílnak meg, amikor elindítasz egy eszközt, például: {{ui:editor.tool.fillet}}, {{ui:editor.tool.array}} vagy {{ui:editor.tool.hollow}}. A címsoruknál fogva félrehúzhatod őket, ha eltakarnak valamit.
+- **Legfelül** váltasz a {{ui:editor.modeGeometry}} és a {{ui:editor.modeSketch}} között, itt nevezed át a tervet, és itt választod ki a nyelvet és a színsémát.
+
+## A munkaterület körüli gombok
+
+Vidd az egeret egy gomb fölé, és látod a nevét. Ha nem vagy biztos benne, mit csinál egy gomb, kattints a {{ui:editor.group.help}} területen az {{ui:interactiveHelp.title}} gombra ([[Shift]]+[[F1]]), majd a gombra. Itt vannak azok, amelyekről a legtöbbször kérdeznek.
+
+### Beillesztés
+
+{{ui:editor.tool.paste}} ([[Ctrl]]+[[V]]) beteszi a tervbe, amit a {{ui:editor.tool.copy}} gombbal másoltál. A {{ui:common.duplicate}} egy lépésben másol és beilleszt. A beillesztés minden részt kicsit arrébb tesz attól, ahol volt. Egy másik programból jövő részek messze a tárgyasztaltól is landolhatnak; ezekhez a beállításokban, a(z) {{ui:workspace.appearance}} alatt ott van a(z) {{ui:workspace.pasteCentered}}: a beillesztés ilyenkor a részeket együtt a munkasík közepére teszi, és ráejti őket.
+
+### Törlés
+
+{{ui:common.delete}} ([[Delete]]) eltávolítja a kijelölt alakzatokat. A {{ui:editor.tool.undo}} visszahozza őket.
+
+### Csoportbontás
+
+{{ui:editor.tool.ungroup}} ([[Ctrl]]+[[Shift]]+[[G]]) a kijelölt csoportot újra szétszedi azokra az alakzatokra, amelyekből készült.
+
+### Munkaterület beállításai
+
+{{ui:editor.workspaceSettings}} megnyitja a munkaterület beállításait: mértékegység, a lap mérete, nyomtató, rács, színek, fény és más. Bővebben a [Nézet és munkasík](chapter:view-and-workplane) fejezetben.
+
+### Téma
+
+{{ui:common.theme}} egészen fent azt választja ki, hogyan néz ki a layerling: a rendszeredhez igazodva, világos, sötét vagy grafit.
+
+### Terv átnevezése
+
+{{ui:editor.renameProject}}: a ceruza a név mellett egészen fent. Írd be az új nevet, és nyomd meg az [[Enter]] billentyűt.
+
+### A terv neve
+
+A terv neve ({{ui:confirm.projectName}}) egészen fent áll. Kattints rá, írj, és az [[Enter]] megtartja a nevet.
+
+### Láthatósági beállítások
+
+{{ui:editor.visibilityOptions}}, a szem melletti nyíl, azt tartalmazza, amit megjeleníthetsz vagy elrejthetsz: az objektumlistát, mindent, amit elrejtettél, a jegyzeteket és a nyomtatás túlnyúlásait. Bővebben a [Kijelölés és elrendezés](chapter:select-and-arrange) fejezetben.
+
+### Kijelöltek elrejtése
+
+{{ui:editor.tool.hideSelected}} ([[Ctrl]]+[[H]]) elrejti a kijelölt alakzatokat. A tervben és az objektumlistában megmaradnak; a {{ui:editor.visibilityOptions}} újra megmutatja őket.
+
+### Parancsok keresése
+
+{{ui:palette.open}}: írd be, amit keresel, egy eszközt, egy alakzatot vagy egy beállítást, és kattints az eredményre.
+
+### Nézetsáv elrejtése
+
+{{ui:camera.hide}} összecsukja a bal oldali nézetsávot, és több helyet ad a munkaterületnek; a {{ui:camera.show}} visszahozza.
+
+### Illesztőrács
+
+{{ui:inspector.snapGrid}} a tulajdonságok alján az a lépés, amelyhez az áthelyezés és az átméretezés igazodik. Mellette a kis **mm | in** kapcsoló váltja a mértékegységet. Bővebben a [Nézet és munkasík](chapter:view-and-workplane) fejezetben.
+
+### Mértékegység: milliméter vagy hüvelyk
+
+A {{ui:inspector.snapGrid}} melletti **mm | in** kapcsoló átváltja a mértékegységet, a lap rácsát és a rögzítési lépést ennél a tervnél.
+
+### Az oldal alja
+
+Az ablak alján: a {{ui:dashboard.sponsor}} arra az oldalra vezet, ahol támogathatod a projektet; a {{ui:dashboard.userGuide}} megnyitja ezt az útmutatót; a {{ui:dashboard.forum}} a kérdések, ötletek és hibajelentések helyére vezet (a GitHub-beszélgetésekre, németül a drucktipps3d fórumára); a {{ui:editor.bugReport}} ZIP-et készít a hibajelentéshez; a {{ui:dashboard.projectOnGitHub}} a projekthez vezet a GitHubon, a verziószám pedig megnyitja a kiadási jegyzeteket. A impresszumra és az adatvédelemre mutató hivatkozások azé, aki a használt layerling-példányt üzemelteti.
+
+### Fókusz mód
+
+Kis képernyőn a {{ui:focusMode.enter}} átadja a címsort és a láblécet a munkának: a jobb felső sarokban a két kifelé mutató nyíllal jelölt gomb, a [[Ctrl]]+[[Shift]]+[[F]] vagy a parancskereső kapcsolja be. A szalag feljebb kerül, a nézet pedig az ablak széléig ér. A szalag alatti kis sáv megtartja a házat a kezdőlaphoz, a {{ui:editor.modeGeometry}} és {{ui:editor.modeSketch}} fület, a nagyítót, a beállításokat és a két befelé mutató nyíllal jelölt gombot, amely kilép a módból; a sávot a fogantyújánál fogva máshová húzhatod, a fogantyúra kettőt kattintva visszakerül. A layerling ebben a böngészőben megjegyzi a választást, és amíg a böngésző kitölti az egész képernyőt (F11), magától fókusz módba vált.
+A sáv a terv nevét is mutatja; rákattintva átnevezheted a tervet anélkül, hogy kilépnél a fókusz módból.
+
+## Az első alkatrészed
+
+Példaként egy lyukas kockát építünk.
+
+1. Kattints a szalagon az {{ui:editor.addShape}} gombra, és válaszd a {{ui:shape.box}} alakzatot. Az alakzat most az egérmutatódon lóg. Egy kattintás a munkasíkon leteszi.
+2. Jobbra állítsd be a méreteket, például 40 mm hosszú, 40 mm széles és 20 mm magas.
+3. Ugyanígy tegyél a közepére egy {{ui:shape.cylinder}} alakzatot, 14 mm átmérővel és 30 mm magasan. Legyen magasabb a kockánál, hogy teljesen átérjen rajta.
+4. Jelöld ki a hengert, és kattints jobbra a {{ui:inspector.hole}} gombra. Áttetsző lesz: a tömör testből anyagot elvevő szerszám lett.
+5. Jelöld ki mindkét alakzatot, és kattints a {{ui:editor.tool.group}} gombra. A kockán most lyuk van.
+
+![A henger lyuk, és kilóg a kocka tetejéből.](shot:hole-before)
+
+![Csoportosítás után a kockában furat van.](shot:hole-after)
+
+Így készülnek a furatok, hornyok és zsebek. A [Tömör testek és lyukak](chapter:solids-and-holes) fejezet részletesen elmagyarázza.
+
+## Újdonságok a legutóbbi látogatásod óta
+
+Ha egy frissítés után újra megnyitod a layerlinget, a kezdőlapon egy kártya felsorolja, mi került be azóta, hogy utoljára itt jártál: minden azóta megjelent verziót, a legújabbal kezdve. Hosszabb távollét után a kártyán belül görgethetsz lefelé. Alattuk a {{ui:whatsNew.earlier}} a legutóbbi látogatásod előtti verziókat is hozzáadja. Az {{ui:whatsNew.dismiss}} gombbal bezárod, és a következő frissítésig nem jelenik meg. A kezdőlap láblécében a {{ui:whatsNew.footerLink}} bármikor újra megmutatja a legutóbbi újdonságokat. A szerkesztőben ugyanezt a listát nyitja meg a jobb felső sarokban, a {{ui:editor.guide}} mellett lévő {{ui:whatsNew.footerLink}} gomb vagy a parancskeresés; nyitva marad a terved mellett, amíg kipróbálod az újdonságokat. A böngésző megjegyzi az utoljára látott verziót, és rólad semmi sem hagyja el.
+
+Időnként egy második kártya is megjelenik fölötte: a layerling szerzőjének üzenete, például egy szünetről, amikor a válaszok tovább tartanak. Csak a neki szánt napokon látszik, és a {{ui:whatsNew.dismiss}} elrejti.
+
+A layerling saját gépen vagy szerveren futó példányán a „Frissítés érhető el” értesítésben van egy {{ui:update.previewShow}} gomb, amely telepítés előtt felsorolja, mit hoz a frissítés. A listát csak akkor tölti le a GitHubról, amikor megnyomod a gombot.
+
+## A tervtől a nyomtatásig
+
+Ha kész az alkatrészed, kattints az {{ui:editor.export}} gombra, válaszd az STL vagy a 3MF formátumot, és töltsd le a fájlt. Nyisd meg a szeletelődben, például a Bambu Studióban, a PrusaSlicerben, az OrcaSlicerben vagy a Curában. Ha a beállításokban kiválasztod a nyomtatódat, már építés közben látod, hogy az alkatrész elfér-e a tárgyasztalon. Bővebben a [Nyomtatás](chapter:printing) fejezetben.
+
+> **Tipp:** Ha a Tinkercadből jössz, gyorsan eligazodsz: a tárgyasztal, az alakzatok, a tömör test és a lyuk, a csoportosítás, az igazítás és a tükrözés szinte ugyanúgy működik. Ami új, az főleg az élletörés és a lekerekítés, a kiüregelés, a menetek és a vázlatok. A saját Tinkercad-terveidet is áthozhatod, lásd [Fájlok, mentés és megosztás](chapter:files-and-saving).

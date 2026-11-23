@@ -1,0 +1,364 @@
+---
+title: Skizzen: vom Umriss zum Körper
+summary: Einen flachen Umriss zeichnen, Ecken runden oder fasen und daraus einen Körper ziehen oder drehen.
+---
+
+Nicht alles lässt sich aus Grundformen zusammensetzen. Für Teile mit eigener Kontur, etwa einen Halter, ein Zahnprofil oder eine Vase, zeichnest du zuerst den **Umriss** und machst dann einen Körper daraus. Dafür gibt es den Skizzenmodus.
+
+## Eine Skizze beginnen
+
+Wechsle oben von {{ui:editor.modeGeometry}} auf {{ui:editor.modeSketch}}. In der Gruppe {{ui:sketch.group.create}} des Menübands stehen drei Knöpfe nebeneinander dafür, was aus dem Umriss werden soll:
+
+- **{{ui:sketch.extrude}}:** Der Umriss wird in die Höhe gezogen, wie eine Ausstechform.
+- **{{ui:sketch.revolve}}:** Der Umriss wird um eine Achse gedreht, wie bei einer Drehbank. So entstehen Vasen, Becher, Kegel und alles, was rund ist.
+- **{{ui:sketch.sweep}}:** Der Umriss wird an einem Pfad entlanggezogen: ein Kabelkanal mit Ecke, eine Leitung, ein Ring um eine Form. Siehe unten „Entlang eines Pfades ziehen".
+
+Danach zeigt der Editor ein Blatt mit Gitter. Das ist deine Zeichenfläche.
+
+Die Skizze liegt auf der Arbeitsebene. Willst du auf einer Fläche eines Körpers zeichnen, etwa für einen Umriss, der weiter oben beginnen soll, lege die Arbeitsebene zuerst mit [[W]] auf diese Fläche (siehe [Ansicht und Arbeitsebene](chapter:ansicht-und-arbeitsebene)) und beginne dann die Skizze.
+
+## Zeichnen
+
+Das Menüband des Skizzenmodus ist in Bereiche geteilt. Unten hat jedes Werkzeug eine eigene Karte: was du tust, ein Schritt pro Zeile, und hinter einem Pfeil, was dann passiert. Die Taste rechts auf einer Karte wählt das Werkzeug.
+
+### Zeichenwerkzeuge
+
+::: icon=line {{ui:sketch.line}} | [[1]]
+Punkte nacheinander anklicken.
+Mit gehaltener [[Umschalt]]-Taste rastet die neue Linie in 15°-Schritten ein, waagerecht und senkrecht eingeschlossen.
+=> Am Zeiger stehen Länge und Winkel der neuen Linie.
+Wie lang sie werden soll und in welchem Winkel, kannst du auch eintippen, siehe [Linien nach Maß und Winkel](#linien-nach-mass-und-winkel).
+> Jeder Punkt, den du anklickst, landet auf dem Raster, das unter {{ui:inspector.snapGrid}} eingestellt ist. Mit gehaltener [[Umschalt]]-Taste geht der 15°-Schritt vor: Die Länge zählt weiter in Rasterschritten, das Ende kann aber zwischen den Rasterlinien liegen.
+:::
+
+::: icon=arc {{ui:sketch.arc}}
+Die beiden Enden des Bogens anklicken.
+Einen dritten Punkt anklicken, durch den der Bogen laufen soll.
+=> Bis zu diesem dritten Klick folgt eine Vorschau dem Zeiger, und die Meldung nennt den Radius.
+=> Ein Ende auf einem vorhandenen Punkt hängt sich an ihn an, so kann ein Bogen einen Umriss schließen.
+[[Esc]] verwirft die bisher geklickten Punkte und kehrt zu {{ui:sketch.select}} zurück.
+> Danach ist der Bogen gewöhnliche Geometrie aus Punkten und Kurven: verschieben, teilen oder radieren wie jede andere Linie.
+:::
+
+::: icon=bezier {{ui:sketch.bezier}} | [[2]]
+Punkt anklicken und ziehen, und zwar in die Richtung, in der die Linie weiterlaufen soll, wie mit dem Zeichenstift in Illustrator oder Inkscape.
+=> Je weiter du ziehst, desto stärker biegt sie sich.
+=> Der Abschnitt zum neuen Punkt biegt sich schon während des Ziehens mit, so dass du siehst, was entsteht.
+> Du kommst aus Tinkercad und willst nur Punkte anklicken? Nimm die {{ui:sketch.smooth}}.
+> Der erste Abschnitt biegt sich an seinem Anfang nur, wenn du auch am ersten Punkt ziehst. Nur angeklickt, verlässt ihn die Linie gerade; um ihn später zu biegen, wählst du den Punkt mit {{ui:sketch.select}} aus und ziehst an seinem Griff.
+:::
+
+::: icon=smooth {{ui:sketch.smooth}} | [[3]]
+Punkte nacheinander anklicken.
+=> Sie legt einen fließenden Verlauf durch die Punkte, die du anklickst.
+> An den beiden Enden einer offenen Linie läuft die Kurve geradewegs auf den nächsten Punkt zu, deshalb biegen sich der erste und der letzte Abschnitt weniger als die übrigen. Soll sich einer stärker biegen, wählst du seinen Endpunkt mit {{ui:sketch.select}} aus und ziehst an seinem Griff. In einem geschlossenen Umriss biegen sich alle Punkte gleich.
+:::
+
+::: Eine Linie schließen oder beenden
+Um den Umriss zu schließen, klickst du am Ende wieder auf den ersten Punkt.
+Die Linienkette beendest du, ohne den Umriss zu schließen, mit einem Rechtsklick ohne Bewegung oder einem Doppelklick auf den letzten Punkt.
+Wechselst du mitten in der Kette zu {{ui:sketch.line}}, {{ui:sketch.bezier}} oder {{ui:sketch.smooth}}, geht die Linie am letzten Punkt weiter.
+=> Ein Körper entsteht nur aus einem **geschlossenen** Umriss.
+:::
+
+::: icon=freehand {{ui:sketch.freehand}} | [[5]]
+Mit Stift, Finger oder Maus zeichnen wie auf Papier.
+=> Beim Absetzen wird die Linie zu gewöhnlichen Punkten: eine Ecke, wo sie scharf abbog, weiche Punkte dazwischen, nur so viele, wie die Form braucht, sodass sich jeder danach ziehen lässt.
+Für feine Einzelheiten hineinzoomen: Je näher du hinsiehst, desto genauer folgt die Linie deiner Hand.
+=> Eine Linie, die dort endet, wo sie begann, schließt sich zum Umriss und kann ein Körper werden; eine offene bleibt eine Linie, für {{ui:sketch.stroke}} oder als Pfad zum Entlangführen.
+Auf Linien oder auf einem Vorlagenbild beginnen, um ein Bild von Hand nachzuzeichnen.
+Einen Strich an einem offenen Ende beginnen oder enden lassen, um diese Linie fortzusetzen; so lässt sich eine Form in mehreren Strichen zeichnen.
+> Der Strich hält sich nicht an das Raster, damit er deiner Hand folgt. Ein Punkt, den du danach ziehst, rastet dagegen darauf ein, außer {{ui:inspector.snapGrid}} ist ausgeschaltet.
+:::
+
+> Die Ziffern wählen ein Werkzeug, solange keine Linie gezeichnet wird; während einer Linie sind sie ihre Länge (siehe unten). Mit dem Werkzeug {{ui:sketch.select}} und ausgewählten Linien oder Punkten ändern dieselben Tasten stattdessen die Auswahl: [[1]] macht Linien gerade und Punkte zu Ecken, [[2]] macht Linien zu Kurven und [[3]] macht Punkte weich. Ohne Auswahl wählen sie wie bisher das Werkzeug.
+
+### Formen
+
+::: {{ui:sketch.addShape}}
+Einen fertigen Umriss wählen: {{ui:sketch.rectangle}}, {{ui:sketch.circle}}, {{ui:sketch.ellipse}}, {{ui:sketch.halfCircle}}, {{ui:sketch.pieSlice}}, {{ui:sketch.boltCircle}} (eine Scheibe mit Bohrungen), {{ui:sketch.triangle}}, {{ui:sketch.hexagon}}, ein {{ui:sketch.polygon}} oder einen {{ui:sketch.star}}.
+Ein Klick setzt die Form in den Ursprung der Skizze, oder ziehe sie aus dem Menü dorthin, wo sie hin soll.
+Unten im Menü legt {{ui:sketch.polygonSides}} die Zahl der Seiten des Vielecks und der Zacken des Sterns fest, {{ui:sketch.starInner}}, wie tief die Täler des Sterns zur Mitte hin reichen (10 bis 90 Prozent des Außenradius).
+=> Beides gilt für die nächste Form, die du einfügst.
+=> Wie jede Skizzenform sind sie danach ganz gewöhnliche Eckpunkte, du kannst sie einzeln verschieben, verrunden oder fasen.
+> Das Rechteck beginnt mit der Breite und Tiefe, die in den Einstellungen unter {{ui:workspace.shapeDefaults}} für den Quader stehen, Kreis und Ellipse mit der Breite des Zylinders dort; ohne eigene Vorgabe und bei den übrigen Formen sind sie 20 mm groß.
+:::
+
+::: Umrisse überlappen
+Zwei geschlossene Umrisse über einander schieben.
+=> Es bleiben zwei Körper, die sich im 3D-Editor vereinigen; die Überlappung ist kein Loch.
+=> Beim Verschieben verbinden sich die Linien nicht an den Kreuzungen, du kannst die Formen also wieder auseinanderziehen.
+Zeichnest du dagegen eine Linie quer über andere, setzt layerling an jeder Kreuzung einen Punkt.
+> Ein Loch entsteht nur, wenn ein Umriss ganz in einem anderen liegt.
+:::
+
+### Auswählen und ändern
+
+::: icon=select {{ui:sketch.select}}
+Punkte und Linien anklicken und ziehen, um sie zu verschieben.
+In einen geschlossenen Umriss klicken, um den ganzen Umriss zu wählen; in einem Loch wird das Loch gewählt.
+=> Du kannst ihn gleich verschieben oder skalieren.
+Mit [[Umschalt]] nimmst du per Klick weitere Punkte und Linien dazu oder wieder weg, so dass du mehrere auf einmal verschieben kannst.
+Einen Rahmen über freie Fläche ziehen, um alles darin zu wählen.
+Eine Linie ziehen: Sie wandert an ihren beiden Enden, oder die ganze Auswahl, wenn sie zu einer gehört.
+Die Pfeiltasten verschieben die Auswahl um einen Rasterschritt, mit [[Umschalt]] um einen größeren.
+[[Umschalt]] beim Ziehen hält die Bewegung auf einer Achse.
+:::
+
+::: Der Rahmen um die Auswahl
+An einem Eckgriff ziehen, um Breite und Höhe zugleich zu ändern; mit gehaltener [[Umschalt]]-Taste im gleichen Verhältnis.
+An einem Seitengriff ziehen, um nur eine Richtung zu ändern.
+Die Maßblase für Breite oder Höhe anklicken und ein neues Maß eintippen, gern auch als Rechnung („60+12,5“) oder in Prozent („150%“).
+An den gebogenen Pfeilen an den Ecken ziehen, um die ganze Auswahl um ihre Mitte zu drehen.
+=> Die Zahl über dem Mauszeiger zeigt den Winkel; mit gehaltener [[Umschalt]]-Taste dreht sie in 15°-Schritten.
+=> Beim Drehen erscheint ein Ring: Mit dem Zeiger darin rastet die Drehung in 22,5°-Schritten ein, außerhalb geht sie in ganzen Grad, unabhängig vom Raster.
+[[R]] dreht einen ganzen geschlossenen Umriss bei jedem Druck um 45°.
+:::
+
+::: Die Leiste über der Skizze
+{{ui:sketch.keepProportions}} hält das Verhältnis auch ohne [[Umschalt]]: Ecken und Seiten strecken dann in beide Richtungen gleich, und ein eingetipptes Maß für Breite oder Höhe ändert das andere mit.
+=> layerling merkt sich den Schalter.
+Die Felder X und Y zeigen, wo die Mitte der Auswahl liegt, in mm vom Ursprung der Skizze. Tippe einen Wert ein, und sie rückt genau dorthin, etwa ein Loch 12 mm neben die Mitte. Y zählt nach oben, wie im 3D-Editor.
+Sind zwei oder mehr Umrisse ausgewählt, richtet die Leiste sie aneinander aus: links, mittig oder rechts und oben, mittig oder unten, am Rahmen um alle.
+=> Jeder Umriss bewegt sich als Ganzes und behält seine Form; in beide Richtungen mittig werden zwei Kreise zu einem Ring.
+:::
+
+::: Einen Umriss sperren | [[Strg]]+[[L]]
+{{ui:sketch.lockOutline}} in der Leiste sperrt den gewählten Umriss wie einen gesperrten Körper im 3D-Editor.
+=> Er lässt sich nicht mehr verschieben, skalieren, drehen oder bearbeiten. Seine Linien werden blasser, seine Punkte grau, und die Griffe des Rahmens werden grau und reagieren nicht mehr.
+=> An seinen Ecken dürfen weiter Linien ansetzen.
+=> Beim Ausrichten bleibt ein gesperrter Umriss, wo er ist, und die anderen richten sich nach ihm.
+Freigeben: Solange er ausgewählt ist, auf das Schloss in seiner Ecke klicken, oder {{ui:sketch.unlockOutline}} anklicken.
+:::
+
+::: icon=refine {{ui:sketch.refine}} | [[4]]
+Einen Abschnitt anklicken, um einen Punkt zu setzen.
+Einen Punkt anklicken, um ihn zu entfernen.
+=> layerling verbindet seine beiden Nachbarn, damit der Umriss geschlossen bleibt.
+:::
+
+::: icon=erase {{ui:sketch.erase}}
+Ein Klick auf einen Punkt oder eine Linie entfernt ihn.
+Ein Fenster über mehrere ziehen, um alles darin zu entfernen.
+Ist etwas ausgewählt, löscht der Knopf die Auswahl.
+Willst du nur ein Stück eines Kreises loswerden, etwa für eine abgerundete Ecke, klick genau dieses Bogenstück zwischen zwei Punkten an.
+=> Der Rest bleibt stehen.
+:::
+
+::: Eine Lücke schließen
+Ein offenes Ende auf das andere ziehen, etwa nachdem du eine Seite eines Sechsecks gelöscht hast.
+=> Es rastet dort ein, und beide werden zu einem Punkt, der Umriss ist wieder geschlossen.
+=> An einem Kreuzungspunkt, etwa wo eine Linie einen Kreis schneidet, werden die Seiten verbunden, die geradeaus durchlaufen: Bogen mit Bogen, Linie mit Linie, und der Kreis bleibt rund.
+:::
+
+::: icon=image {{ui:sketch.addImage}}
+Ein Vorlagenbild unter die Skizze legen, um es nachzuzeichnen, siehe [Ein Bild als Vorlage](#ein-bild-als-vorlage).
+:::
+
+### Zwischenablage und Verlauf
+
+::: Kopieren, Einfügen, Duplizieren, Löschen
+{{ui:editor.tool.copy}}, {{ui:editor.tool.paste}}, {{ui:editor.tool.duplicate}} und {{ui:editor.tool.delete}} wirken auf die gewählten Punkte, Linien und Bilder, wie im 3D-Editor; [[Strg]]+[[X]] schneidet aus.
+=> Eingefügtes und Dupliziertes landet mit 10 mm Abstand neben dem Original, an einer freien Stelle, an der es keine vorhandene Linie berührt, so dass es nie mit dem Bestehenden verbunden wird.
+=> Es bleibt ausgewählt, so dass du es gleich an seinen Platz ziehen kannst.
+{{ui:sketch.undo}} und {{ui:sketch.redo}} gehen einen Schritt zurück und wieder vor.
+:::
+
+### Notizen
+
+::: {{ui:editor.tool.note}} | [[N]]
+{{ui:editor.tool.note}} unter {{ui:sketch.viewControls}} anklicken, dann dorthin klicken, wo die Notiz hin soll: irgendwohin, auch auf eine Linie.
+Ziehen an der Nadel verschiebt sie, ein Klick auf die Nadel klappt die Karte zu.
+=> Die Notizen einer Skizze gehören zu ihrem Körper: In der 3D-Ansicht sitzen sie oben auf einem extrudierten oder gezogenen Körper und auf dem gezeichneten Profil eines gedrehten, und sie wandern mit ihm.
+=> Öffnest du die Skizze wieder, zeigt sie alle Notizen des Körpers, auch die in 3D gesetzten.
+{{ui:sketch.undo}} nimmt eine Notiz zurück wie eine Linie, und {{ui:sketch.cancel}} verwirft, was sich an den Notizen geändert hat.
+> Mehr im Kapitel [Messen und Notizen](chapter:messen-und-notizen).
+:::
+
+### Ansicht und Maße
+
+::: Die Ansicht verschieben
+Mit der mittleren Maustaste verschieben oder mit [[Umschalt]] oder [[Strg]] plus rechter Maustaste, wie im 3D-Editor.
+Ist nichts ausgewählt, verschieben [[Strg]] und die Pfeiltasten sie auch: ein Zehntel des Bildes pro Druck, mit [[Umschalt]] dazu die Hälfte; die Skizze wandert in ihre Richtung.
+[[Pos1]] holt die ganze Skizze ins Bild, [[F]] zoomt auf die Auswahl (ohne Auswahl auf die ganze Skizze), und [[+]] und [[−]] zoomen hinein und heraus, wie im 3D-Editor.
+Ist nichts ausgewählt, schiebt ein Doppelklick auf eine freie Stelle sie in die Mitte der Ansicht.
+> {{ui:workspace.doubleClickCentersView}} in den Einstellungen schaltet den Doppelklick ab.
+:::
+
+::: Maße
+Eine Linie oder einen Punkt anklicken.
+=> Die Skizze zeigt bei einer Linie ihre Länge, bei einem Punkt die Längen der Linien, die dort zusammentreffen.
+Die Schaltfläche {{ui:sketch.showMeasurements}} in der Skizzenleiste blendet diese Maße aus und wieder ein, wenn sie stören, zum Beispiel beim Formen von Kurven. Ruht der Mauszeiger auf einem Punkt, zeigt ein kleines Schild daneben sein X und Y, in mm vom Ursprung der Skizze, und läuft mit, während der Punkt gezogen wird; die Schaltfläche blendet auch dieses Schild aus.
+Das {{ui:camera.tapeTools}} in der Skizzenleiste misst den Abstand zwischen zwei Punkten; es funktioniert auch bei ausgeblendeten Maßen.
+:::
+
+![Ein L-förmiger Umriss. Am gewählten Eckpunkt oben links stehen die Längen der beiden Linien in Millimetern und der Winkel dazwischen in Grad.](shot:sketch-outline)
+
+::: Eine Länge eintippen
+Bei einer geraden Linie die Maßblase anklicken und die Länge in Millimetern eintippen.
+[[Enter]] übernimmt sie, [[Esc]] bricht ab.
+=> Die Linie behält ihre Richtung, ihr Anfangspunkt bleibt stehen, und die Linien am anderen Ende gehen mit. Ist ein Endpunkt markiert, wandert dieser.
+Mit [[Alt]]+[[Enter]] wächst die Linie stattdessen zu beiden Seiten und behält ihre Mitte.
+=> Bei Kurven zeigt die Blase nur die Länge.
+:::
+
+## Linien nach Maß und Winkel
+
+Hast du mit {{ui:sketch.line}} oder {{ui:sketch.smooth}} den ersten Punkt gesetzt, tippst du einfach eine Zahl: Neben der Linie öffnen sich zwei Felder, {{ui:sketch.typedLength}} in Millimetern und {{ui:sketch.typedAngle}} in Grad. Mit [[<]] oder [[Tab]] wechselst du zum Winkel, so dass „50<30“ eine 50 mm lange Linie unter 30° ergibt, wie in AutoCAD. [[Enter]] setzt den Punkt, und du tippst gleich die nächste Linie; [[Esc]] schließt die Felder, ohne den Linienzug zu beenden.
+
+Der Winkel zählt von rechts gegen den Uhrzeigersinn: 0° nach rechts, 90° nach oben, 180° nach links, 270° nach unten. Lässt du ihn leer, folgt die Linie dem Zeiger, du gibst also nur die Länge vor und zeigst die Richtung mit der Maus. Rechnungen wie „40+12,5“ gehen in beiden Feldern. Würde der Punkt neben der Platte landen, sagt das Feld es dir und wartet auf ein anderes Maß.
+
+## Eine gerade Seite krümmen
+
+Wähle eine gerade Linie und klicke in der Leiste, die erscheint, auf {{ui:sketch.curveLine}}: Die Seite wölbt sich wie bei Tinkercad zu einer Kurve und zeigt ihre beiden Griffe. Ziehe daran, um die Kurve zu formen; je weiter ein Griff absteht, desto stärker die Biegung. Unter dem Zeiger färbt sich ein Griff orange, und er fängt auch einen Klick knapp daneben ab, damit ein Vorlagenbild darunter nicht aus Versehen verrutscht. {{ui:sketch.straightenLine}} macht die Seite wieder gerade. Einen gewählten Punkt kannst du mit {{ui:sketch.smooth}} rund machen: Er bekommt eigene Griffe, und die Linien daneben werden zu Kurven. Sind drei oder mehr Punkte gewählt, legt {{ui:sketch.curveThroughPoints}} in der Leiste eine weiche Kurve vom ersten bis zum letzten von ihnen, durch jeden Punkt dazwischen, so wie das Werkzeug {{ui:sketch.smooth}} sie zeichnet; die Linien jenseits der beiden Enden bleiben, wie sie sind. In anderen Programmen heißt das „Fit curve“ oder „Fit point spline“. Der Unterschied: {{ui:sketch.curveLine}} biegt jede gewählte Seite für sich und lässt die Ecken dazwischen stehen, für einen Bogen an einer Seite; {{ui:sketch.curveThroughPoints}} führt eine Kurve durch die Punkte und lässt keine Ecken übrig, zum Glätten einer zackigen, nachgezeichneten Kante. Klick auf einen Griff, und er leuchtet auf: Die Pfeiltasten verschieben ihn dann um einen Rasterschritt, mit [[Shift]] um einen größeren, so stellst du eine Kurve genau ein.
+
+Werte lassen sich auch eintippen. Ein gewählter Punkt zeigt in der Leiste {{ui:sketch.selectionX}} und {{ui:sketch.selectionY}}: wo er liegt, in mm vom Ursprung der Skizze, Y zählt nach oben. Klick auf einen Griff, dann zeigt die Leiste stattdessen {{ui:sketch.handleX}} und {{ui:sketch.handleY}}: wo der Griff von seinem Punkt aus liegt. An einem glatten Punkt dreht der Gegengriff mit. Gibst du dem passenden Griff auf der anderen Seite dasselbe Y und das X mit umgekehrtem Vorzeichen, wird die Kurve genau gespiegelt; eine ganze Hälfte auf einmal spiegelt {{ui:sketch.mirror}}.
+
+![Die untere Seite des L-förmigen Umrisses zu einer Kurve gebogen, mit ihren zwei Griffen an den Enden.](shot:sketch-curve)
+
+## Winkel ablesen und eintippen
+
+Klickst du einen Eckpunkt an, an dem **zwei gerade Linien** zusammentreffen, zeigt layerling neben den Längen den **Winkel** dazwischen in Grad, mit einem kleinen Bogen. In einem geschlossenen Umriss ist es der Winkel im Inneren der Form, eine Einbuchtung liest sich also über 180°. Klicke auf den Wert und tippe einen neuen Winkel. Dann dreht sich eine der beiden Linien um die Ecke und behält ihre Länge, die andere bleibt, wo sie ist. Die Linie, die sich dreht, ist gestrichelt; mit [[Tab]] wechselst du zur anderen, [[Enter]] übernimmt und [[Esc]] bricht ab. Was am anderen Ende der gedrehten Linie hängt, geht mit.
+
+Ein gesperrter Punkt bleibt, wo er ist, und ein getippter Wert richtet sich danach: Eine Länge bewegt das freie Ende der Linie, ein Winkel dreht die Linie, deren anderes Ende frei ist. Auch ein einzelner Punkt lässt sich sperren: markieren und [[Strg]]+[[L]] drücken. So machst du einen Umriss Ecke für Ecke genau: eine Ecke sperren, Länge und Winkel der nächsten Linie eintippen, ihr Ende sperren und weiter.
+
+Verschiebst du einen Punkt, ändern sich drei Winkel: an ihm selbst und an den beiden Nachbarecken am anderen Ende seiner Linien. Darum zeigt layerling auch diese beiden, und jeder lässt sich anklicken und eintippen. So stellst du etwa eine Ecke unten links auf 75,5°, während oben links der Punkt gewählt ist, der dafür wandert. Auch hier darfst du rechnen, z. B. „90-14,5“.
+
+Wo eine Kurve an die Ecke stößt oder mehr als zwei Linien zusammenlaufen, gibt es keinen Winkel. Der Knopf {{ui:sketch.showMeasurements}} in der Skizzenleiste blendet den Winkel zusammen mit den Längen aus.
+
+## Ecken runden oder fasen
+
+Klicke auf einen Eckpunkt und wähle {{ui:sketch.filletCorner}} oder {{ui:sketch.chamferCorner}}. Es erscheint ein kleines Feld für den {{ui:sketch.filletRadius}} beziehungsweise den {{ui:sketch.chamferDistance}}. Trage das Maß ein und bestätige mit dem Haken. Das geht für Ecken zwischen zwei geraden Linien.
+
+Auch mehrere Ecken auf einmal gehen: Wähle sie mit [[Umschalt]] und je einem Klick oder ziehe einen Rahmen darum, und nimm {{ui:sketch.filletCorner}} oder {{ui:sketch.chamferCorner}} aus der Leiste, die erscheint. Alle bekommen denselben Radius oder Abstand. Teilen sich zwei gewählte Ecken eine Seite, nimmt jede höchstens 45 % davon, ein Rechteck rundherum verrundet wird also an jeder Ecke gleich. Punkte, die keine Ecke zwischen zwei geraden Linien sind, bleiben außen vor, und die Meldung sagt, wie viele. Ein Rahmen um eine ganze Form oder ein Klick hinein wählt ihre Ecken und ihre Linien zusammen aus, und die Leiste bietet dann neben den Eckenwerkzeugen {{ui:sketch.curveLine}} und {{ui:sketch.straightenLine}} für alle gewählten Linien an.
+
+![Die Ecke oben links wird mit 12 mm Radius verrundet.](shot:sketch-fillet)
+
+## Spiegeln
+
+Wähle Punkte und Linien aus (anklicken, [[Umschalt]] und Klick, oder einen Rahmen darum ziehen) und klicke in der Leiste auf {{ui:sketch.mirror}}. Dann wählst du die Achse: {{ui:sketch.mirrorLeftRight}} spiegelt an der senkrechten Achse durch die Mitte der Platte, {{ui:sketch.mirrorTopBottom}} an der waagerechten, und {{ui:sketch.mirrorAcrossLine}} an einer geraden Linie der Skizze, die du danach anklickst. Die Kopie kommt auf die andere Seite, das Original bleibt; nichts ist verknüpft, du kannst beide einzeln ändern. Punkte, die auf der Achse liegen, werden geteilt, so wird aus einem halben Umriss, dessen Enden auf der Achse sitzen, ein geschlossener Umriss: Zeichne die Hälfte eines Winkels, wähle sie aus, spiegle sie und mache den Körper daraus. Eine Hilfslinie eignet sich gut als Achse. [[Esc]] bricht ab.
+
+## Hilfslinien
+
+Eine Hilfslinie hilft dir beim Setzen von Punkten, ohne zum Körper zu gehören. Sie wird gestrichelt gezeichnet und zählt nie zum Umriss: Du kannst sie beliebig weit über die Form hinausziehen, ohne dass der Körper größer wird.
+
+- Schalte {{ui:sketch.construction}} in der Gruppe {{ui:sketch.group.draw}} ein. Neue Linien, auch die nach Maß, sind dann Hilfslinien. Mit dem Knopf schaltest du wieder auf normale Linien zurück.
+- Eine schon gezeichnete Linie machst du zur Hilfslinie, indem du sie anklickst und {{ui:sketch.makeConstruction}} wählst. {{ui:sketch.makeSolid}} macht sie wieder zu einer normalen Linie.
+- Neue Punkte rasten dort ein, wo eine Hilfslinie eine andere Linie kreuzt, ein blauer Ring zeigt es, und an den Enden der Hilfslinie. So legst du eine Ecke auf eine Mitte, in einen festen Abstand von der Kante oder auf einen Schnittpunkt, ohne zu rechnen.
+- Neue Punkte rasten auch in der Mitte jeder geraden Linie der Skizze ein, im Mittelpunkt jedes Kreises und jeder abgerundeten Ecke und in den Mitten der Seiten eines Körpers, der darunter gezeigt wird (#624). Ein Punkt, den du gerade ziehst, ignoriert die Mitte seiner eigenen Linien.
+- Eine Auswahl, die du ziehst, rastet mit ihrer Mitte ein (#1236): Der Mittelpunkt eines Kreises oder die Mitte eines Rechtecks landet auf den Enden, Ecken und Mitten der übrigen Linien, auf Kreismittelpunkten, auf Kreuzungen von Hilfslinien und auf den Ecken eines Körpers darunter; ein blauer Ring zeigt die Stelle. Eine Form, die du aus {{ui:sketch.addShape}} hereinziehst, landet mit ihrer Mitte ebenfalls auf diesen Punkten. Mit gedrückter [[Alt]]-Taste bleibt es beim Raster.
+- {{ui:sketch.fromMiddle}} in der Gruppe {{ui:sketch.group.draw}} zeichnet eine Linie von ihrer Mitte aus: Klicke erst die Mitte an, dann das Ende, und die Linie ist zur anderen Seite gleich lang. Die Mitte wird ein eigener Punkt. Mit einem weiteren Klick auf den Knopf zeichnest du wieder normale Linien.
+- Eine Hilfslinie schneidet den Umriss dort nicht auseinander, wo sie ihn kreuzt. Beim Rotieren darf sie auch rechts von der Achse liegen.
+
+## Ein Körper daraus machen
+
+Klicke auf {{ui:sketch.finishSketch}}. Der Umriss steht als Körper auf der Arbeitsebene und trägt den Namen „Skizzenkörper“. In seinen Einstellungen änderst du die Höhe, die Farbe und alles Weitere wie bei jeder anderen Form. Änderst du seine Größe, baut layerling ihn kurz danach aus der Skizze neu auf, und die Skizze wächst mit. So bleibt er ein exakter Körper, an dem Fase und Rundung gehen, und beim nächsten Bearbeiten hat die Skizze die Größe, die der Körper hat.
+
+Liegt die Arbeitsebene auf einer Seite eines Körpers, zeichnest du so, wie du auf diese Seite schaust: Oben in der Skizze ist auch am fertigen Körper oben. Der blasse Umriss des Körpers in der Skizzenansicht zeigt, wo er steht. Schneidet die Arbeitsebene durch einen Körper, zeigt die Skizzenansicht stattdessen den Umriss dieses Schnitts: Ein ausgehöhlter Körper erscheint als Ring, und du kannst die Skizze an seinen Wänden ausrichten. Ein Punkt, den du nahe an eine Ecke dieser Umrisse setzt oder ziehst, rastet genau dort ein; ein kleiner blauer Ring zeigt das an. So übernimmst du Kanten anderer Körper in die Skizze, auch wenn die Arbeitsebene nicht genau auf ihnen liegt. Um an vorhandener Arbeit entlangzuzeichnen, schaltest du {{ui:sketch.showPartEdges}} ein (der Knopf mit den Schichten bei den Ansichtsknöpfen links): Dann werden alle Kanten der Körper dünn und blass auf die Skizzenebene gezeichnet, als sähest du durch sie hindurch, in welcher Höhe sie auch liegen. Eine senkrecht stehende Ebene, etwa auf eine Vorderfläche gelegt, zeigt so die Vorderansicht. Die Wahl wird im Browser gemerkt.
+
+![Aus dem Umriss ist ein Körper geworden. Die Ecke ist gerundet.](shot:sketch-result)
+
+Mit {{ui:inspector.editSketch}} kehrst du jederzeit in die Skizze zurück, um sie zu ändern. Ein Doppelklick auf den Körper tut dasselbe, wie bei Tinkercad (ein gesperrter Körper bleibt zu); in den Einstellungen lässt sich das mit {{ui:workspace.doubleClickOpensSketch}} abschalten. Kantenbearbeitungen, die du an dem Körper schon gemacht hast, gehen dabei allerdings verloren, weil die Kanten neu entstehen. Ein Körper, den du im 3D-Editor gedreht oder verschoben hast, öffnet sich dort, wo er auf der Platte steht, so gedreht, wie du ihn dort siehst, und auf dem Raster der Platte; nur ein gekippter oder gespiegelter Körper öffnet sich in seiner eigenen Lage.
+
+Eine Skizze mit mehreren Umrissen ergibt einen Körper, und Umrisse, die sich überlappen, verschmelzen darin. Sollen die Umrisse einzeln bleiben, wähle den Körper und klicke {{ui:inspector.separateParts}}: Jeder äußere Umriss wird ein eigener Körper mit den Löchern, die in ihm liegen, und behält Höhe, Farbe und Platz. Jedes Teil hat seine eigene Skizze zum Bearbeiten, mit den Hilfslinien, so dass du die Teile einzeln anheben oder absenken und danach verbinden oder abziehen kannst. Kantenbearbeitungen verhindern das, ebenso ein nachträglich gestreckter Körper: Er wird dann als Netz zerlegt.
+
+**Eine andere Körperart aus derselben Skizze:** Das Schild oben in der Skizze sagt, was aus ihr wird: {{ui:sketch.modeBadgeExtrude}}, {{ui:sketch.modeBadgeRevolve}} oder {{ui:sketch.modeBadgeSweep}}. Klicke darauf und wähle eine andere, auch während du einen vorhandenen Körper bearbeitest: Ein importiertes SVG, das extrudiert hereinkommt, wird zur Vase oder zum Knauf, wenn du es auf {{ui:sketch.modeBadgeRevolve}} umstellst. Ein Umriss, der über die Achse reicht, rückt nach links, bis sein rechter Rand auf der Achse liegt; so dreht sich der halbe Querschnitt eines SVG um seine gerade Seite. [[Strg]]+[[Z]] nimmt das Verschieben zurück. Beim Abschließen tritt der neue Körper an die Stelle des alten, mit dessen Namen und Farbe und dem Fuß auf derselben Höhe. Kantenbearbeitungen gehen dabei verloren, wie bei jeder Änderung einer Skizze.
+
+### Rotieren
+
+Beim Rotieren zeichnest du den halben Querschnitt **links von der Achse**, die in der Skizze eingezeichnet ist. Daneben siehst du eine 3D-Vorschau der Drehung. Sie zeigt sofort, wie der Körper aussieht. Du kannst sie mit der Maus drehen, verschieben und zoomen; der kleine Knopf oben rechts in der Vorschau oder ein Doppelklick darauf holt die erste Ansicht zurück. Der Umriss muss geschlossen sein, oder du baust eine offene Linie als Kontur, siehe unten. Zum Schluss klickst du auf {{ui:sketch.finishRevolve}}. Die anderen Körper des Entwurfs erscheinen von vorn, in derselben Ansicht wie das Profil, mit der Achse in der Mitte: Zeichne das Profil neben oder über sie. Der Körper steht dort, wo du ihn gezeichnet hast, und die waagerechte Linie durch die Mitte der Skizze ist der Boden: Ein Profil über ihr ergibt einen Körper, der höher steht, und sein tiefster Punkt ist der Fuß des Körpers. Für einen größeren Radius schiebst du das Profil weiter von der Achse weg, wenn nötig über den Rand der Fläche hinaus: Die Fläche wächst mit der Skizze, ihr Raster folgt beim Loslassen, und die Minus-Taste zoomt heraus, bis alles zu sehen ist.
+
+Ein gedrehter Körper ist ein exakter Körper wie ein ausgezogener: Er nimmt Fasen und Verrundungen an, und du kannst ihn aushöhlen, für einen Becher oder eine Vase. Ein Körper, der mit einer älteren layerling-Fassung gedreht wurde, ist ein Netz; öffne {{ui:inspector.editSketch}} und schließe ihn neu ab, dann ist er exakt. Ein Umriss, der über die Achse hinausreicht, lässt sich nicht exakt bauen und wird wie bisher ein Netz.
+
+**Glattere runde Flächen: {{ui:prop.revolveSmoothness}}.** Ein exakter Drehkörper wird für Ansicht, Export und Druck in kleine ebene Facetten geteilt, und an einem großen Topf können sie im Druck sichtbar werden. Wähle den Körper und stelle im Eigenschaftenfeld {{ui:prop.revolveSmoothness}} auf {{ui:prop.revolveSmoothnessFine}} oder {{ui:prop.revolveSmoothnessExtraFine}}: Die runden Flächen werden feiner geteilt, um den Preis von mehr Dreiecken und einem langsameren Entwurf. Eine Schraubenlinie oder ein Netz-Drehkörper hat dafür {{ui:prop.sides}}.
+
+**Ein durchgehender Strang: {{ui:prop.pitch}}.** Eine Drehung macht aus dem Umriss geschlossene Ringe. Wähle den gedrehten Körper aus und gib ihm in den Eigenschaften eine {{ui:prop.pitch}} über 0, die Höhe, um die er pro Umdrehung steigt, dann windet sich der Umriss als Schraubenlinie: ein durchgehender Strang wie Filament auf einer Spule oder eine Spirale. Aus {{ui:prop.sweep}} wird dann {{ui:prop.turns}}, bis 200; eine negative Zahl windet linksgängig. Windungen, die enger liegen, als der Umriss hoch ist, verschmelzen zu einem Körper, also geht auch ein voller Kern mit feiner Steigung. Eine Schraubenlinie wird als Netz gebaut, Verrunden, Fasen und Aushöhlen gehen darauf nicht; halte {{ui:prop.sides}} bei vielen Windungen niedrig. Eine Steigung von 0 macht wieder Ringe.
+
+## Entlang eines Pfades ziehen
+
+{{ui:sketch.sweep}} zieht einen Umriss an einem Pfad entlang: ein Kabelkanal, der um die Ecke geht, eine Leitung, ein Schutz um einen Riemen, ein Ring um ein Sechseck. Der Knopf steht neben {{ui:sketch.extrude}} und {{ui:sketch.revolve}} in der Gruppe {{ui:sketch.group.create}}.
+
+Du zeichnest zwei Dinge auf dasselbe Blatt:
+
+- **Der Querschnitt** als geschlossener Umriss, wie sonst auch. Zeichne ihn so, wie du ihn sähest, wenn du vom Anfang des Pfades aus am Pfad entlangblickst: quer zum Pfad ist links und rechts in der Skizze, oben ist oben am fertigen Körper. Ein hohler Querschnitt, ein Kanal oder ein Rohr, ist ein Umriss mit einem zweiten darin. Der Querschnitt sitzt standardmäßig quer mittig auf dem Pfad. Im Menü neben der Modusanzeige oben legst du stattdessen seine linke oder rechte Kante auf den Pfad ({{ui:sketch.sweepAnchorLeft}}, {{ui:sketch.sweepAnchorRight}}, in Pfadrichtung gesehen), sodass eine Leiste auf einer Seite der Linie sitzt oder der Kante eines Teils folgt. Der Körper steht mit dem tiefsten Punkt des Querschnitts auf der Skizzenebene.
+
+- **Der Pfad** als {{ui:sketch.construction}}: Schalte sie ein und zeichne Linien oder Kurven, eine einzige Kette, offen oder geschlossen (eine geschlossene Kette ergibt einen Ring). Der Pfad liegt flach in der Skizzenebene.
+
+Zeichne den Querschnitt an das Ende des Pfades, wo er beginnen soll; der Pfad beginnt an dem Ende, das ihm am nächsten liegt. Klicke dann auf {{ui:sketch.finishSweep}}. Eine Ecke aus geraden Stücken wird eine Gehrung, eine Kurve bleibt glatt, und der Querschnitt bleibt auf der ganzen Strecke aufrecht. Der Körper ist exakt wie ein hochgezogener: Verrundung, Fase und STEP-Export gehen. Fehlt ein geschlossener Umriss oder ein Pfad, oder gibt es mehrere getrennte Pfade, sagt layerling es. Mit {{ui:inspector.editSketch}} gehst du zurück in die Skizze und änderst Querschnitt oder Pfad.
+
+## Als Kontur bauen
+
+Normalerweise wird die Fläche innerhalb eines geschlossenen Umrisses zum Körper. Mit {{ui:sketch.stroke}} im Abschnitt {{ui:sketch.group.finish}} baust du stattdessen die Linie selbst, mit einer Breite, die du einstellst. Setze dazu im Linienfenster das Häkchen bei {{ui:sketch.strokeOn}}. Die Skizze zeigt dann gleich, was entsteht.
+
+- Ein **geschlossener Umriss** wird zu einem Rahmen. {{ui:sketch.strokeAlign}} sagt, wo die Wand liegt: {{ui:sketch.strokeAlign.center}} auf der gezeichneten Linie, {{ui:sketch.strokeAlign.inside}} innerhalb oder {{ui:sketch.strokeAlign.outside}} außerhalb. Außen ist praktisch für eine Toleranz: Zeichne den Umriss einer Aussparung, etwa eines Schwalbenschwanzes, und gib ihm 0,2 mm Kontur außen. So entsteht der Spalt, den der Druck braucht.
+- Eine **offene Linie** wird zu einem Streifen, mittig auf der Linie. Unter {{ui:sketch.strokeCap}} wählst du, wie ihre Enden aussehen: {{ui:sketch.strokeCap.flat}}, {{ui:sketch.strokeCap.square}} (um die halbe Breite verlängert) oder {{ui:sketch.strokeCap.round}}.
+- {{ui:sketch.strokeJoin}} gilt für beide: {{ui:sketch.strokeJoin.miter}}, {{ui:sketch.strokeJoin.round}} oder {{ui:sketch.strokeJoin.bevel}}.
+
+Die Skizze behält die gezeichnete Linie. Öffnest du sie wieder, änderst du Linie und Kontur weiter, und ohne Häkchen wird wieder die Fläche gebaut. Kurven werden dabei in kurze gerade Stücke zerlegt.
+
+Beim Rotieren ist die Kontur eine dünne Wand: Zeichne die Wand einer Vase oder eines Bechers als **eine offene Linie** links von der Achse, setze das Häkchen bei {{ui:sketch.stroke}} und stelle die Breite ein, dann dreht die Rotation dieses Band. Was über die Achse hinausreicht, wird an ihr abgeschnitten.
+
+## Füllung und Silhouette
+
+Die Kontur stellst du auch ein, ohne die Skizze zu öffnen: In den Eigenschaften eines Skizzenkörpers wählst du unter {{ui:prop.sketchFill}} {{ui:prop.sketchFill.area}}, {{ui:prop.sketchFill.outside}}, {{ui:prop.sketchFill.inside}} oder {{ui:prop.sketchFill.center}}, dazu {{ui:prop.sketchLineWidth}} und {{ui:sketch.strokeJoin}}. Der Körper wird gleich neu gebaut, an seinem Platz. Das entspricht den Füllarten beim SVG-Import in Tinkercad: Standard, Außenlinie und Innenlinie. {{ui:prop.sketchFill.grow}} lässt die Fläche gefüllt und vergrößert sie rundum um die Linienbreite, mit spitzen, runden oder abgeschrägten Ecken: eine Grundschicht unter einem Logo für den Mehrfarbdruck, die Kontur außen allein nur als Ring ergäbe. {{ui:prop.sketchFill.shrink}} macht das Gegenteil: Die Fläche bleibt gefüllt und ihr Rand rückt rundum um die Linienbreite nach innen, Löcher eingeschlossen (sie werden größer). Mit beiden an Kopien einer Skizze passt du etwas ein: das Loch in der gezeichneten Größe, das Teil, das hindurchgeht, {{ui:prop.sketchFill.shrink}} um 0,5 mm, oder eine Wand innen in einer Form aus demselben Umriss. Eine Breite, die der Umriss nicht hergibt, lässt nichts übrig. Im Linienfenster der Skizze stehen dieselben beiden Auswahlen unter {{ui:sketch.strokeAlign}}. Bei einer Linie außen, innen oder mittig macht {{ui:prop.sketchCuttingEdge}} die Wand oben scharf: Sie läuft mit einer 45°-Fase auf beiden Seiten auf diese Breite zu, wie bei einer Ausstechform. 0 lässt sie oben flach; die Kante bleibt, wenn du die Linienbreite änderst.
+
+{{ui:prop.sketchSilhouette}} lässt alle Umrisse weg, die in einem anderen liegen: Löcher und was in ihnen liegt. Übrig bleibt nur der äußere Umriss. Zusammen mit {{ui:prop.sketchFill.outside}} wird daraus ein Ausstecher: Importiere ein SVG zweimal, einmal mit Silhouette als Fläche für den Boden und einmal mit Silhouette und 1 bis 2 mm Kontur außen als Wand. Den Schalter gibt es auch im Fenster {{ui:sketch.stroke}} im Skizzenmodus.
+
+Verrundungen und Fasen an den Kanten gehen beim Neubau verloren, wie beim Bearbeiten der Skizze. {{ui:inspector.taper}} und {{ui:inspector.twist}} bleiben; eine Verjüngung wächst oder schrumpft mit dem Umriss.
+
+## Schräge Wände, für Stempel
+
+Eine extrudierte Skizze hat senkrechte Wände. Ein Stempel, eine Prägeform oder ein Stanzwerkzeug braucht schräge, außen und innen, mit durchgehend gleicher Wandstärke. Einen Ausformwinkel für die Extrusion gibt es in layerling nicht, bei einfachen Umrissen kommt man aber mit der {{ui:inspector.taper}} ans Ziel. Ein Weg, der funktioniert:
+
+1. Zeichne den Umriss mit dem Loch, das er braucht, und mache einen Körper daraus. Dupliziere den Körper ([[Strg]]+[[D]]).
+2. Schalte beim ersten Körper {{ui:prop.sketchSilhouette}} ein, so dass das Loch gefüllt ist, und gib ihm mit {{ui:inspector.taper}} unten eine größere Fläche als oben.
+3. Öffne bei der Kopie die Skizze noch einmal und lösche den äußeren Umriss, so dass nur der Umriss des Lochs bleibt. Schließe die Skizze ab, stelle den Körper auf {{ui:inspector.hole}} und gib ihm mit {{ui:inspector.taper}} unten eine kleinere Fläche als oben.
+4. Schiebe das Loch dorthin, wo es im ersten Körper war, und gruppiere beide.
+
+Die Wände sind nun außen und innen schräg. Die Verjüngung skaliert den ganzen Umriss, deshalb stimmt das bei einfachen Formen genau, wo du die Maße so wählen kannst, dass die Wände parallel laufen, und bei feinen Einzelheiten wie Schrift nur ungefähr.
+
+## Ein Bild als Vorlage
+
+Mit {{ui:sketch.addImage}} legst du ein Foto oder eine Zeichnung unter die Skizze und zeichnest sie nach, jederzeit, auch vor der ersten Linie. Du kannst die Größe, die Deckkraft und die Lage einstellen. Sobald das Bild richtig liegt, sperrst du es mit [[Strg]]+[[L]], damit du es beim Zeichnen nicht versehentlich verschiebst. Ein gesperrtes Bild ist aus dem Weg: Klicks gehen durch es hindurch, du wählst also Linien und Punkte darauf an und ziehst einen Rahmen darüber. Ein Klick auf das Schloss in seiner Ecke entsperrt es; mit [[Alt]]+Klick wählst du es aus, ohne es zu entsperren. Verdecken seine Einstellungen am rechten Rand das Bild, ziehst du sie an ihrer Titelleiste weg; ein Doppelklick darauf dockt sie wieder an.
+
+Unter {{ui:sketch.imageAlign}} richtest du ein Foto aus, das nicht gerade aufgenommen wurde:
+
+- **{{ui:sketch.imageRotation}}:** Drehe das Bild um seine Mitte, mit den gebogenen Pfeilen an seinen Ecken oder als Zahl in Grad. Mit [[Umschalt]] rasten die Pfeile in 15°-Schritten ein. Im Ring, der beim Drehen erscheint, rasten sie in 22,5°-Schritten ein, außerhalb in ganzen Grad.
+- **{{ui:sketch.centreImageX}}** und **{{ui:sketch.centreImageY}}:** setzen die Bildmitte auf X = 0 beziehungsweise Y = 0. Beim Drehkörper ist X = 0 die Drehachse, das Bild liegt dann symmetrisch darüber.
+- **{{ui:sketch.calibrateImage}}:** Der Knopf steht oben, gleich unter der Vorschau. Klicke zwei Punkte im Bild, deren Abstand du kennst, etwa die Enden eines Lineals oder einen bekannten Durchmesser, und tippe den wirklichen Abstand ein. Das Bild wird gleichmäßig so skaliert, dass die Strecke stimmt; der erste Punkt bleibt, wo er war.
+- **{{ui:sketch.cropImage}}:** Die Griffe am Rahmen schneiden das Bild zu statt es zu skalieren; was wegfällt, bleibt gespeichert und kommt mit {{ui:sketch.uncropImage}} oder beim Herausziehen eines Griffs zurück.
+
+Alle vier wirken nur auf die Vorlage, nie auf die Skizze.
+
+**{{ui:sketch.traceImage}}** in den Einstellungen des Bildes setzt die Punkte für dich: Es zeichnet den Umriss der Form im Bild nach – eine Silhouette, ein Logo, ein Wort – und zeigt ihn in Rot über dem Bild, eckige Punkte für Ecken, runde für weiche Punkte. {{ui:sketch.traceDark}} oder {{ui:sketch.traceLight}} wählt, welcher Teil des Bildes die Form ist, {{ui:sketch.traceThreshold}}, wo Dunkel in Hell übergeht, {{ui:sketch.tracePoints}}, wie viele Punkte die Umrisse zusammen bekommen (weniger ergeben weichere Kurven, mehr folgen dem Bild genauer), {{ui:sketch.traceCorners}}, ab welchem Knick ein Punkt eine Ecke ist, {{ui:sketch.traceSpeck}}, bis zu welcher Größe Flecken wegfallen, und {{ui:sketch.traceHoles}} behält die Mitte eines A oder O. {{ui:sketch.traceApply}} legt die Umrisse genau dorthin in die Skizze, wo das Bild liegt, in seiner Größe, Drehung und seinem Zuschnitt, und wählt sie aus: Es sind gewöhnliche Punkte zum Verschieben, Krümmen oder Entfernen, und [[Strg]]+[[Z]] nimmt sie in einem Schritt zurück. Am besten klappt es mit klarem Kontrast; ein Foto mit unruhigem Hintergrund stellst du vorher frei. Was wegfällt – um die Umrisse herum, in den Löchern, was weggeschnitten ist –, deckt die Vorschau in der Farbe der Platte ab, sodass vom Bild nur zu sehen ist, was bleibt. Umrisse, die so dicht liegen, dass grobe Kurven sich kreuzen würden, bekommen von selbst mehr Punkte; die Karte sagt es dann. Für einen Rand außen oder innen um den Umriss gibst du dem Skizzenkörper eine Kontur außen oder innen an seinen Linien oder versetzt den fertigen Körper.
+
+Für ein Foto – etwa ein Spielzeug auf einem weißen Tisch – wählst du unter {{ui:sketch.tracePart}} **{{ui:sketch.traceObject}}**: Der Hintergrund ist die Farbe am Bildrand, und alles, was sich davon abhebt, wird ein einziger Umriss, gleich in welchen Farben; {{ui:sketch.traceThreshold}} legt dann fest, wie deutlich es sich abheben muss. Ein buntes Bild auf gleichmäßigem Hintergrund beginnt so. {{ui:sketch.tracePickAreas}} umrandet mehr: Klicke im Bild auf eine Fläche, etwa ein Fenster, und die Fläche gleicher Farbe um die Stelle wird umrandet ({{ui:sketch.traceAreaTolerance}} legt fest, wie gleich). Löcher und angeklickte Flächen stehen unter {{ui:sketch.traceList}}; zeigst du auf eine, erscheint sie in der Vorschau hervorgehoben, ✕ nimmt sie heraus, und mit {{ui:sketch.traceCut}} aus wird sie statt eines Lochs als Hilfslinie eingezeichnet. Eine Fläche, die bis an den Bildrand reicht, ist der Hintergrund und wird nicht genommen. Was kein Schwellwert und keine Farbe trennt – ein Schatten, so dunkel wie die Räder darüber –, nimmt {{ui:sketch.traceTrim}} weg: Klicke Ecken darum (ein Klick auf die erste Ecke, ein Doppelklick oder [[Enter]] schließt sie), und der Umriss läuft am Schnitt entlang; in der Liste steht er als „Schnitt 1“.
+
+Den Baum neben einem Haus, eine Figur vor unruhigem Hintergrund – wo keine Farbe die Form vom Rest trennt, fängt das **{{ui:sketch.traceLasso}}** sie ein: Klicke grob entlang ihrer Kante, und zwischen zwei Klicks folgt die Linie selbst der Kante, auch um Bögen; schon beim Bewegen zeigt die Vorschau, wo sie laufen wird. Ein Klick auf den ersten Punkt, ein Doppelklick oder [[Enter]] schließt sie, [[Esc]] verwirft sie. In der Liste steht sie als „Lasso 1“ mit der Wahl {{ui:sketch.traceRegionAdd}} (die Fläche kommt zur Form dazu) oder {{ui:sketch.traceTrim}} (sie wird weggenommen); dieselbe Wahl hat jeder Schnitt. Unter {{ui:sketch.tracePart}} macht **{{ui:sketch.traceLassoOnly}}** nur das zur Form, was du so einfängst – sonst nichts vom Bild.
+
+![Ein gezeichnetes Haus als Gegenstand nachgezeichnet, die Schwelle für die helle Wand gesenkt: Das Magnetlasso hat den Baum weggeschnitten, die acht Fensterscheiben sind als Löcher angeklickt.](shot:trace-house)
+
+![Das Haus als Körper: ohne den Baum, die Fenster durchbrochen.](shot:trace-house-body)
+
+## Tasten im Skizzenmodus
+
+| Taste | Wirkung |
+| --- | --- |
+| [[Esc]] | das Notizwerkzeug ablegen; sonst Werkzeug ablegen (zurück zu {{ui:sketch.select}}), dann Auswahl aufheben |
+| [[Entf]] | gewähltes Element löschen |
+| [[Strg]]+[[C]] | Auswahl kopieren |
+| [[Strg]]+[[X]] | Auswahl ausschneiden |
+| [[Strg]]+[[V]] | einfügen |
+| [[Strg]]+[[D]] | Auswahl duplizieren |
+| [[Strg]]+[[Z]] | rückgängig |
+| [[Strg]]+[[A]] | alle Punkte und Linien auswählen |
+| [[Strg]]+[[I]] | {{ui:sketch.addImage}} |
+| [[Umschalt]] | beim Zeichnen: Linie in 15°-Schritten einrasten; beim Ziehen: Bewegung auf eine Achse beschränken |
+| [[Alt]] | beim Setzen oder Ziehen eines Punkts: nur aufs Raster, ohne Einrasten an Ecken und Mitten |
+| Ziffer, [[<]], [[Tab]], [[Enter]] | beim Zeichnen: Länge und Winkel der nächsten Linie eintippen und setzen |
+| [[R]] | geschlossene Skizze um 45° drehen |
+| [[Strg]]+[[L]] | gewählten Umriss oder das Vorlagenbild sperren oder entsperren |
+| [[N]] | Notiz setzen: Der nächste Klick setzt sie auf die Skizze |
+| [[Umschalt]]+[[N]] | Notizen ein- oder ausblenden |
+
+> **Tipp:** Zeichne so wenig Punkte wie nötig. Ein Umriss mit wenigen, sauber gesetzten Punkten ergibt einen glatteren Körper als ein Gewirr aus vielen.

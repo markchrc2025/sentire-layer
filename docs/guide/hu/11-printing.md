@@ -1,0 +1,106 @@
+---
+title: Előkészítés 3D nyomtatásra
+summary: A saját nyomtatód kiválasztása, figyelmeztetés, ha valami nem fér el, és az alkatrész helyes fektetése.
+---
+
+## A nyomtatód kiválasztása
+
+Nyisd meg a beállításokat (a fogaskerék a címsorban, {{ui:editor.workspaceSettings}}), és válts a {{ui:workspace.workplane}} részre. A {{ui:workspace.printer}} alatt egy több mint 230 elterjedt modellt tartalmazó listából választod ki a nyomtatódat, köztük Bambu Lab, Prusa, Creality, Anycubic, Elegoo és sok más gyártó gépeit.
+
+![A munkasík beállításai kiválasztott nyomtatóval. A tárgyasztal és a legnagyobb nyomtatási magasság a szeletelőprofilból származik.](shot:settings-workplane)
+
+Három dolog történik:
+
+- A munkasík felveszi a tárgyasztal méretét.
+- A munkasík sarkában megjelenik a nyomtató neve és a nyomtatási tere. Ha a felirat zavar, kapcsold ki a {{ui:workspace.workplane}} alatt a {{ui:workspace.showPlateLabels}} kapcsolóval; ez a terv bal elöl lévő nevére is vonatkozik.
+- A layerling **figyelmeztet**, ha valami nem fér el.
+
+A nyomtatóprofilok többsége az OrcaSlicerből származik. Ha inkább nyomtató nélkül dolgoznál, válaszd a {{ui:workspace.printerNone}} lehetőséget. A munkasík méretét kézzel is beállíthatod.
+
+A delta nyomtatók, például az FLSun vagy a SeeMeCNC gépei vagy az Anycubic Predator, kerek tárgyasztalra nyomtatnak. Ezekkel a munkafelület is kerek, olyan széles, mint a tárgyasztal, és egy test túl nagy, amint túlnyúlik a peremen. Egy kerek testet a saját körvonala alapján mér a program, nem a köré írt doboz alapján, így egy majdnem asztalnyi széles henger is elfér.
+
+## Ha valami nem fér el
+
+Egy test, amely túlnyúlik a tárgyasztal szélén, jelölést kap. Egy üzenet megmondja, mely oldalakon és mennyivel lóg ki. Ugyanez történik, ha az alkatrész **túl magas**: a magasság a legalsó testtől számít, ahogy a szeletelő is leteszi a modellt.
+
+![A doboz szélesebb, mint a Bambu Lab A1 mini tárgyasztala. Az alul lévő üzenet megmondja, mennyivel.](shot:printer-overhang)
+
+A figyelmeztetés nem akadályoz meg abban, hogy tovább dolgozz. Csak jelzés, hogy ne a szeletelőben derüljön ki, hogy az alkatrész túl nagy. Egy túl nagy alkatrész gyakran kettévágható: vágd ketté a {{ui:editor.tool.split}} paranccsal, és nyomtasd ki a két felét külön.
+
+Ha szándékosan teszel részeket a tárgyasztal mellé, kattints az üzenetben a kis keresztre. A figyelmeztetés ekkor pontosan ezeknél a testeknél eltűnik. Ha valamelyikük újra elfér, és később ismét kitolod, vagy egy másik test lóg ki, az üzenet visszatér. A rejtett testek sosem számítanak, így a félretett részek elrejtése is működik.
+
+## Az alkatrész helyes fektetése
+
+Hogy egy alkatrész hogyan fekszik a tárgyasztalon, az dönti el az erősségét és a kinézetét. Az {{ui:editor.group.arrange}} terület két eszköze segít:
+
+- {{ui:editor.tool.layFlat}}: kattints egy lapra, és az alkatrész azzal az oldalával lefelé fekszik. A legjobb nyomtatási irány egy kattintással.
+- {{ui:editor.tool.dropToWorkplane}} ([[D]]): a munkasíkra teszi az alkatrészt, ha valahol a levegőben lebeg.
+
+Néhány ökölszabály az irányhoz:
+
+- A nagy sík lapok kerüljenek alulra. Azok tapadnak a legjobban.
+- A hosszú, terhelt alkatrészeket úgy fektesd, hogy a rétegek ne a terhelésre merőlegesen fussanak. A rétegek mentén a leggyengébb az alkatrész.
+- Kerüld a 45°-nál meredekebb túlnyúlásokat, vagy adj nekik támaszt a szeletelőben.
+
+## Túlnyúlások keresése
+
+A szem melletti menüben ({{ui:editor.group.visibility}}) a **Túlnyúlások mutatása** bekapcsolja a túlnyúlások jelölését. Minden olyan lap, amely 45°-nál meredekebben néz lefelé, ilyenkor piros-fehér sraffozást kap – ott kellene a nyomtatónak támasz. Ami a tárgyasztalon nyugszik, az jelöletlen marad. Így már tervezés közben látod, hogy egy gömb, egy boltív vagy egy vízszintes lyuk kinyomtatható-e támasz nélkül; a [csepp alakú lyuk](chapter:threads-and-mechanics) pont erre való. Fordítsd el az alkatrészt, vagy fektesd egy másik lapjára a {{ui:editor.tool.layFlat}} paranccsal, és a sraffozás azonnal követi.
+
+Hogy a nyomtatód milyen meredeket bír, azt a beállításokban a {{ui:workspace.appearance}} alatt adod meg: 30°-tól (óvatos) 70°-ig (jó alkatrészhűtésű nyomtatókhoz). Egy másik testen nyugvó lap is jelölést kap – a layerling csak magát a lapot nézi.
+
+## Támasztóbordák megdöntött alkatrészhez
+
+Egy élére döntve, például 45°-ban nyomtatott alkatrésznek gyakran nem kell támasz: a lapjai elég meredekek. Viszont vékony élen áll, és felborulhat. A {{ui:supportRib.title}} megtartja: alsó lapja alatt kis réssel vékony borda áll ovális talpon, és apró hidak tartják az alkatrészt. Előbb fordítsd az alkatrészt az élére, és állítsd a tálcára.
+
+1. Jelöld ki az alkatrészt, és kattints a szalag {{ui:editor.section.splitShape}} csoportjában a {{ui:supportRib.title}} gombra, kattints jobb gombbal az alkatrészre, vagy keresd meg [[Ctrl]]+[[K]] segítségével.
+2. Kattints az alsó lapra ott, ahol a bordának állnia kell. A lapnak lefelé kell néznie, 15° és 75° között dőlnie, és le kell érnie a tálcáig; a borda a kattintástól egyenesen lefelé fut a lapon. Ha az alkatrész alsó éle le van kerekítve vagy törve, a lap legfeljebb 3 mm-rel a tálca felett is végződhet: kattints a lekerekítés feletti sík lapra.
+3. Állítsd be a {{ui:supportRib.nozzle}}, {{ui:supportRib.layerHeight}} és {{ui:supportRib.firstLayer}} értékét úgy, mint a szeletelődben. A borda két fúvókavonal vastag, a rés az alkatrészig fél vonal; minden híd egy vonal széles és pontosan egy réteg magas, és a nyomat egy rétegén fekszik, így a szeletelő egyetlen vékony vonalként nyomtatja, ami tisztán letörik. A {{ui:supportRib.height}} megadja, milyen magasra ér a borda a lapon (kezdetben a feléig), a {{ui:supportRib.bridgeSpacing}} pedig, milyen messze vannak egymástól a hidak, egész rétegekben.
+4. A {{ui:supportRib.more}} alatt kézzel állítható a vastagság, a rés, a hidak szélessége és a talp vastagsága (addig a fúvókát és a rétegeket követik), valamint a talp szélessége és a lekerekítések a talpnál és felül. Ha a(z) {{ui:supportRib.bridgeGap}} nagyobb 0-nál, a hidak már nem nyúlnak bele az alkatrészbe, hanem ennyivel előtte érnek véget, a rétegben mérve: a szeletelő ekkor mindegyiket külön pályaként nyomtatja, amely a szétnyomott vonallal tartja az alkatrészt, és nyom nélkül leválik (fél vonal, 0,4 mm-es fúvókánál 0,2 mm, jó kiindulás). Ehhez növeld a(z) {{ui:supportRib.gap}} értékét is, hogy a hidak még áthidaljanak egy részt belőle.
+5. A {{ui:supportRib.apply}} hozzáadja a bordát. A {{ui:supportRib.bundle}} beállítással (kezdetben be) a borda és az alkatrész kötegben van: együtt mozognak, és két testként egymás mellett kerülnek a szeletelőbe, a nyomatban a hidakkal összekötve.
+
+A borda hálós test: módosításához töröld, és készítsd el újra. Minden kattintás egy bordát készít; továbbiakhoz kattints a {{ui:supportRib.repick}} gombra, vagy ismételd meg az {{ui:editor.tool.array}} eszközzel. A borda sehol sem futhat bele az alkatrészbe, és az alkatrésznek a tálcán kell állnia - különben az ablak megmondja, miért nem megy. A beállításaidat ez a böngésző megjegyzi a következő bordához.
+
+A {{ui:clearance.title}} és a {{ui:printCheck.title}} ismeri a bordát: hogy a hídjai belenyúlnak az alkatrészbe, és hogy a borda és a hidak vékonyak, és egy rétegnyi magasan ívelnek át a résen, szándékos, és nem jelzik. A layerling 1.148.0-ban készült borda még nem hordozza ezt a jelölést; készítsd el újra, és az ellenőrzések kihagyják.
+
+## Falvastagság, hézag és letörések
+
+- A falak legyenek legalább két extrudálási vonal szélesek, vagyis 0,4 mm-es fúvókánál 0,8 mm. Az erős alkatrészeknek 1,2–2 mm kell.
+- Ahol két alkatrész egymásba illeszkedik, hézag kell: általában 0,2–0,4 mm, a nyomtatótól függően. Mielőtt a nagy alkatrészt kinyomtatnád, készíts egy kis próbapárt.
+- Sokan enyhén letörik a tárgyasztalon ülő alsó élt. Így az első réteg nem terül szét („elefántláb”).
+
+## A nyomtatód hézaga: az illesztési próba
+
+Minden nyomtató egy kicsit kisebbre nyomtatja a furatokat és egy kicsit vastagabbra a csapokat, mint ahogy rajzolva vannak, mindegyik a maga mértékével, így a két nyomtatott alkatrész közé kellő hézag eleinte csak tipp. Inkább mérd meg egyszer: a beállításokban, a(z) {{ui:workspace.workplane}} alatt a(z) {{ui:workspace.fitTestMake}} illesztési próbát tesz a tárgyasztalra. Ez egy 60 × 20 × 4 mm-es lap hét furattal egyetlen 5 mm-es csaphoz, mindegyik 5 mm plusz kétszer 0,05, 0,10, 0,15, 0,20, 0,25, 0,30 vagy 0,40 mm méretre rajzolva, mellette kiemelkedő számmal, és maga az 5 mm-es csap, amely a lap mellett áll, a tetején kis letöréssel. Közönséges formákból áll, így a tárgyasztal többi részével együtt nyomtatható, támasz nélkül.
+
+Ha a nyomtató tárgyasztala előre-hátra mozog, a magas, vékony csap meginoghat, leválhat vagy hullámos lehet az alján, peremmel vagy anélkül. Az illesztési próba elkészítése előtt jelöld be: {{ui:workspace.fitTestBase}}. A csap ekkor egy kis, 10 mm-es lapon áll, amely az asztalon marad. A foglalat falához nem ér, a fenekén lévő kis bütykön áll; nyomtatás után hajlítgasd meg, és letörik.
+
+Nyomtasd ki úgy, ahogy fekszik, aztán told a csapot letört végével előre a furatokba, a legszűkebbel kezdve. **A legszűkebb furat, amelyben a csap még forog,** adja meg a nyomtatód hézagát. Írd be a számát a(z) {{ui:workspace.printerPlay}} mezőbe, vagy kattints rá a mező alatti értékek között. A hézag oldalanként értendő, milliméterben, és a böngésző minden tervhez megőrzi; az üres mező azt jelenti, hogy nincs megmérve.
+Több nyomtatóval először a {{ui:workspace.printer}} alatt válaszd ki, amelyiken nyomtatsz: minden nyomtató megtartja a saját hézagát, és az új használatok a tervhez beállított nyomtató hézagából indulnak. A saját hézag nélküli nyomtató azt a hézagot használja, amelyet akkor állítottak be, amikor nem volt nyomtató kiválasztva.
+
+Ettől kezdve az új használatok a beépített érték helyett ebből a hézagból indulnak: a(z) {{ui:lid.gap}} és a(z) {{ui:lid.hingePinPlay}} a(z) {{ui:editor.tool.lid}} eszközben, egy új {{ui:shape.dovetail}} és {{ui:shape.snapFit}} hézaga, egy új anya vagy menetes furat {{ui:prop.clearance}} értéke – a hézag kétszerese, mert az a teljes átmérőre jutó hely –, valamint a(z) {{ui:clearance.threshold}} a(z) {{ui:editor.tool.clearance}} eszközben. Ugyanígy a(z) {{ui:editor.tool.split}} eszköz csapjainak és fecskefarkainak {{ui:split.connectorClearance}} értéke is. Amíg egy ilyen mező még ezt az értéket tartja, a mellette álló „{{ui:printerPlay.fromFitTest}}” megmondja, honnan jön a szám. Az egyben nyomtatott zsanér és a(z) {{ui:editor.tool.flexi}} eszköz ízületei megtartják a 0,4 mm-t: egy darabban nyomtatva a réseiknek a rétegek között is nyitva kell maradniuk, ezt pedig egy külön nyomtatott csap nem méri. A mágnes vagy Gridfinity-kulcs bepréseléséhez szükséges hely és a megvásárolt aljzatnak vagy lapnak hagyott hely is megtartja a saját értékét. A tervben már meglévő testek sosem változnak, és az a terv sem, amelyet megnyitsz.
+
+## A nyomtatás ellenőrzése
+
+A {{ui:editor.tool.printCheck}} a {{ui:editor.group.combine}} csoportban, a {{ui:editor.tool.clearance}} mellett megnézi a kijelölt objektumokat, vagy ha nincs kijelölés, az összes láthatót, és egy ablakban megmondja, mi romlana el nyomtatáskor. Öt sora közül az zöld, amelyik nem talált semmit, és narancssárga, azzal együtt, hogy mit és hol, amelyik talált:
+
+- **{{ui:printCheck.thin.title}}**: a fúvóka két vonalánál vékonyabb helyek - 0,4 mm-es fúvókánál 0,8 mm. A szeletelő az ilyen falat kihagyja, vagy egyetlen gyenge vonalként nyomtatja ki. Az ablak tetején, a {{ui:printCheck.nozzle}} résznél válaszd ki a fúvókádat (0,2-től 0,8-ig egy kattintással, bármely mást a mezőben). A vékony helyeket a testeken piros színnel, világos ráccsal jelöli, a sor pedig megadja a legvékonyabb helyet és azt, mekkora felület túl vékony. Az 1 mm²-nél kisebb helyek és az éles élek, például egy ék éle, kimaradnak.
+- **{{ui:printCheck.floating.title}}**: egy test vagy egy test különálló része, amely sem a tálcához, sem más alkatrészhez nem ér hozzá (0,05 mm-en belül). A levegőben nyomtatódna. Az az alkatrész, amely egy álló alkatrészen fekszik, rendben van.
+- **{{ui:printCheck.contact.title}}**: a tálcán álló alkatrész, amelynek első rétege a magasságához képest nagyon kicsi, például egy gömb vagy egy hegyén álló kúp. Nyomtatás közben leválhat. A figyelmeztetés 0,5 mm² alatti talpfelületnél jelenik meg magasságmilliméterenként, a tálca felett 0,1 mm-rel mérve: egy gömb mindig ez alatt van, egy 10 mm-es kocka 10-et ad.
+- **{{ui:printCheck.overhang.title}}**: ugyanazok a számok, mint a **Túlnyúlások mutatása** esetén, az ott beállított szöggel.
+- **{{ui:printCheck.openMesh.title}}**: importált háló nyitott élekkel, vagy olyan élekkel, amelyeken három vagy több lap osztozik. A szeletelőnek ilyenkor találgatnia kell, hol van a belseje.
+
+![Egy tálca, amelynek jobb fala csak 0,6 mm vastag: a nyomtatás ellenőrzése pirosra festi, és megnevezi az ablakban.](shot:print-check)
+
+Egy sor {{ui:printCheck.show}} gombja odaviszi a kamerát; kijelöli a lebegő alkatrészeket, a kevés felületen állókat és a nyitott hálókat, a túlnyúlásoknál pedig bekapcsolja a **Túlnyúlások mutatása** nézetet. Az egymásba érő testeket egyesítve ellenőrzi, ahogy a szeletelő is egyesíti őket. Ha az ablak nyitva van, miközben a tervet módosítod, megjelenik a {{ui:printCheck.stale}} felirat; kattints rá vagy a {{ui:printCheck.checkAgain}} gombra. Az [[Esc]] bezárja az ablakot. A tervben semmi sem változik. Egy MI ugyanezt az ellenőrzést a `layerling_check_print` eszközzel végzi. Az ablak csak ellenőriz, nem nyomtat és nem ment semmit: nyomtatáshoz exportáld a modellt a szeletelőnek a(z) {{ui:editor.group.file}} csoport {{ui:editor.export}} gombjával. Az ablakban a(z) {{ui:printCheck.openExport}} bezárja az ellenőrzést és megnyitja az exportot.
+
+### Nyomtatáselemzés és rétegnézet
+
+A(z) {{ui:editor.tool.layerCheck}} a(z) {{ui:editor.tool.printCheck}} mellett egy lépéssel tovább megy: a kijelölt objektumokat (vagy az összes láthatót) felszeleteli azokra a rétegekre, amelyeket a nyomtatód lerak, és minden réteget összevet az alatta lévővel, mindezt egyszerre. Nem kell rétegről rétegre lapozgatnod, hogy megtalálj egy hibát: az ablak felsorolja a **találatait**, előbb a hibákat (piros), aztán a figyelmeztetéseket (sárga), alulról felfelé. Minden sor megmondja, hol és mennyire súlyos, például „83–97. réteg (16,6–19,4 mm): Túlnyúlás 62°, 1,4 cm²”, és hogy mi segít. Az egymás utáni rétegek, amelyekben ugyanazon a helyen ugyanaz a hiba van, egyetlen találatot alkotnak.
+
+Mielőtt a rétegeket nézné, az egészet ellenőrzi: egy részt, amely belelóg a tárgyasztalba ({{ui:finding.kind.inBed}}; a munkasík alatti rétegek nem számítanak), egy részt, amely fölötte lebeg, egy nem zárt hálót, egy részt, amely nagyobb a beállításokban kiválasztott nyomtatónál. Aztán rétegről rétegre: {{ui:finding.kind.unsupported}} (egy hely, amely alatt semmi sincs, amikor elkezdődik, például egy T karjai), {{ui:finding.kind.overhang}} (45°-tól figyelmeztetés, 60°-tól hiba a függőlegeshez képest), {{ui:finding.kind.bridge}} (10 mm-es fesztávtól figyelmeztetés), {{ui:finding.kind.thinWall}} (a fúvóka két vonala alatt), {{ui:finding.kind.smallIsland}} (2 mm²-nél kisebb különálló hely, amely 2 mm-en vagy annál tovább tart) és {{ui:finding.kind.adhesion}}. Felül válaszd ki a(z) {{ui:layerCheck.layerHeight}} és a(z) {{ui:layerCheck.nozzle}} értékét; a határértékek a(z) {{ui:layerCheck.advanced}} alatt vannak. A 0,05 mm²-nél kisebb helyeket, például egy csúcsot vagy az utolsó réteget, nem értékeli. Az ellenőrzés a háttérben fut egy sávval; a(z) {{ui:layerCheck.stop}} azonnal leállítja.
+
+Kattints egy találatra: a **rétegnézet** az első érintett rétegnél nyílik meg, a kamera a helyre megy, a hely pirosra vagy sárgára festődik a rétegen, és az alatta lévő rétegek láthatók maradnak. A csúszka függőlegesen áll a keresztmetszet magasság szerinti profilja mellett; az oldalán lévő jelek mutatják, hol vannak találatok, és egy kattintás valamelyikre odaugrik. A csúszkán a [[↑]] és a [[↓]] egy réteggel lép, a [[Page Up]] és a [[Page Down]] tízzel, a [[Home]] és az [[End]] a végekre ugrik, a [[Space]] lejátssza, az [[N]] a következő találatra ugrik, a [[Shift+N]] az előzőre. A(z) {{ui:layerCheck.view.mode}} a(z) {{ui:layerCheck.view.mode.upTo}}, a(z) {{ui:layerCheck.view.mode.only}} vagy a(z) {{ui:layerCheck.view.mode.range}} nézetet mutatja; a még hátralévő rétegek halvány árnyékként látszhatnak. Ahol a Layerlingnek van eszköze a találathoz, egy gomb megnyitja: {{ui:finding.action.dropToPlate}}, {{ui:finding.action.layFlat}} vagy {{ui:finding.action.supportRib}}. Egy változtatás után a lista elavultként van megjelölve, amíg a(z) {{ui:layerCheck.checkAgain}} gombra nem kattintasz. Az ablak bezárása visszateszi a kamerát oda, ahol volt. Ez nem szeletelő-előnézet: a támaszokat, a kitöltést és a nyomtatási időt a szeletelőd adja.
+
+## Ha kész vagy
+
+Válaszd az {{ui:editor.export}} lehetőséget, majd az **STL** vagy a **3MF** formátumot. Az STL a legegyszerűbb formátum. A 3MF megtartja az egyes testek nevét és színét, ezért hasznos, ha több színnel nyomtatsz. Az exportálási ablak azt is mutatja, hány gramm és méter filament kellene az alkatrészhez tömören nyomtatva. Bővebben a [Fájlok és mentés](chapter:files-and-saving) fejezetben.
